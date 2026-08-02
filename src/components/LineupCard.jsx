@@ -1,3 +1,5 @@
+import { teams } from "../data/teams.js";
+
 function createFallbackNumber(name) {
   let total = 0;
 
@@ -18,12 +20,44 @@ function getNumericStat(value) {
   return 0;
 }
 
-function createPlayerIdentity(player, name, number) {
-  if (player && typeof player === "object" && player.id) {
-    return String(player.id);
+function getLogoPath(logo) {
+  if (!logo) {
+    return "";
   }
 
-  return `${name.toLowerCase()}-${number}`;
+  if (
+    logo.startsWith("http://") ||
+    logo.startsWith("https://") ||
+    logo.startsWith("data:")
+  ) {
+    return logo;
+  }
+
+  const cleanLogoPath = logo.replace(/^\/+/, "");
+
+  return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
+}
+
+function getFullTeamInformation(lineupTeam) {
+  const matchingTeam = teams.find((team) => {
+    return team.slug === lineupTeam.slug;
+  });
+
+  if (!matchingTeam) {
+    return lineupTeam;
+  }
+
+  return {
+    ...matchingTeam,
+    ...lineupTeam,
+
+    // Always use the logo path stored in teams.js.
+    logo: matchingTeam.logo,
+
+    // Keep the team colours from teams.js as the main source.
+    primary: matchingTeam.primary,
+    secondary: matchingTeam.secondary,
+  };
 }
 
 function normalizePlayer(player, index, groupName) {
@@ -32,7 +66,7 @@ function normalizePlayer(player, index, groupName) {
     const number = createFallbackNumber(name);
 
     return {
-      identity: createPlayerIdentity(null, name, number),
+      identity: `${groupName}-${name.toLowerCase()}-${number}`,
       renderKey: `${groupName}-${name}-${index}`,
       id: null,
       name,
@@ -52,11 +86,9 @@ function normalizePlayer(player, index, groupName) {
     player?.jerseyNumber ??
     createFallbackNumber(name);
 
-  const identity = createPlayerIdentity(
-    player,
-    name,
-    number
-  );
+  const identity = player?.id
+    ? String(player.id)
+    : `${name.toLowerCase()}-${number}`;
 
   return {
     identity,
@@ -131,65 +163,80 @@ function findTeamLeader(players) {
   });
 }
 
-function getTeamLogoUrl(logo) {
-  if (!logo) {
-    return "";
-  }
-
-  const logoValue = String(logo);
-
-  if (
-    logoValue.startsWith("http://") ||
-    logoValue.startsWith("https://") ||
-    logoValue.startsWith("data:")
-  ) {
-    return logoValue;
-  }
-
-  const cleanLogoPath = logoValue.replace(/^\/+/, "");
-
-  return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
-}
-
-function getLogoPath(logo) {
-  if (!logo) {
-    return "";
-  }
-
-  if (
-    logo.startsWith("http://") ||
-    logo.startsWith("https://")
-  ) {
-    return logo;
-  }
-
-  const cleanLogoPath = logo.replace(/^\/+/, "");
-
-  return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
-}
-
 function PlayerVisual({ player, team }) {
   const logoSource = getLogoPath(team.logo);
 
   return (
-    <div className="team-player-visual">
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        aspectRatio: "1 / 1",
+        display: "grid",
+        placeItems: "center",
+        overflow: "hidden",
+        isolation: "isolate",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
+        background:
+          "radial-gradient(circle at center, rgba(255,255,255,0.18), rgba(0,0,0,0.12) 72%)",
+      }}
+    >
       {logoSource ? (
         <img
-          className="team-player-background-logo"
           src={logoSource}
           alt=""
           aria-hidden="true"
+          onError={(event) => {
+            console.error(
+              `Could not load logo for ${team.fullName || team.team}:`,
+              logoSource
+            );
+
+            event.currentTarget.style.display = "none";
+          }}
+          style={{
+            position: "absolute",
+            zIndex: 0,
+            width: "82%",
+            height: "82%",
+            objectFit: "contain",
+            opacity: 0.2,
+            filter:
+              "saturate(0.9) contrast(1.1) drop-shadow(0 8px 12px rgba(0,0,0,0.3))",
+            transform: "scale(1.06)",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
         />
       ) : (
         <span
-          className="team-player-logo-fallback"
           aria-hidden="true"
+          style={{
+            position: "absolute",
+            zIndex: 0,
+            color: "white",
+            fontSize: "clamp(2rem, 6vw, 5rem)",
+            fontWeight: 900,
+            opacity: 0.12,
+          }}
         >
           {team.abbreviation || "TEAM"}
         </span>
       )}
 
-      <strong className="team-player-number">
+      <strong
+        style={{
+          position: "relative",
+          zIndex: 2,
+          color: "white",
+          fontSize: "clamp(3.4rem, 8vw, 6rem)",
+          fontWeight: 1000,
+          letterSpacing: "-0.06em",
+          lineHeight: 1,
+          textShadow:
+            "-3px -3px 0 rgba(0,0,0,0.75), 3px -3px 0 rgba(0,0,0,0.75), -3px 3px 0 rgba(0,0,0,0.75), 3px 3px 0 rgba(0,0,0,0.75), 0 8px 18px rgba(0,0,0,0.65)",
+        }}
+      >
         {player.number}
       </strong>
     </div>
@@ -198,7 +245,7 @@ function PlayerVisual({ player, team }) {
 
 function PlayerStat({ label, value }) {
   return (
-    <div className="team-player-stat">
+    <div className="stats-stat">
       <span>{label}</span>
       <strong>{value}</strong>
     </div>
@@ -210,30 +257,48 @@ function PlayerCard({
   team,
   isTeamLeader,
 }) {
+  const primary = team.primary || "#1f5f43";
+  const secondary = team.secondary || "#ffffff";
+
   return (
     <article
-      className={`team-player-card ${
-        isTeamLeader ? "is-team-leader" : ""
-      }`}
+      className="stats-player-card"
+      style={{
+        padding: "12px 12px 0",
+        background: `linear-gradient(
+          180deg,
+          ${primary},
+          #071a35
+        )`,
+        borderColor: secondary,
+      }}
     >
       <PlayerVisual
         player={player}
         team={team}
       />
 
-      <div className="team-player-information">
-        <h3 className="team-player-name">
-          {player.name}
-        </h3>
+      <h3 className="stats-player-name">
+        {player.name}
+      </h3>
 
-        {player.position && (
-          <span className="team-player-position">
-            {player.position}
-          </span>
-        )}
-      </div>
+      {player.position && (
+        <span
+          style={{
+            margin: "-5px 0 9px",
+            color: "rgba(255,255,255,0.72)",
+            fontSize: "0.65rem",
+            fontWeight: 900,
+            letterSpacing: "0.08em",
+            textAlign: "center",
+            textTransform: "uppercase",
+          }}
+        >
+          {player.position}
+        </span>
+      )}
 
-      <div className="team-player-stats">
+      <div className="stats-grid">
         <PlayerStat
           label="Goals"
           value={player.goals}
@@ -255,23 +320,30 @@ function PlayerCard({
         />
       </div>
 
-      {isTeamLeader ? (
-        <div className="team-player-leader-tag">
-          Team Leader
-        </div>
-      ) : (
-        <div
-          className="team-player-leader-tag is-empty"
-          aria-hidden="true"
-        >
-          Team Leader
-        </div>
-      )}
+      <div
+        className="stats-team-leader"
+        style={{
+          visibility: isTeamLeader
+            ? "visible"
+            : "hidden",
+
+          background: isTeamLeader
+            ? `linear-gradient(
+                90deg,
+                ${secondary},
+                ${primary}
+              )`
+            : "transparent",
+        }}
+        aria-hidden={!isTeamLeader}
+      >
+        Team Leader
+      </div>
     </article>
   );
 }
 
-function PlayerGroup({
+function PlayerSection({
   title,
   subtitle,
   players,
@@ -283,8 +355,14 @@ function PlayerGroup({
   }
 
   return (
-    <section className="team-roster-group">
-      <div className="team-roster-group-heading">
+    <section className="stats-roster-section">
+      <div
+        className="stats-section-heading"
+        style={{
+          borderBottomColor:
+            team.secondary || "#ffffff",
+        }}
+      >
         <div>
           <p>{subtitle}</p>
           <h4>{title}</h4>
@@ -298,10 +376,11 @@ function PlayerGroup({
         </span>
       </div>
 
-      <div className="team-roster-grid">
+      <div className="stats-lineup-grid">
         {players.map((player) => {
           const isTeamLeader =
-            teamLeader?.identity === player.identity;
+            teamLeader?.identity ===
+            player.identity;
 
           return (
             <PlayerCard
@@ -317,7 +396,9 @@ function PlayerGroup({
   );
 }
 
-function LineupCard({ team }) {
+function LineupCard({ team: lineupTeam }) {
+  const team = getFullTeamInformation(lineupTeam);
+
   const displayName =
     team.team ||
     team.fullName ||
@@ -353,20 +434,43 @@ function LineupCard({ team }) {
 
   const teamLeader = findTeamLeader(allPlayers);
 
+  const primary =
+    team.primary || "#1f5f43";
+
+  const secondary =
+    team.secondary || "#ffffff";
+
   return (
     <article
-      className="team-roster-panel"
+      className="stats-lineup-panel"
       style={{
-        "--roster-primary":
-          team.primary || "#1f5f43",
-
-        "--roster-secondary":
-          team.secondary || "#ffffff",
+        "--team-primary": primary,
+        "--team-secondary": secondary,
+        background: primary,
+        borderColor: secondary,
       }}
     >
-      <header className="team-roster-header">
-        <div className="team-roster-title">
-          <p>Previous Season Player Stats</p>
+      <header
+        className="stats-lineup-header"
+        style={{
+          background: `
+            linear-gradient(
+              rgba(0, 0, 0, 0.18),
+              rgba(0, 0, 0, 0.48)
+            ),
+            linear-gradient(
+              135deg,
+              ${primary},
+              ${secondary}
+            )
+          `,
+          borderBottomColor: secondary,
+        }}
+      >
+        <div>
+          <p className="stats-header-label">
+            Previous Season Player Stats
+          </p>
 
           <h3>{displayName}</h3>
 
@@ -375,18 +479,15 @@ function LineupCard({ team }) {
           </span>
         </div>
 
-        <div className="team-roster-summary">
+        <div className="stats-header-details">
           {teamLeader && (
             <div>
               <span>Points Leader</span>
 
               <strong>
-                {teamLeader.name}
+                {teamLeader.name} ·{" "}
+                {teamLeader.points} PTS
               </strong>
-
-              <small>
-                {teamLeader.points} points
-              </small>
             </div>
           )}
 
@@ -399,8 +500,20 @@ function LineupCard({ team }) {
         </div>
       </header>
 
-      <div className="team-roster-content">
-        <PlayerGroup
+      <div
+        className="stats-lineup-content"
+        style={{
+          background: `
+            linear-gradient(
+              160deg,
+              rgba(255,255,255,0.1),
+              rgba(0,0,0,0.35)
+            ),
+            ${primary}
+          `,
+        }}
+      >
+        <PlayerSection
           title="Forwards"
           subtitle="Forward Lines"
           players={forwards}
@@ -408,7 +521,7 @@ function LineupCard({ team }) {
           teamLeader={teamLeader}
         />
 
-        <PlayerGroup
+        <PlayerSection
           title="Defence"
           subtitle="Defensive Pairings"
           players={defense}
@@ -416,7 +529,7 @@ function LineupCard({ team }) {
           teamLeader={teamLeader}
         />
 
-        <PlayerGroup
+        <PlayerSection
           title="Additional Players"
           subtitle="Remaining Roster"
           players={additionalPlayers}
