@@ -1,4 +1,4 @@
-function createNumberFromName(name) {
+function createFallbackNumber(name) {
   let total = 0;
 
   for (let index = 0; index < name.length; index++) {
@@ -8,14 +8,35 @@ function createNumberFromName(name) {
   return (total % 88) + 1;
 }
 
-function normalizePlayer(player, index) {
+function getNumericStat(value) {
+  const number = Number(value);
+
+  if (Number.isFinite(number)) {
+    return number;
+  }
+
+  return 0;
+}
+
+function createPlayerIdentity(player, name, number) {
+  if (player && typeof player === "object" && player.id) {
+    return String(player.id);
+  }
+
+  return `${name.toLowerCase()}-${number}`;
+}
+
+function normalizePlayer(player, index, groupName) {
   if (typeof player === "string") {
-    const cleanName = player.trim();
+    const name = player.trim();
+    const number = createFallbackNumber(name);
 
     return {
-      id: `${cleanName}-${index}`,
-      name: cleanName,
-      number: createNumberFromName(cleanName),
+      identity: createPlayerIdentity(null, name, number),
+      renderKey: `${groupName}-${name}-${index}`,
+      id: null,
+      name,
+      number,
       position: "",
       goals: 0,
       assists: 0,
@@ -24,148 +45,225 @@ function normalizePlayer(player, index) {
     };
   }
 
-  const name = player.name || "Unknown Player";
+  const name = player?.name || "Unknown Player";
+
+  const number =
+    player?.number ??
+    player?.jerseyNumber ??
+    createFallbackNumber(name);
+
+  const identity = createPlayerIdentity(
+    player,
+    name,
+    number
+  );
 
   return {
-    id: player.id || `${name}-${index}`,
+    identity,
+    renderKey: `${groupName}-${identity}-${index}`,
+    id: player?.id ?? null,
     name,
-    number:
-      player.number ??
-      player.jerseyNumber ??
-      createNumberFromName(name),
-
-    position: player.position || "",
-    goals: Number(player.goals) || 0,
-    assists: Number(player.assists) || 0,
-    points: Number(player.points) || 0,
-    gamesPlayed: Number(player.gamesPlayed) || 0,
+    number,
+    position: player?.position || "",
+    goals: getNumericStat(player?.goals),
+    assists: getNumericStat(player?.assists),
+    points: getNumericStat(player?.points),
+    gamesPlayed: getNumericStat(player?.gamesPlayed),
   };
 }
 
-function flattenPlayers(rows = []) {
+function flattenPlayers(rows, groupName) {
+  if (!Array.isArray(rows)) {
+    return [];
+  }
+
   return rows
     .flat()
     .filter(Boolean)
-    .map((player, index) => normalizePlayer(player, index));
+    .map((player, index) => {
+      return normalizePlayer(player, index, groupName);
+    });
 }
 
 function removeDuplicatePlayers(players) {
-  const playerKeys = new Set();
+  const playerIdentities = new Set();
 
   return players.filter((player) => {
-    const playerKey = player.id || `${player.name}-${player.number}`;
-
-    if (playerKeys.has(playerKey)) {
+    if (playerIdentities.has(player.identity)) {
       return false;
     }
 
-    playerKeys.add(playerKey);
+    playerIdentities.add(player.identity);
     return true;
   });
 }
 
 function findTeamLeader(players) {
-  const skaters = players.filter((player) => player.position !== "G");
+  const skaters = players.filter((player) => {
+    return player.position !== "G";
+  });
 
   if (skaters.length === 0) {
     return null;
   }
 
-  return skaters.reduce((currentLeader, player) => {
-    if (player.points > currentLeader.points) {
+  return skaters.reduce((leader, player) => {
+    if (player.points > leader.points) {
       return player;
     }
 
     if (
-      player.points === currentLeader.points &&
-      player.goals > currentLeader.goals
+      player.points === leader.points &&
+      player.goals > leader.goals
     ) {
       return player;
     }
 
     if (
-      player.points === currentLeader.points &&
-      player.goals === currentLeader.goals &&
-      player.assists > currentLeader.assists
+      player.points === leader.points &&
+      player.goals === leader.goals &&
+      player.assists > leader.assists
     ) {
       return player;
     }
 
-    return currentLeader;
+    return leader;
   });
 }
 
-function getLastName(playerName) {
-  if (playerName.includes(",")) {
-    return playerName.split(",")[0].trim();
+function getTeamLogoUrl(logo) {
+  if (!logo) {
+    return "";
   }
 
-  const nameParts = playerName.trim().split(" ");
+  const logoValue = String(logo);
 
-  return nameParts[nameParts.length - 1];
+  if (
+    logoValue.startsWith("http://") ||
+    logoValue.startsWith("https://") ||
+    logoValue.startsWith("data:")
+  ) {
+    return logoValue;
+  }
+
+  const cleanLogoPath = logoValue.replace(/^\/+/, "");
+
+  return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
 }
 
-function PlayerJersey({ player, team }) {
+function getLogoPath(logo) {
+  if (!logo) {
+    return "";
+  }
+
+  if (
+    logo.startsWith("http://") ||
+    logo.startsWith("https://")
+  ) {
+    return logo;
+  }
+
+  const cleanLogoPath = logo.replace(/^\/+/, "");
+
+  return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
+}
+
+function PlayerVisual({ player, team }) {
+  const logoSource = getLogoPath(team.logo);
+
   return (
-    <div
-      className="stats-player-jersey"
-      style={{
-        "--jersey-primary": team.primary,
-        "--jersey-secondary": team.secondary,
-      }}
-    >
-      <div className="stats-jersey-neck"></div>
+    <div className="team-player-visual">
+      {logoSource ? (
+        <img
+          className="team-player-background-logo"
+          src={logoSource}
+          alt=""
+          aria-hidden="true"
+        />
+      ) : (
+        <span
+          className="team-player-logo-fallback"
+          aria-hidden="true"
+        >
+          {team.abbreviation || "TEAM"}
+        </span>
+      )}
 
-      <span className="stats-jersey-name">
-        {getLastName(player.name)}
-      </span>
-
-      <strong className="stats-jersey-number">
+      <strong className="team-player-number">
         {player.number}
       </strong>
-
-      <div className="stats-jersey-stripe"></div>
     </div>
   );
 }
 
-function PlayerCard({ player, team, isTeamLeader }) {
+function PlayerStat({ label, value }) {
   return (
-    <article className="stats-player-card">
-      <span className="stats-number-badge">
-        {player.number}
-      </span>
+    <div className="team-player-stat">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  );
+}
 
-      <PlayerJersey player={player} team={team} />
+function PlayerCard({
+  player,
+  team,
+  isTeamLeader,
+}) {
+  return (
+    <article
+      className={`team-player-card ${
+        isTeamLeader ? "is-team-leader" : ""
+      }`}
+    >
+      <PlayerVisual
+        player={player}
+        team={team}
+      />
 
-      <h3 className="stats-player-name">
-        {player.name}
-      </h3>
+      <div className="team-player-information">
+        <h3 className="team-player-name">
+          {player.name}
+        </h3>
 
-      <div className="stats-grid">
-        <div className="stats-stat">
-          <span>Goals</span>
-          <strong>{player.goals}</strong>
-        </div>
-
-        <div className="stats-stat">
-          <span>Assists</span>
-          <strong>{player.assists}</strong>
-        </div>
-
-        <div className="stats-stat">
-          <span>Points</span>
-          <strong>{player.points}</strong>
-        </div>
-
-        <div className="stats-stat">
-          <span>Games</span>
-          <strong>{player.gamesPlayed}</strong>
-        </div>
+        {player.position && (
+          <span className="team-player-position">
+            {player.position}
+          </span>
+        )}
       </div>
 
-      {isTeamLeader && (
-        <div className="stats-team-leader">
+      <div className="team-player-stats">
+        <PlayerStat
+          label="Goals"
+          value={player.goals}
+        />
+
+        <PlayerStat
+          label="Assists"
+          value={player.assists}
+        />
+
+        <PlayerStat
+          label="Points"
+          value={player.points}
+        />
+
+        <PlayerStat
+          label="Games"
+          value={player.gamesPlayed}
+        />
+      </div>
+
+      {isTeamLeader ? (
+        <div className="team-player-leader-tag">
+          Team Leader
+        </div>
+      ) : (
+        <div
+          className="team-player-leader-tag is-empty"
+          aria-hidden="true"
+        >
           Team Leader
         </div>
       )}
@@ -173,7 +271,7 @@ function PlayerCard({ player, team, isTeamLeader }) {
   );
 }
 
-function PlayerSection({
+function PlayerGroup({
   title,
   subtitle,
   players,
@@ -185,25 +283,29 @@ function PlayerSection({
   }
 
   return (
-    <section className="stats-roster-section">
-      <div className="stats-section-heading">
+    <section className="team-roster-group">
+      <div className="team-roster-group-heading">
         <div>
           <p>{subtitle}</p>
           <h4>{title}</h4>
         </div>
 
-        <span>{players.length} Players</span>
+        <span>
+          {players.length}{" "}
+          {players.length === 1
+            ? "Player"
+            : "Players"}
+        </span>
       </div>
 
-      <div className="stats-lineup-grid">
+      <div className="team-roster-grid">
         {players.map((player) => {
           const isTeamLeader =
-            teamLeader &&
-            player.id === teamLeader.id;
+            teamLeader?.identity === player.identity;
 
           return (
             <PlayerCard
-              key={player.id}
+              key={player.renderKey}
               player={player}
               team={team}
               isTeamLeader={isTeamLeader}
@@ -216,21 +318,32 @@ function PlayerSection({
 }
 
 function LineupCard({ team }) {
-  const displayName = team.team || team.fullName;
+  const displayName =
+    team.team ||
+    team.fullName ||
+    "Team Roster";
 
   const forwards = removeDuplicatePlayers(
-    flattenPlayers(team.forwards)
+    flattenPlayers(
+      team.forwards,
+      "forward"
+    )
   );
 
   const defense = removeDuplicatePlayers(
-    flattenPlayers(team.defense)
-  );
-
-  const additionalPlayers = removeDuplicatePlayers(
-    (team.additionalPlayers || []).map((player, index) =>
-      normalizePlayer(player, index)
+    flattenPlayers(
+      team.defense,
+      "defense"
     )
   );
+
+  const additionalPlayers =
+    removeDuplicatePlayers(
+      flattenPlayers(
+        team.additionalPlayers,
+        "additional"
+      )
+    );
 
   const allPlayers = removeDuplicatePlayers([
     ...forwards,
@@ -242,33 +355,38 @@ function LineupCard({ team }) {
 
   return (
     <article
-      className="stats-lineup-panel"
+      className="team-roster-panel"
       style={{
-        "--team-primary": team.primary,
-        "--team-secondary": team.secondary,
+        "--roster-primary":
+          team.primary || "#1f5f43",
+
+        "--roster-secondary":
+          team.secondary || "#ffffff",
       }}
     >
-      <header className="stats-lineup-header">
-        <div>
-          <p className="stats-header-label">
-            Previous Season Player Stats
-          </p>
+      <header className="team-roster-header">
+        <div className="team-roster-title">
+          <p>Previous Season Player Stats</p>
 
           <h3>{displayName}</h3>
 
           <span>
-            {team.status || "CSV roster"}
+            {team.status || "Team roster"}
           </span>
         </div>
 
-        <div className="stats-header-details">
+        <div className="team-roster-summary">
           {teamLeader && (
             <div>
               <span>Points Leader</span>
 
               <strong>
-                {teamLeader.name} · {teamLeader.points} PTS
+                {teamLeader.name}
               </strong>
+
+              <small>
+                {teamLeader.points} points
+              </small>
             </div>
           )}
 
@@ -281,24 +399,24 @@ function LineupCard({ team }) {
         </div>
       </header>
 
-      <div className="stats-lineup-content">
-        <PlayerSection
+      <div className="team-roster-content">
+        <PlayerGroup
           title="Forwards"
-          subtitle="Projected Lines"
+          subtitle="Forward Lines"
           players={forwards}
           team={team}
           teamLeader={teamLeader}
         />
 
-        <PlayerSection
+        <PlayerGroup
           title="Defence"
-          subtitle="Defensive Group"
+          subtitle="Defensive Pairings"
           players={defense}
           team={team}
           teamLeader={teamLeader}
         />
 
-        <PlayerSection
+        <PlayerGroup
           title="Additional Players"
           subtitle="Remaining Roster"
           players={additionalPlayers}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { teams } from "../data/teams.js";
+import { lineupTeams } from "../data/lineups.js";
 import loadPlayerStats from "../data/loadPlayerStats.js";
 import LineupCard from "../components/LineupCard.jsx";
 
@@ -26,182 +26,194 @@ const TEAM_STATS_CODES = {
   victoriaville: "Vic",
 };
 
-function sortPlayers(playerA, playerB) {
-  if (playerB.points !== playerA.points) {
-    return playerB.points - playerA.points;
+function normalizeName(name) {
+  if (!name) {
+    return "";
   }
 
-  if (playerB.gamesPlayed !== playerA.gamesPlayed) {
-    return playerB.gamesPlayed - playerA.gamesPlayed;
-  }
-
-  return playerA.name.localeCompare(playerB.name);
+  return String(name)
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .replace(/[-]/g, " ")
+    .replace(/[^a-z0-9 ]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
-function convertPlayer(player) {
-  return {
-    id: player.id,
-    name: player.name,
-    number: player.jerseyNumber ?? "--",
-    position: player.position,
-    gamesPlayed: player.gamesPlayed,
-    goals: player.goals,
-    assists: player.assists,
-    points: player.points,
-  };
+function getLineupPlayerName(player) {
+  if (typeof player === "string") {
+    return player.trim();
+  }
+
+  return player.name?.trim() || "";
 }
 
-function buildForwardLines(teamPlayers) {
-  const remainingPlayers = teamPlayers
-    .filter((player) => {
-      return (
-        player.position === "LW" ||
-        player.position === "C" ||
-        player.position === "RW"
-      );
-    })
-    .sort(sortPlayers);
-
-  function takeExactPosition(position) {
-    const playerIndex = remainingPlayers.findIndex(
-      (player) => player.position === position
-    );
-
-    if (playerIndex === -1) {
-      return null;
-    }
-
-    return remainingPlayers.splice(playerIndex, 1)[0];
+function getLineupPlayerNumber(player) {
+  if (typeof player === "string") {
+    return null;
   }
 
-  const forwardLines = [];
-
-  for (let lineNumber = 0; lineNumber < 4; lineNumber++) {
-    forwardLines.push([
-      takeExactPosition("LW"),
-      takeExactPosition("C"),
-      takeExactPosition("RW"),
-    ]);
-  }
-
-  for (const line of forwardLines) {
-    for (let positionIndex = 0; positionIndex < line.length; positionIndex++) {
-      if (!line[positionIndex] && remainingPlayers.length > 0) {
-        line[positionIndex] = remainingPlayers.shift();
-      }
-    }
-  }
-
-  const completedLines = forwardLines
-    .map((line) => {
-      return line
-        .filter((player) => player !== null)
-        .map(convertPlayer);
-    })
-    .filter((line) => line.length > 0);
-
-  return {
-    lines: completedLines,
-    additionalPlayers: remainingPlayers.map(convertPlayer),
-  };
+  return player.number ?? null;
 }
 
-function buildDefensePairs(teamPlayers) {
-  const defensePlayers = teamPlayers
-    .filter((player) => player.position === "D")
-    .sort(sortPlayers);
+function attachPlayerStats(lineupPlayer, teamStats) {
+  const lineupName = getLineupPlayerName(lineupPlayer);
+  const normalizedLineupName = normalizeName(lineupName);
 
-  const activeDefense = defensePlayers.slice(0, 6);
-  const defensePairs = [];
+  const matchedPlayer = teamStats.find((statsPlayer) => {
+    return normalizeName(statsPlayer.name) === normalizedLineupName;
+  });
 
-  for (let index = 0; index < activeDefense.length; index += 2) {
-    defensePairs.push(
-      activeDefense.slice(index, index + 2).map(convertPlayer)
-    );
+  if (!matchedPlayer) {
+    console.warn(`No CSV match found for: ${lineupName}`);
+
+    return {
+      id: `unmatched-${normalizedLineupName}`,
+      name: lineupName,
+      number: getLineupPlayerNumber(lineupPlayer) ?? "--",
+      position: "",
+      gamesPlayed: 0,
+      goals: 0,
+      assists: 0,
+      points: 0,
+      matched: false,
+    };
   }
 
   return {
-    pairs: defensePairs,
-    additionalPlayers: defensePlayers.slice(6).map(convertPlayer),
+    id: matchedPlayer.id,
+    name: lineupName,
+    number:
+      matchedPlayer.jerseyNumber ??
+      getLineupPlayerNumber(lineupPlayer) ??
+      "--",
+
+    position: matchedPlayer.position,
+    gamesPlayed: matchedPlayer.gamesPlayed,
+    goals: matchedPlayer.goals,
+    assists: matchedPlayer.assists,
+    points: matchedPlayer.points,
+    pointsPerGame: matchedPlayer.pointsPerGame,
+    plusMinus: matchedPlayer.plusMinus,
+    shots: matchedPlayer.shots,
+    shootingPercentage: matchedPlayer.shootingPercentage,
+    penaltyMinutes: matchedPlayer.penaltyMinutes,
+    powerPlayGoals: matchedPlayer.powerPlayGoals,
+    powerPlayAssists: matchedPlayer.powerPlayAssists,
+    shortHandedGoals: matchedPlayer.shortHandedGoals,
+    shortHandedAssists: matchedPlayer.shortHandedAssists,
+    gameWinningGoals: matchedPlayer.gameWinningGoals,
+    rookie: matchedPlayer.rookie,
+    season: matchedPlayer.season,
+    matched: true,
   };
 }
 
-function findGoalies(teamPlayers) {
-  const goalies = teamPlayers
-    .filter((player) => player.position === "G")
-    .sort((goalieA, goalieB) => {
-      return goalieB.gamesPlayed - goalieA.gamesPlayed;
+function attachStatsToRows(rows, teamStats) {
+  return rows.map((row) => {
+    return row.map((player) => {
+      return attachPlayerStats(player, teamStats);
     });
-
-  return {
-    starter: goalies.length > 0 ? convertPlayer(goalies[0]) : null,
-    additionalPlayers: goalies.slice(1).map(convertPlayer),
-  };
+  });
 }
 
 function TeamLineupPage() {
   const { teamSlug } = useParams();
 
-  const team = teams.find((currentTeam) => {
-    return currentTeam.slug === teamSlug;
+  const lineupTeam = lineupTeams.find((team) => {
+    return team.slug === teamSlug;
   });
 
-  const [teamPlayers, setTeamPlayers] = useState([]);
+  const [displayTeam, setDisplayTeam] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     let pageIsActive = true;
 
-    if (!team) {
+    if (!lineupTeam) {
       setLoading(false);
       return undefined;
     }
 
-    const statsCode = TEAM_STATS_CODES[team.slug];
+    async function prepareLineup() {
+      try {
+        setLoading(true);
+        setErrorMessage("");
 
-    setLoading(true);
-    setErrorMessage("");
+        const allPlayers = await loadPlayerStats();
 
-    loadPlayerStats()
-      .then((allPlayers) => {
         if (!pageIsActive) {
           return;
         }
 
-        const matchingPlayers = allPlayers.filter((player) => {
+        const statsCode = TEAM_STATS_CODES[lineupTeam.slug];
+
+        const teamStats = allPlayers.filter((player) => {
           return player.teamCode === statsCode;
         });
 
-        setTeamPlayers(matchingPlayers);
-      })
-      .catch((error) => {
+        const forwardsWithStats = attachStatsToRows(
+          lineupTeam.forwards || [],
+          teamStats
+        );
+
+        const defenseWithStats = attachStatsToRows(
+          lineupTeam.defense || [],
+          teamStats
+        );
+
+        const unmatchedPlayers = [
+          ...forwardsWithStats.flat(),
+          ...defenseWithStats.flat(),
+        ].filter((player) => !player.matched);
+
+        if (unmatchedPlayers.length > 0) {
+          console.warn(
+            "Players not matched to the CSV:",
+            unmatchedPlayers.map((player) => player.name)
+          );
+        }
+
+        setDisplayTeam({
+          ...lineupTeam,
+          forwards: forwardsWithStats,
+          defense: defenseWithStats,
+          status: lineupTeam.status || "Projected",
+          unmatchedPlayers,
+        });
+      } catch (error) {
         console.error(error);
 
         if (pageIsActive) {
           setErrorMessage(
-            "The player statistics file could not be loaded."
+            "The lineup was found, but the CSV statistics could not be loaded."
           );
         }
-      })
-      .finally(() => {
+      } finally {
         if (pageIsActive) {
           setLoading(false);
         }
-      });
+      }
+    }
+
+    prepareLineup();
 
     return () => {
       pageIsActive = false;
     };
-  }, [teamSlug, team]);
+  }, [lineupTeam]);
 
-  if (!team) {
+  if (!lineupTeam) {
     return (
       <>
         <section className="page-title">
-          <p className="section-label">Roster Not Found</p>
+          <p className="section-label">Lineup Not Found</p>
           <h2>Team not found</h2>
-          <p>The requested QMJHL team could not be found.</p>
+          <p>This team does not have a lineup available yet.</p>
         </section>
 
         <Link className="back-link" to="/lineups">
@@ -217,13 +229,13 @@ function TeamLineupPage() {
         <section
           className="lineup-page-header no-logo"
           style={{
-            "--primary": team.primary,
-            "--secondary": team.secondary,
+            "--primary": lineupTeam.primary,
+            "--secondary": lineupTeam.secondary,
           }}
         >
           <div>
-            <p className="section-label">QMJHL Roster</p>
-            <h2>{team.fullName}</h2>
+            <p className="section-label">Team Lineup</p>
+            <h2>{lineupTeam.team || lineupTeam.fullName}</h2>
             <p>Loading player statistics...</p>
           </div>
         </section>
@@ -239,8 +251,8 @@ function TeamLineupPage() {
     return (
       <>
         <section className="page-title">
-          <p className="section-label">Roster Error</p>
-          <h2>{team.fullName}</h2>
+          <p className="section-label">Lineup Error</p>
+          <h2>{lineupTeam.team || lineupTeam.fullName}</h2>
           <p>{errorMessage}</p>
         </section>
 
@@ -251,64 +263,22 @@ function TeamLineupPage() {
     );
   }
 
-  if (teamPlayers.length === 0) {
-    return (
-      <>
-        <section className="page-title">
-          <p className="section-label">Roster Unavailable</p>
-          <h2>{team.fullName}</h2>
-
-          <p>
-            No players in the CSV matched this team’s statistics code.
-          </p>
-        </section>
-
-        <Link className="back-link" to="/lineups">
-          ← Back to all teams
-        </Link>
-      </>
-    );
-  }
-
-  const forwardResults = buildForwardLines(teamPlayers);
-  const defenseResults = buildDefensePairs(teamPlayers);
-  const goalieResults = findGoalies(teamPlayers);
-
-  const additionalPlayers = [
-    ...forwardResults.additionalPlayers,
-    ...defenseResults.additionalPlayers,
-    ...goalieResults.additionalPlayers,
-  ];
-
-  const lineupTeam = {
-    ...team,
-    team: team.fullName,
-    status: "Stat-based roster",
-    goalie: goalieResults.starter
-      ? `${goalieResults.starter.name} #${goalieResults.starter.number}`
-      : "No goalie listed",
-
-    forwards: forwardResults.lines,
-    defense: defenseResults.pairs,
-    additionalPlayers,
-  };
-
   return (
     <>
       <section
         className="lineup-page-header no-logo"
         style={{
-          "--primary": team.primary,
-          "--secondary": team.secondary,
+          "--primary": displayTeam.primary,
+          "--secondary": displayTeam.secondary,
         }}
       >
         <div>
-          <p className="section-label">QMJHL Roster</p>
-          <h2>{team.fullName}</h2>
+          <p className="section-label">Team Lineup</p>
+          <h2>{displayTeam.team || displayTeam.fullName}</h2>
 
           <p>
-            Players are loaded from the CSV file. Lines are projected using
-            player positions and point totals and are not official team lines.
+            Line combinations are set manually. Player statistics are loaded
+            from the CSV file.
           </p>
         </div>
       </section>
@@ -318,7 +288,7 @@ function TeamLineupPage() {
       </Link>
 
       <section className="single-lineup-page">
-        <LineupCard team={lineupTeam} />
+        <LineupCard team={displayTeam} />
       </section>
     </>
   );
