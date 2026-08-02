@@ -36,31 +36,50 @@ function normalizeName(name) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/æ/g, "ae")
     .replace(/[’']/g, "")
-    .replace(/[-]/g, " ")
+    .replace(/-/g, " ")
     .replace(/[^a-z0-9 ]/g, "")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function getLineupPlayerName(player) {
+function getPlayerName(player) {
   if (typeof player === "string") {
     return player.trim();
   }
 
-  return player.name?.trim() || "";
+  return player?.name?.trim() || "";
 }
 
-function getLineupPlayerNumber(player) {
+function getPlayerNumber(player) {
   if (typeof player === "string") {
     return null;
   }
 
-  return player.number ?? null;
+  return player?.number ?? player?.jerseyNumber ?? null;
+}
+
+function convertCsvPlayer(player, preferredName = null) {
+  return {
+    id: player.id,
+    name: preferredName || player.name,
+    number: player.jerseyNumber ?? "--",
+    position: player.position || "",
+    gamesPlayed: Number(player.gamesPlayed) || 0,
+    goals: Number(player.goals) || 0,
+    assists: Number(player.assists) || 0,
+    points: Number(player.points) || 0,
+    pointsPerGame: Number(player.pointsPerGame) || 0,
+    plusMinus: Number(player.plusMinus) || 0,
+    shots: Number(player.shots) || 0,
+    matched: true,
+  };
 }
 
 function attachPlayerStats(lineupPlayer, teamStats) {
-  const lineupName = getLineupPlayerName(lineupPlayer);
+  const lineupName = getPlayerName(lineupPlayer);
   const normalizedLineupName = normalizeName(lineupName);
 
   const matchedPlayer = teamStats.find((statsPlayer) => {
@@ -73,7 +92,7 @@ function attachPlayerStats(lineupPlayer, teamStats) {
     return {
       id: `unmatched-${normalizedLineupName}`,
       name: lineupName,
-      number: getLineupPlayerNumber(lineupPlayer) ?? "--",
+      number: getPlayerNumber(lineupPlayer) ?? "--",
       position: "",
       gamesPlayed: 0,
       goals: 0,
@@ -84,40 +103,101 @@ function attachPlayerStats(lineupPlayer, teamStats) {
   }
 
   return {
-    id: matchedPlayer.id,
-    name: lineupName,
+    ...convertCsvPlayer(matchedPlayer, lineupName),
+
     number:
       matchedPlayer.jerseyNumber ??
-      getLineupPlayerNumber(lineupPlayer) ??
+      getPlayerNumber(lineupPlayer) ??
       "--",
-
-    position: matchedPlayer.position,
-    gamesPlayed: matchedPlayer.gamesPlayed,
-    goals: matchedPlayer.goals,
-    assists: matchedPlayer.assists,
-    points: matchedPlayer.points,
-    pointsPerGame: matchedPlayer.pointsPerGame,
-    plusMinus: matchedPlayer.plusMinus,
-    shots: matchedPlayer.shots,
-    shootingPercentage: matchedPlayer.shootingPercentage,
-    penaltyMinutes: matchedPlayer.penaltyMinutes,
-    powerPlayGoals: matchedPlayer.powerPlayGoals,
-    powerPlayAssists: matchedPlayer.powerPlayAssists,
-    shortHandedGoals: matchedPlayer.shortHandedGoals,
-    shortHandedAssists: matchedPlayer.shortHandedAssists,
-    gameWinningGoals: matchedPlayer.gameWinningGoals,
-    rookie: matchedPlayer.rookie,
-    season: matchedPlayer.season,
-    matched: true,
   };
 }
 
-function attachStatsToRows(rows, teamStats) {
-  return rows.map((row) => {
-    return row.map((player) => {
-      return attachPlayerStats(player, teamStats);
-    });
+function attachStatsToRows(
+  rows,
+  teamStats,
+  maximumRows,
+  playersPerRow
+) {
+  if (!Array.isArray(rows)) {
+    return [];
+  }
+
+  return rows
+    .slice(0, maximumRows)
+    .map((row) => {
+      if (!Array.isArray(row)) {
+        return [];
+      }
+
+      return row
+        .slice(0, playersPerRow)
+        .map((player) => {
+          return attachPlayerStats(player, teamStats);
+        });
+    })
+    .filter((row) => row.length > 0);
+}
+
+function getManualGoalies(lineupTeam) {
+  if (Array.isArray(lineupTeam.goalies)) {
+    return lineupTeam.goalies.slice(0, 2);
+  }
+
+  if (
+    lineupTeam.goalie &&
+    lineupTeam.goalie.trim() !== "" &&
+    lineupTeam.goalie.trim().toUpperCase() !== "TBD"
+  ) {
+    return [
+      {
+        name: lineupTeam.goalie,
+        number: lineupTeam.goalieNumber ?? null,
+      },
+    ];
+  }
+
+  return [];
+}
+
+function buildGoalieList(lineupTeam, teamStats) {
+  const manualGoalies = getManualGoalies(lineupTeam);
+
+  const goalieResults = manualGoalies.map((goalie) => {
+    return {
+      ...attachPlayerStats(goalie, teamStats),
+      position: "G",
+    };
   });
+
+  const usedGoalieNames = new Set(
+    goalieResults.map((goalie) => {
+      return normalizeName(goalie.name);
+    })
+  );
+
+  const csvGoalies = teamStats
+    .filter((player) => {
+      return (
+        String(player.position).toUpperCase() === "G" &&
+        !usedGoalieNames.has(normalizeName(player.name))
+      );
+    })
+    .sort((goalieA, goalieB) => {
+      return goalieB.gamesPlayed - goalieA.gamesPlayed;
+    });
+
+  for (const goalie of csvGoalies) {
+    if (goalieResults.length >= 2) {
+      break;
+    }
+
+    goalieResults.push({
+      ...convertCsvPlayer(goalie),
+      position: "G",
+    });
+  }
+
+  return goalieResults.slice(0, 2);
 }
 
 function TeamLineupPage() {
@@ -135,6 +215,7 @@ function TeamLineupPage() {
     let pageIsActive = true;
 
     if (!lineupTeam) {
+      setDisplayTeam(null);
       setLoading(false);
       return undefined;
     }
@@ -156,19 +237,32 @@ function TeamLineupPage() {
           return player.teamCode === statsCode;
         });
 
+        // Exactly three forward lines with three players each.
         const forwardsWithStats = attachStatsToRows(
-          lineupTeam.forwards || [],
-          teamStats
+          lineupTeam.forwards,
+          teamStats,
+          3,
+          3
         );
 
+        // Exactly three defence pairs with two players each.
         const defenseWithStats = attachStatsToRows(
-          lineupTeam.defense || [],
+          lineupTeam.defense,
+          teamStats,
+          3,
+          2
+        );
+
+        // Manual goalie first, then fill from the CSV up to two.
+        const goaliesWithStats = buildGoalieList(
+          lineupTeam,
           teamStats
         );
 
         const unmatchedPlayers = [
           ...forwardsWithStats.flat(),
           ...defenseWithStats.flat(),
+          ...goaliesWithStats,
         ].filter((player) => !player.matched);
 
         if (unmatchedPlayers.length > 0) {
@@ -182,6 +276,7 @@ function TeamLineupPage() {
           ...lineupTeam,
           forwards: forwardsWithStats,
           defense: defenseWithStats,
+          goalies: goaliesWithStats,
           status: lineupTeam.status || "Projected",
           unmatchedPlayers,
         });
@@ -235,7 +330,11 @@ function TeamLineupPage() {
         >
           <div>
             <p className="section-label">Team Lineup</p>
-            <h2>{lineupTeam.team || lineupTeam.fullName}</h2>
+
+            <h2>
+              {lineupTeam.team || lineupTeam.fullName}
+            </h2>
+
             <p>Loading player statistics...</p>
           </div>
         </section>
@@ -247,12 +346,16 @@ function TeamLineupPage() {
     );
   }
 
-  if (errorMessage) {
+  if (errorMessage || !displayTeam) {
     return (
       <>
         <section className="page-title">
           <p className="section-label">Lineup Error</p>
-          <h2>{lineupTeam.team || lineupTeam.fullName}</h2>
+
+          <h2>
+            {lineupTeam.team || lineupTeam.fullName}
+          </h2>
+
           <p>{errorMessage}</p>
         </section>
 
@@ -274,11 +377,14 @@ function TeamLineupPage() {
       >
         <div>
           <p className="section-label">Team Lineup</p>
-          <h2>{displayTeam.team || displayTeam.fullName}</h2>
+
+          <h2>
+            {displayTeam.team || displayTeam.fullName}
+          </h2>
 
           <p>
-            Line combinations are set manually. Player statistics are loaded
-            from the CSV file.
+            Three forward lines, three defence pairs and up to two
+            goaltenders.
           </p>
         </div>
       </section>

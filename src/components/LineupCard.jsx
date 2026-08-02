@@ -1,23 +1,9 @@
 import { teams } from "../data/teams.js";
 
-function createFallbackNumber(name) {
-  let total = 0;
-
-  for (let index = 0; index < name.length; index++) {
-    total += name.charCodeAt(index);
-  }
-
-  return (total % 88) + 1;
-}
-
 function getNumericStat(value) {
   const number = Number(value);
 
-  if (Number.isFinite(number)) {
-    return number;
-  }
-
-  return 0;
+  return Number.isFinite(number) ? number : 0;
 }
 
 function getLogoPath(logo) {
@@ -38,7 +24,7 @@ function getLogoPath(logo) {
   return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
 }
 
-function getFullTeamInformation(lineupTeam) {
+function getCompleteTeam(lineupTeam) {
   const matchingTeam = teams.find((team) => {
     return team.slug === lineupTeam.slug;
   });
@@ -50,52 +36,33 @@ function getFullTeamInformation(lineupTeam) {
   return {
     ...matchingTeam,
     ...lineupTeam,
-
-    // Always use the logo path stored in teams.js.
     logo: matchingTeam.logo,
-
-    // Keep the team colours from teams.js as the main source.
     primary: matchingTeam.primary,
     secondary: matchingTeam.secondary,
   };
 }
 
-function normalizePlayer(player, index, groupName) {
-  if (typeof player === "string") {
-    const name = player.trim();
-    const number = createFallbackNumber(name);
-
-    return {
-      identity: `${groupName}-${name.toLowerCase()}-${number}`,
-      renderKey: `${groupName}-${name}-${index}`,
-      id: null,
-      name,
-      number,
-      position: "",
-      goals: 0,
-      assists: 0,
-      points: 0,
-      gamesPlayed: 0,
-    };
-  }
-
+function normalizePlayer(
+  player,
+  groupName,
+  rowIndex,
+  playerIndex
+) {
   const name = player?.name || "Unknown Player";
 
-  const number =
-    player?.number ??
-    player?.jerseyNumber ??
-    createFallbackNumber(name);
-
-  const identity = player?.id
-    ? String(player.id)
-    : `${name.toLowerCase()}-${number}`;
-
   return {
-    identity,
-    renderKey: `${groupName}-${identity}-${index}`,
+    identity:
+      player?.id !== null && player?.id !== undefined
+        ? String(player.id)
+        : `${groupName}-${name}-${player?.number}`,
+
+    renderKey:
+      `${groupName}-${rowIndex}-${playerIndex}-` +
+      `${player?.id || name}`,
+
     id: player?.id ?? null,
     name,
-    number,
+    number: player?.number ?? player?.jerseyNumber ?? "--",
     position: player?.position || "",
     goals: getNumericStat(player?.goals),
     assists: getNumericStat(player?.assists),
@@ -104,42 +71,55 @@ function normalizePlayer(player, index, groupName) {
   };
 }
 
-function flattenPlayers(rows, groupName) {
+function prepareRows(rows, groupName) {
   if (!Array.isArray(rows)) {
     return [];
   }
 
   return rows
-    .flat()
-    .filter(Boolean)
-    .map((player, index) => {
-      return normalizePlayer(player, index, groupName);
-    });
+    .map((row, rowIndex) => {
+      if (!Array.isArray(row)) {
+        return [];
+      }
+
+      return row.map((player, playerIndex) => {
+        return normalizePlayer(
+          player,
+          groupName,
+          rowIndex,
+          playerIndex
+        );
+      });
+    })
+    .filter((row) => row.length > 0);
 }
 
-function removeDuplicatePlayers(players) {
-  const playerIdentities = new Set();
+function prepareGoalies(goalies) {
+  if (!Array.isArray(goalies)) {
+    return [];
+  }
 
-  return players.filter((player) => {
-    if (playerIdentities.has(player.identity)) {
-      return false;
-    }
-
-    playerIdentities.add(player.identity);
-    return true;
+  return goalies.map((goalie, index) => {
+    return normalizePlayer(
+      goalie,
+      "goalie",
+      0,
+      index
+    );
   });
 }
 
-function findTeamLeader(players) {
-  const skaters = players.filter((player) => {
-    return player.position !== "G";
-  });
+function findTeamLeader(forwardRows, defenseRows) {
+  const players = [
+    ...forwardRows.flat(),
+    ...defenseRows.flat(),
+  ];
 
-  if (skaters.length === 0) {
+  if (players.length === 0) {
     return null;
   }
 
-  return skaters.reduce((leader, player) => {
+  return players.reduce((leader, player) => {
     if (player.points > leader.points) {
       return player;
     }
@@ -167,76 +147,17 @@ function PlayerVisual({ player, team }) {
   const logoSource = getLogoPath(team.logo);
 
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        aspectRatio: "1 / 1",
-        display: "grid",
-        placeItems: "center",
-        overflow: "hidden",
-        isolation: "isolate",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
-        background:
-          "radial-gradient(circle at center, rgba(255,255,255,0.18), rgba(0,0,0,0.12) 72%)",
-      }}
-    >
-      {logoSource ? (
+    <div className="lineup-row-player-visual">
+      {logoSource && (
         <img
+          className="lineup-row-player-logo"
           src={logoSource}
           alt=""
           aria-hidden="true"
-          onError={(event) => {
-            console.error(
-              `Could not load logo for ${team.fullName || team.team}:`,
-              logoSource
-            );
-
-            event.currentTarget.style.display = "none";
-          }}
-          style={{
-            position: "absolute",
-            zIndex: 0,
-            width: "82%",
-            height: "82%",
-            objectFit: "contain",
-            opacity: 0.2,
-            filter:
-              "saturate(0.9) contrast(1.1) drop-shadow(0 8px 12px rgba(0,0,0,0.3))",
-            transform: "scale(1.06)",
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
         />
-      ) : (
-        <span
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            zIndex: 0,
-            color: "white",
-            fontSize: "clamp(2rem, 6vw, 5rem)",
-            fontWeight: 900,
-            opacity: 0.12,
-          }}
-        >
-          {team.abbreviation || "TEAM"}
-        </span>
       )}
 
-      <strong
-        style={{
-          position: "relative",
-          zIndex: 2,
-          color: "white",
-          fontSize: "clamp(3.4rem, 8vw, 6rem)",
-          fontWeight: 1000,
-          letterSpacing: "-0.06em",
-          lineHeight: 1,
-          textShadow:
-            "-3px -3px 0 rgba(0,0,0,0.75), 3px -3px 0 rgba(0,0,0,0.75), -3px 3px 0 rgba(0,0,0,0.75), 3px 3px 0 rgba(0,0,0,0.75), 0 8px 18px rgba(0,0,0,0.65)",
-        }}
-      >
+      <strong className="lineup-row-player-number">
         {player.number}
       </strong>
     </div>
@@ -256,6 +177,7 @@ function PlayerCard({
   player,
   team,
   isTeamLeader,
+  isGoalie,
 }) {
   const primary = team.primary || "#1f5f43";
   const secondary = team.secondary || "#ffffff";
@@ -264,60 +186,76 @@ function PlayerCard({
     <article
       className="stats-player-card"
       style={{
-        padding: "12px 12px 0",
-        background: `linear-gradient(
-          180deg,
-          ${primary},
-          #071a35
-        )`,
+        padding: "0 12px",
+        background: `
+          linear-gradient(
+            180deg,
+            rgba(255,255,255,0.1),
+            rgba(0,0,0,0.48)
+          ),
+          ${primary}
+        `,
         borderColor: secondary,
       }}
     >
-      <PlayerVisual
-        player={player}
-        team={team}
-      />
+      <PlayerVisual player={player} team={team} />
 
       <h3 className="stats-player-name">
         {player.name}
       </h3>
 
-      {player.position && (
-        <span
-          style={{
-            margin: "-5px 0 9px",
-            color: "rgba(255,255,255,0.72)",
-            fontSize: "0.65rem",
-            fontWeight: 900,
-            letterSpacing: "0.08em",
-            textAlign: "center",
-            textTransform: "uppercase",
-          }}
-        >
-          {player.position}
-        </span>
-      )}
+      <span className="lineup-row-position">
+        {isGoalie
+          ? "Goaltender"
+          : player.position || "Skater"}
+      </span>
 
       <div className="stats-grid">
-        <PlayerStat
-          label="Goals"
-          value={player.goals}
-        />
+        {isGoalie ? (
+          <>
+            <PlayerStat
+              label="Games"
+              value={player.gamesPlayed}
+            />
 
-        <PlayerStat
-          label="Assists"
-          value={player.assists}
-        />
+            <PlayerStat
+              label="Goals"
+              value={player.goals}
+            />
 
-        <PlayerStat
-          label="Points"
-          value={player.points}
-        />
+            <PlayerStat
+              label="Assists"
+              value={player.assists}
+            />
 
-        <PlayerStat
-          label="Games"
-          value={player.gamesPlayed}
-        />
+            <PlayerStat
+              label="Points"
+              value={player.points}
+            />
+          </>
+        ) : (
+          <>
+            <PlayerStat
+              label="Goals"
+              value={player.goals}
+            />
+
+            <PlayerStat
+              label="Assists"
+              value={player.assists}
+            />
+
+            <PlayerStat
+              label="Points"
+              value={player.points}
+            />
+
+            <PlayerStat
+              label="Games"
+              value={player.gamesPlayed}
+            />
+          </>
+        )}
       </div>
 
       <div
@@ -335,7 +273,6 @@ function PlayerCard({
               )`
             : "transparent",
         }}
-        aria-hidden={!isTeamLeader}
       >
         Team Leader
       </div>
@@ -343,14 +280,60 @@ function PlayerCard({
   );
 }
 
-function PlayerSection({
-  title,
-  subtitle,
-  players,
+function LineupRow({
+  row,
+  rowIndex,
+  sectionType,
   team,
   teamLeader,
 }) {
-  if (players.length === 0) {
+  let rowLabel = `Line ${rowIndex + 1}`;
+
+  if (sectionType === "defense") {
+    rowLabel = `Pair ${rowIndex + 1}`;
+  }
+
+  if (sectionType === "goalies") {
+    rowLabel = "Goaltenders";
+  }
+
+  return (
+    <div className="lineup-row">
+      <div className="lineup-row-label">
+        {rowLabel}
+      </div>
+
+      <div
+        className={`lineup-row-grid lineup-row-grid-${sectionType}`}
+      >
+        {row.map((player) => {
+          const isTeamLeader =
+            teamLeader?.identity === player.identity;
+
+          return (
+            <PlayerCard
+              key={player.renderKey}
+              player={player}
+              team={team}
+              isTeamLeader={isTeamLeader}
+              isGoalie={sectionType === "goalies"}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function LineupSection({
+  title,
+  subtitle,
+  rows,
+  sectionType,
+  team,
+  teamLeader,
+}) {
+  if (rows.length === 0) {
     return null;
   }
 
@@ -367,27 +350,18 @@ function PlayerSection({
           <p>{subtitle}</p>
           <h4>{title}</h4>
         </div>
-
-        <span>
-          {players.length}{" "}
-          {players.length === 1
-            ? "Player"
-            : "Players"}
-        </span>
       </div>
 
-      <div className="stats-lineup-grid">
-        {players.map((player) => {
-          const isTeamLeader =
-            teamLeader?.identity ===
-            player.identity;
-
+      <div className="lineup-row-list">
+        {rows.map((row, rowIndex) => {
           return (
-            <PlayerCard
-              key={player.renderKey}
-              player={player}
+            <LineupRow
+              key={`${sectionType}-${rowIndex}`}
+              row={row}
+              rowIndex={rowIndex}
+              sectionType={sectionType}
               team={team}
-              isTeamLeader={isTeamLeader}
+              teamLeader={teamLeader}
             />
           );
         })}
@@ -397,48 +371,35 @@ function PlayerSection({
 }
 
 function LineupCard({ team: lineupTeam }) {
-  const team = getFullTeamInformation(lineupTeam);
+  const team = getCompleteTeam(lineupTeam);
+
+  const forwards = prepareRows(
+    team.forwards,
+    "forward"
+  );
+
+  const defense = prepareRows(
+    team.defense,
+    "defense"
+  );
+
+  const goalies = prepareGoalies(team.goalies);
+
+  const goalieRows =
+    goalies.length > 0 ? [goalies] : [];
+
+  const teamLeader = findTeamLeader(
+    forwards,
+    defense
+  );
+
+  const primary = team.primary || "#1f5f43";
+  const secondary = team.secondary || "#ffffff";
 
   const displayName =
     team.team ||
     team.fullName ||
-    "Team Roster";
-
-  const forwards = removeDuplicatePlayers(
-    flattenPlayers(
-      team.forwards,
-      "forward"
-    )
-  );
-
-  const defense = removeDuplicatePlayers(
-    flattenPlayers(
-      team.defense,
-      "defense"
-    )
-  );
-
-  const additionalPlayers =
-    removeDuplicatePlayers(
-      flattenPlayers(
-        team.additionalPlayers,
-        "additional"
-      )
-    );
-
-  const allPlayers = removeDuplicatePlayers([
-    ...forwards,
-    ...defense,
-    ...additionalPlayers,
-  ]);
-
-  const teamLeader = findTeamLeader(allPlayers);
-
-  const primary =
-    team.primary || "#1f5f43";
-
-  const secondary =
-    team.secondary || "#ffffff";
+    "Team Lineup";
 
   return (
     <article
@@ -455,8 +416,8 @@ function LineupCard({ team: lineupTeam }) {
         style={{
           background: `
             linear-gradient(
-              rgba(0, 0, 0, 0.18),
-              rgba(0, 0, 0, 0.48)
+              rgba(0,0,0,0.18),
+              rgba(0,0,0,0.5)
             ),
             linear-gradient(
               135deg,
@@ -469,18 +430,18 @@ function LineupCard({ team: lineupTeam }) {
       >
         <div>
           <p className="stats-header-label">
-            Previous Season Player Stats
+            Projected Team Lineup
           </p>
 
           <h3>{displayName}</h3>
 
           <span>
-            {team.status || "Team roster"}
+            3 forward lines · 3 defence pairs · goalies
           </span>
         </div>
 
-        <div className="stats-header-details">
-          {teamLeader && (
+        {teamLeader && (
+          <div className="stats-header-details">
             <div>
               <span>Points Leader</span>
 
@@ -489,15 +450,8 @@ function LineupCard({ team: lineupTeam }) {
                 {teamLeader.points} PTS
               </strong>
             </div>
-          )}
-
-          {team.goalie && (
-            <div>
-              <span>Goalie</span>
-              <strong>{team.goalie}</strong>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </header>
 
       <div
@@ -513,26 +467,29 @@ function LineupCard({ team: lineupTeam }) {
           `,
         }}
       >
-        <PlayerSection
+        <LineupSection
           title="Forwards"
-          subtitle="Forward Lines"
-          players={forwards}
+          subtitle="Three Forward Lines"
+          rows={forwards}
+          sectionType="forwards"
           team={team}
           teamLeader={teamLeader}
         />
 
-        <PlayerSection
+        <LineupSection
           title="Defence"
-          subtitle="Defensive Pairings"
-          players={defense}
+          subtitle="Three Defence Pairs"
+          rows={defense}
+          sectionType="defense"
           team={team}
           teamLeader={teamLeader}
         />
 
-        <PlayerSection
-          title="Additional Players"
-          subtitle="Remaining Roster"
-          players={additionalPlayers}
+        <LineupSection
+          title="Goalies"
+          subtitle="Goaltenders"
+          rows={goalieRows}
+          sectionType="goalies"
           team={team}
           teamLeader={teamLeader}
         />
