@@ -1,457 +1,798 @@
-//This is going to be filler data until we have a way to add data
-// This is roster-style lineup data until you have a real API.
-// These are NOT confirmed game-day lines.
+import { teams } from "./teams.js";
+
+// Projected roster lines. These are not confirmed game-day lines.
+// Change the order here whenever you want to update a line combination.
+// Names are matched to qmjhl_player_stats.csv to attach player statistics.
 
 function p(name, number) {
   return { name, number };
 }
 
-export const lineupTeams = [
-  {
-    id: 1,
-    slug: "halifax",
-    team: "Halifax Mooseheads",
-    abbreviation: "HAL",
-    record: "24-12-3",
-    jerseyNumber: "31",
-    primary: "#296a08",
-    secondary: "#f8f9f6",
+const lineupDetails = {
+  halifax: {
     status: "Projected",
     goalie: "Owen Bresson",
+
     forwards: [
-      [p("Oleg Kulebiakin", 21), p("Shawn Carrier", 18), p("Quinn Kennedy", 71)],
-      [p("Liam Kilfoil", 9), p("Jasu Mensonen", 20), p("Daniel Walters", 19)],
-      [p("Caylen Blake", 17), p("Samuel Rousseau", 11), p("Connor MacPherson", 55)],
-      [p("Amelio Santini", 14), p("William Bent", 26), p("Paulo Gualberto Jr.", 88)],
+      [
+        p("Oleg Kulebiakin", 10),
+        p("Liam Kilfoil", 9),
+        p("Evan Nee", 16),
+      ],
+      [
+        p("Shawn Carrier", 55),
+        p("Mateo Nobert", 16),
+        p("Brent William", 12),
+      ],
+      [
+        p("Caylen Blake", 19),
+        p("Daniel Walters", 20),
+        p("Cnnor MacPherson", 14),
+      ],
+      [
+        p("Jasu Mensonen", 70),
+        p("Quinn Kennady", 88),
+        p("Santi Amelio", 37),
+      ],
     ],
+
     defense: [
-      [p("Owen Phillips", 8), p("Malik L'Italien", 77)],
-      [p("Carlos Händel", 7), p("Eddy Doyle", 51)],
-      [p("Cameron Minella", 44), p("Brenden Espenell", 4)],
+      [
+        p("Carlos Handel", 7),
+        p("Minella Minella", 23),
+      ],
+      [
+        p("Owen Phillips", 26),
+        p("Brenden Espenell", 44),
+      ],
+      [
+        p("Eddy Doyle", 51),
+        p("Malik L'Italien", 77),
+      ],
     ],
   },
 
-  {
-    id: 2,
-    slug: "moncton",
-    team: "Moncton Wildcats",
-    abbreviation: "MON",
-    record: "26-10-2",
-    jerseyNumber: "35",
-    primary: "#C8102E",
-    secondary: "#000000",
+  moncton: {
     status: "Projected",
-    goalie: "TBD",
+    goalie: "Jacob Weiner",
+
     forwards: [
-      [p("Caleb Desnoyers", 91), p("Gabe Smith", 9), p("Niko Tournas", 27)],
-      [p("Teddy Mutryn", 14), p("Alex Mercier", 10), p("Kuzma Voronin", 71)],
-      [p("Simon Binkley", 12), p("Victor Morrissette-Richer", 17), p("Evan Dépatie", 24)],
-      [p("Vincent Collard", 15), p("Alexandre Blais", 22), p("Jacob Steinman", 28)],
+      [
+        p("Anthony Preskar", 23),
+        p("Gabe Smith", 9),
+        p("Rian Chudzinski", 22),
+      ],
+      [
+        p("Sam Binkley", 12),
+        p("Teddy Mutryn", 14),
+        p("Niko Tournas", 86),
+      ],
+      [
+        p("Kuzma Voronin", 27),
+        p("Victor Morrissette-Richer", 17),
+        p("Gavin Cornforth", 92),
+      ],
+      [
+        p("Place Holder", 99),
+        p("Caleb Desnoyers", 18),
+        p("Place Holder", 99),
+      ],
     ],
+
     defense: [
-      [p("Tommy Bleyl", 11), p("Evan Dépatie", 24)],
-      [p("Will Reynolds", 71), p("Thomas Fontaine", 4)],
-      [p("Zachary Wheeler", 5), p("Olivier Adam", 6)],
+      [
+        p("Tommy Bleyl", 11),
+        p("Max Vilen", 2),
+      ],
+      [
+        p("Jackson Batchilder", 99),
+        p("Matthew Virgilio", 15),
+      ],
+      [
+        p("Adam Fortier-Gendron", 24),
+        p("Evan Depatie", 44),
+      ],
     ],
   },
 
-  {
-    id: 3,
-    slug: "cape-breton",
-    team: "Cape Breton Eagles",
-    abbreviation: "CB",
-    record: "21-15-4",
-    jerseyNumber: "30",
-    primary: "#111111",
-    secondary: "#FDB913",
-    accent: "#FFFFFF",
+  "cape-breton": {
     status: "Projected",
-    goalie: "Félix Hamel",
+    goalie: "Lucas Beckman",
+
     forwards: [
-      [p("Reece Peitzsche", 21), p("Éliot L'Italien", 19), p("Blake Burke", 25)],
-      [p("Lucas Romeo", 9), p("Lewis Gendron", 18), p("Rory Pilling", 27)],
-      [p("Romain L'Italien", 28), p("Sam Boyer", 11), p("Derek Andrews", 16)],
-      [p("Hugo Charron", 22), p("Jacob Hartlin", 24), p("Maxime Sauthier", 26)],
+      [
+        p("Maxim Schafer", 99),
+        p("Cole Chandler", 99),
+        p("Eliot Litalien", 19),
+      ],
+      [
+        p("Jack Broderick", 65),
+        p("Elias Schneider", 81),
+        p("Jacob Hartlin", 22),
+      ],
+      [
+        p("Reece Peitzche", 21),
+        p("Liam Lefebvre", 39),
+        p("Adam Klaus", 28),
+      ],
+      [
+        p("Derek Andrews", 11),
+        p("Raoul Boilard", 11),
+        p("Samuel Rocca", 81),
+      ],
     ],
+
     defense: [
-      [p("Xavier Daigle", 44), p("Tomas Lavoie", 55)],
-      [p("Will Murphy", 6), p("Logan Quinn", 8)],
-      [p("Noah Jettelson", 4), p("Jacob De Ladurantaye", 77)],
+      [
+        p("Xavier Daigle", 44),
+        p("Alonso Gosselin", 13),
+      ],
+      [
+        p("Will Murphy", 6),
+        p("Logan Quinn", 8),
+      ],
+      [
+        p("Noah Jettelson", 4),
+        p("Jacob De Ladurantaye", 77),
+      ],
     ],
   },
 
-  {
-    id: 4,
-    slug: "newfoundland",
-    team: "Newfoundland Regiment",
-    abbreviation: "NFL",
-    record: "20-18-4",
-    jerseyNumber: "29",
-    primary: "#6D1A36",
-    secondary: "#C9A646",
+  newfoundland: {
     status: "Projected",
     goalie: "Louis-Antoine Denault",
+
     forwards: [
-      [p("Tyson Goguen", 29), p("Blake Pilgrim-Edwards", 7), p("Liam Arsenault", 13)],
-      [p("Maddex Marmulak", 98), p("Louis-François Bélanger", 18), p("Justin Larose", 9)],
-      [p("Luke Sinclair", 16), p("Ben Veitch", 21), p("Matys St-Gelais", 42)],
-      [p("Ryan Dwyer", 40), p("Liam Fournier", 23), p("Aidan Graham", 12)],
+      [
+        p("Dawson Sharkey", 81),
+        p("Tyson Gogan", 29),
+        p("Liam Arsenault", 13),
+      ],
+      [
+        p("Benjamin Veitch", 88),
+        p("Louis-François Bélanger", 18),
+        p("Marek Danicek", 41),
+      ],
+      [
+        p("Liam Arsenault", 13),
+        p("Maddox Marmulak", 98),
+        p("Alexis Michaud", 95),
+      ],
+      [
+        p("Luke Sinclair", 16),
+        p("Ryan Dwyer", 40),
+        p("Maddex Marmulak", 98),
+      ],
     ],
+
     defense: [
-      [p("Will Reynolds", 71), p("Émile Perron", 74)],
-      [p("Alexis Mathieu", 77), p("Quinn Norman", 91)],
-      [p("Benjamin Girard", 5), p("Noah Laberge", 6)],
+      [
+        p("Jayden Lazare", 6),
+        p("Noah Laberge", 8),
+      ],
+      [
+        p("Alexis Mathieu", 77),
+        p("Quinn Norman", 91),
+      ],
+      [
+        p("Benjamin Girard", 55),
+        p("Will Reynolds", 71),
+      ],
     ],
   },
 
-  {
-    id: 5,
-    slug: "gatineau",
-    team: "Gatineau Olympiques",
-    abbreviation: "GAT",
-    record: "21-35-8",
-    jerseyNumber: "1",
-    primary: "#000000",
-    secondary: "#F15A24",
+  gatineau: {
     status: "Projected",
-    goalie: "Danai Shaiikov",
+    goalie: "Finn Moffett",
+
     forwards: [
-      [p("Justin Boisselle", 18), p("Nicolas Petrut", 91), p("Maxim Dubé", 15)],
-      [p("Gabriel Séguin", 19), p("Simon-Xavier Cyr", 24), p("Louis-Étienne Halley", 46)],
-      [p("Maxime Côté", 9), p("Giovanni Collin", 23), p("Finn Barton", 17)],
-      [p("Noah Florent", 22), p("Zakary Horvat-Édouard", 27), p("Alex Dagenais", 71)],
+      [
+        p("Artom Glukhikh", 99),
+        p("Dylan Allie", 7),
+        p("Finn Barton", 17),
+      ],
+      [
+        p("Ilya Pautov", 88),
+        p("Simon-Xavier Cyr", 91),
+        p("Louis-Étienne Halley", 99),
+      ],
+      [
+        p("Charles Pigeon", 99),
+        p("Maxime Dube", 86),
+        p("Place Holder", 99),
+      ],
+      [
+        p("Noah Florent", 22),
+        p("Peter Legostaev", 99),
+        p("Alex Dagenais", 71),
+      ],
     ],
+
     defense: [
-      [p("Jérémie Dumas-Larouche", 13), p("Jan Golicic", 21)],
-      [p("Justin Blais", 12), p("Drew McLennan", 44)],
-      [p("Michel Myloserdnyy", 55), p("Nathan Nadeau", 6)],
+      [
+        p("Michel Myloserdnyy", 5),
+        p("Justin Blais", 12),
+      ],
+      [
+        p("Justin Blais", 12),
+        p("Clement Landry", 44),
+      ],
+      [
+        p("Alexandre Carbonneau", 6),
+        p("Wassim Rabbath", 99),
+      ],
     ],
   },
 
-  {
-    id: 6,
-    slug: "newfoundland",
-    city: "Newfoundland",
-    name: "Regiment",
-    fullName: "Newfoundland Regiment",
-    abbreviation: "NFL",
-    province: "Newfoundland and Labrador",
-    division: "Eastern Conference",
-    primary: "#6D1A36",
-    secondary: "#C9A646",
+  "saint-john": {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Rafaël Courchesne",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Olivier Lemieux", 28),
+        p("Alexis Joseph", 19),
+        p("Alexander Donovan", 9),
+      ],
+      [
+        p("Dylan Rozzi", 8),
+        p("Olivier Groulx", 86),
+        p("Jabez Seymour", 23),
+      ],
+      [
+        p("Zachary Morin", 10),
+        p("Olivers Murnieks", 14),
+        p("Place Holder", 99),
+      ],
+      [
+        p("Matthew Krayer", 21),
+        p("William Yared", 22),
+        p("Place Holder", 99),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Olivier Duhamel", 71),
+        p("Everett Baldwin", 2),
+      ],
+      [
+        p("Oskar Drabczynski", 13),
+        p("Bo Damphousse", 26),
+      ],
+      [
+        p("Carl-Otto Magnusson", 44),
+        p("Cameron Chartrand", 5),
+      ],
     ],
   },
 
-  {
-    id: 7,
-    slug: "baie-comeau",
-    city: "Baie-Comeau",
-    name: "Drakkar",
-    fullName: "Baie-Comeau Drakkar",
-    abbreviation: "BAC",
-    province: "Quebec",
-    division: "Eastern Conference",
-    primary: "#C8102E",
-    secondary: "#000000",
+  "baie-comeau": {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Mathias Hernandez",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Aiden Kirkwood", 11),
+        p("Jacopo De Luca", 25),
+        p("Liam Armit", 19),
+      ],
+      [
+        p("Joseph Cadorin", 20),
+        p("Gleb Semenov", 41),
+        p("Place Holder", 99),
+      ],
+      [
+        p("Declan Wotton", 23),
+        p("Robin Benoit", 43),
+        p("Place Holder", 99),
+      ],
+      [
+        p("Vik Filip", 57),
+        p("Kieran Litterick", 49),
+        p("Samuel Brunet", 99),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Place Holder", 99),
+        p("Mattias Gilbert", 13),
+      ],
+      [
+        p("Aaron Murphy", 21),
+        p("Biago Daniele Jr", 27),
+      ],
+      [
+        p("James Roberts", 2),
+        p("Zachary Hachey", 6),
+      ],
     ],
   },
-  {
-    id: 8,
-    slug: "chicoutimi",
-    city: "Chicoutimi",
-    name: "Saguenéens",
-    fullName: "Chicoutimi Saguenéens",
-    abbreviation: "CHI",
-    province: "Quebec",
-    division: "Eastern Conference",
-    primary: "#002D62",
-    secondary: "#FDBB30",
+
+  chicoutimi: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Raphael Precourt",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Emmanuel Vermette", 28),
+        p("Nathan Lecompte", 42),
+        p("Maxim Masse", 7),
+      ],
+      [
+        p("Emile Guite", 86),
+        p("Alexis Toussaint", 71),
+        p("Christophe Berthelot", 8),
+      ],
+      [
+        p("Anton Linde", 88),
+        p("Mavrick Lachance", 93),
+        p("Emile Ricard", 11),
+      ],
+      [
+        p("Jacob Gomez", 61),
+        p("Francis Koby", 53),
+        p("Gryphon Watson-Bucci", 19),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Thomas Lavoie", 3),
+        p("Alex Huang", 12),
+      ],
+      [
+        p("Alexis Bernier", 44),
+        p("Gabriel Anctil", 89),
+      ],
+      [
+        p("Alexandre Desmarais", 92),
+        p("Place Holder", 99),
+      ],
     ],
   },
-  {
-    id: 9,
-    slug: "quebec",
-    city: "Québec",
-    name: "Remparts",
-    fullName: "Québec Remparts",
-    abbreviation: "QUE",
-    province: "Quebec",
-    division: "Eastern Conference",
-    primary: "#C8102E",
-    secondary: "#FFFFFF",
+
+  quebec: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Patrick Deniger",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Charles-Antoine Dube", 24),
+        p("Maddox Degenais", 26),
+        p("Egan Beveridge", 6),
+      ],
+      [
+        p("Lou Levesque", 99),
+        p("Alex Desruisseaux", 91),
+        p("Jayden Rousseau", 17),
+      ],
+      [
+        p("Nikita Ovcharov", 25),
+        p("Nathan Quinn", 29),
+        p("James Scantlebury", 99),
+      ],
+      [
+        p("Mavrick Rousseau-Hamel", 63),
+        p("Carter Meyer", 43),
+        p("Place Holder", 99),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Alexandre Taillefer", 77),
+        p("Bastien Michaud", 86),
+      ],
+      [
+        p("Freddy Meyer", 14),
+        p("Joey Lackman", 99),
+      ],
+      [
+        p("Etinne Desjardins", 55),
+        p("Logan Brennan", 5),
+      ],
     ],
   },
-  {
-    id: 10,
-    slug: "rimouski",
-    city: "Rimouski",
-    name: "Océanic",
-    fullName: "Rimouski Océanic",
-    abbreviation: "RIM",
-    province: "Quebec",
-    division: "Eastern Conference",
-    primary: "#003DA5",
-    secondary: "#C8102E",
+
+  rimouski: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Noah Preston, Moore",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Rafael Cloutier", 10),
+        p("Caiden Pellegrino", 99),
+        p("Maxmilian Mares", 99),
+      ],
+      [
+        p("Alex Masse", 18),
+        p("Mathys Dube", 24),
+        p("Thomas Belzil", 17),
+      ],
+      [
+        p("Aaron Chipp", 22),
+        p("Dovydas Jukna", 77),
+        p("Samuel Thibault", 34),
+      ],
+      [
+        p("Logan Roop", 25),
+        p("Lev Gaponov", 78),
+        p("Zack Arsenault", 57),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Louis-Felix Gagnon", 99),
+        p("Conner Strungeon", 3),
+      ],
+      [
+        p("Luca Nappiot", 71),
+        p("Benjamin Rioux", 6),
+      ],
+      [
+        p("Charles Genereux", 26),
+        p("Justin Beaulieu", 27),
+      ],
     ],
   },
-  {
-    id: 11,
-    slug: "blainville-boisbriand",
-    city: "Blainville-Boisbriand",
-    name: "Armada",
-    fullName: "Blainville-Boisbriand Armada",
-    abbreviation: "BLB",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#000000",
-    secondary: "#C8102E",
+
+  "blainville-boisbriand": {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Jakub Milota",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Torkel Jennersjo", 2),
+        p("Bill Zannon", 9),
+        p("Justi  Carbonneau", 8),
+      ],
+      [
+        p("Place Holder", 99),
+        p("Matt Gosslin", 11),
+        p("Place Holder", 99),
+      ],
+      [
+        p("Ludovik Grenier", 84),
+        p("Vincent Desjardins", 42),
+        p("Stefano Pietrantonio", 51),
+      ],
+      [
+        p("Elliot Dube", 44),
+        p("Olivier Metcalfe", 37),
+        p("Jacob Beaulieu", 24),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Olivier Filaj", 6),
+        p("Spencer Gill", 15),
+      ],
+      [
+        p("Jan Golicic", 21),
+        p("Mathieu Taillefer", 22),
+      ],
+      [
+        p("Zackary Plamondon", 55),
+        p("Xavier Villeneuve", 72),
+      ],
     ],
   },
-  {
-    id: 12,
-    slug: "drummondville",
-    city: "Drummondville",
-    name: "Voltigeurs",
-    fullName: "Drummondville Voltigeurs",
-    abbreviation: "DRU",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#C8102E",
-    secondary: "#FDBB30",
+
+  drummondville: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Mathys Fortin",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Antoine Boudreau", 86),
+        p("Maxime-Olivier Drolet", 9),
+        p("Dylan Dumont", 94),
+      ],
+      [
+        p("William Dumont", 24),
+        p("Louis-Felix Bourque", 91),
+        p("David Bosson", 17),
+      ],
+      [
+        p("Hugo Dufour", 28),
+        p("Renaud Poulin", 99),
+        p("Trent Gates", 77),
+      ],
+      [
+        p("Thomas Duhamel", 29),
+        p("Yoan Tasse", 16),
+        p("Carter Fogarty", 51),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Owen Keefe", 44),
+        p("Xavier Cormier", 43),
+      ],
+      [
+        p("Filip Kovalcik", 13),
+        p("Owen Ronson", 15),
+      ],
+      [
+        p("Cooper Campbell", 2),
+        p("Place Holder", 99),
+      ],
     ],
   },
-  {
-    id: 13,
-    slug: "gatineau",
-    city: "Gatineau",
-    name: "Olympiques",
-    fullName: "Gatineau Olympiques",
-    abbreviation: "GAT",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#000000",
-    secondary: "#F15A24",
+
+  charlottetown: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Donald Hickey",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Jude Herron", 92),
+        p("Matthew Butler", 13),
+        p("Ross Campbell", 15),
+      ],
+      [
+        p("Alexis Beaulieu", 11),
+        p("Anthony Flanagan", 14),
+        p("Nolan Duskocy", 88),
+      ],
+      [
+        p("CJ Watroba", 12),
+        p("Ivan Ryabkin", 18),
+        p("William Shields", 72),
+      ],
+      [
+        p("Rowan Walsh", 34),
+        p("Antoine Provencher", 17),
+        p("Ryan Staples", 19),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Marcus Kearsey", 7),
+        p("Emile-Alexandro Lemieux-Goupil", 76),
+      ],
+      [
+        p("Brady Peddle", 2),
+        p("Owen Conrad", 10),
+      ],
+      [
+        p("Aiden MacIsaac", 3),
+        p("Nikita Voyaga", 16),
+      ],
     ],
   },
-  {
-    id: 14,
-    slug: "rouyn-noranda",
-    city: "Rouyn-Noranda",
-    name: "Huskies",
-    fullName: "Rouyn-Noranda Huskies",
-    abbreviation: "ROU",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#C8102E",
-    secondary: "#000000",
+
+  "rouyn-noranda": {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Alexandre Raymond",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Eliot Ogonowski", 12),
+        p("Samuel Beauchemin", 11),
+        p("Lars Steiner", 15),
+      ],
+      [
+        p("Nathan Langlois", 17),
+        p("William Vezina", 19),
+        p("Jayden Poinville", 29),
+      ],
+      [
+        p("Niko El Khouri", 10),
+        p("Charles Laforest", 20),
+        p("Murzov Vladislav", 37),
+      ],
+      [
+        p("Samuel Rheault", 21),
+        p("Jeremy Jerret", 26),
+        p("Charlie Benigno", 14),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Antoine St-Lourent", 5),
+        p("Alexis Lemire", 72),
+      ],
+      [
+        p("Brayden Kaldenbach", 2),
+        p("Guus Van der Kaaij", 16),
+      ],
+      [
+        p("Jacob Hamel", 7),
+        p("Tristan Langlois", 38),
+      ],
     ],
   },
-  {
-    id: 15,
-    slug: "shawinigan",
-    city: "Shawinigan",
-    name: "Cataractes",
-    fullName: "Shawinigan Cataractes",
-    abbreviation: "SHA",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#002D62",
-    secondary: "#FDBB30",
+
+  shawinigan: {
     status: "Projected",
     goalie: "Ethan Mercer",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Chad Lygitsakos", 72),
+        p("Place Holder", 99),
+        p("Jiri Klima", 97),
+      ],
+      [
+        p("Place Holder", 99),
+        p("Gleb Semenov", 71),
+        p("Felix Lacerte", 55),
+      ],
+      [
+        p("Jacob Lachance", 10),
+        p("Olivier Charron", 44),
+        p("Bergeron Frederic", 37),
+      ],
+      [
+        p("Samuel Boyer", 13),
+        p("Kody Dupuis", 96),
+        p("Dylan Laframboise", 93),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Julien Lanthier", 3),
+        p("Mathieu Plante", 5),
+      ],
+      [
+        p("Felix Plamondon", 6),
+        p("Alexis Fortin", 99),
+      ],
+      [
+        p("Jonathan Prud'homme", 24),
+        p("Pyotr Novozhilov", 99),
+      ],
     ],
   },
-  {
-    id: 16,
-    slug: "sherbrooke",
-    city: "Sherbrooke",
-    name: "Phœnix",
-    fullName: "Sherbrooke Phœnix",
-    abbreviation: "SHE",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#003087",
-    secondary: "#F58220",
+
+  sherbrooke: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Justin Brisebois",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Ilya Kolmakov", 19),
+        p("Thomas Rousseau", 91),
+        p("Florent Houle", 16),
+      ],
+      [
+        p("Jayden Plouffe", 37),
+        p("Cameron Haye", 71),
+        p("Chad Bellmare", 18),
+      ],
+      [
+        p("Samuel Rochon", 51),
+        p("Eloi Benard", 26),
+        p("Brogan McNeil", 27),
+      ],
+      [
+        p("Martins Klaucans", 55),
+        p("Etinne Giroux", 47),
+        p("Loic Poirier", 88),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Brandon Delarosbil", 7),
+        p("Louis-Alex Tremblay", 77),
+      ],
+      [
+        p("PJ Fagan", 73),
+        p("Sydney Gagnon", 14),
+      ],
+      [
+        p("Zakary Gagnon", 23),
+        p("Sydney Gagnon", 14),
+      ],
     ],
   },
-  {
-    id: 17,
-    slug: "val-dor",
-    city: "Val-d’Or",
-    name: "Foreurs",
-    fullName: "Val-d’Or Foreurs",
-    abbreviation: "VDO",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#005030",
-    secondary: "#FDBB30",
+
+  "val-dor": {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Emile Beaunoyer",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Philippe Veilleux", 44),
+        p("Nathan Brisson", 72),
+        p("Alix Durocher", 47),
+      ],
+      [
+        p("Jeremy Leroux", 11),
+        p("Benjamin Olivier", 10),
+        p("Place Holder", 99),
+      ],
+      [
+        p("Jordan Labelle", 23),
+        p("Mathias Bourque", 12),
+        p("Sheldon Rioux", 92),
+      ],
+      [
+        p("Josh Demers", 51),
+        p("Evan Sercerchi", 17),
+        p("Etinne Maheu", 16),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Anthony Pare", 5),
+        p("Benjamin Cossette Ayotte", 7),
+      ],
+      [
+        p("Hemrick Carbonneau", 15),
+        p("Alexis Fortin", 77),
+      ],
+      [
+        p("Esteban Cinq-Mars", 3),
+        p("Eduard Bondar", 91),
+      ],
     ],
   },
-  {
-    id: 18,
-    slug: "victoriaville",
-    city: "Victoriaville",
-    name: "Tigres",
-    fullName: "Victoriaville Tigres",
-    abbreviation: "VIC",
-    province: "Quebec",
-    division: "Western Conference",
-    primary: "#FF6A00",
-    secondary: "#000000",
+
+  victoriaville: {
     status: "Projected",
-    goalie: "Ethan Mercer",
+    goalie: "Gabriel D'Aigle",
+
     forwards: [
-      ["Logan Pierce", " Mason Clarke", " Ryan Bell"],
-      ["Noah Fraser", " Owen Burke", " Tyler Grant"],
-      ["Caleb Morris", " Aiden Walsh", " Jack Bennett"],
-      ["Liam Carter", " Evan Ross", " Cole Murray"],
+      [
+        p("Alexey Vlasov", 17),
+        p("Egor Shilov", 9),
+        p("Enzo Lottin", 34),
+      ],
+      [
+        p("Place Holder", 99),
+        p("Loik Gariepy", 39),
+        p("Korney Korneyev", 90),
+      ],
+      [
+        p("Xavier Sabourin", 95),
+        p("Jordan Forget", 61),
+        p("Zakary Savoie", 83),
+      ],
+      [
+        p("Derek Lemaire", 22),
+        p("Place Holder", 99),
+        p("Arno Delisle", 37),
+      ],
     ],
+
     defense: [
-      ["Sam Ellis", " Connor Reid"],
-      ["Nathan Cole", " Brady Hughes"],
-      ["Miles Turner", " Dylan Scott"],
+      [
+        p("Maddox Labre", 25),
+        p("Maxime Dodier", 93),
+      ],
+      [
+        p("Matheo Lepage", 44),
+        p("Dominik Necak", 78),
+      ],
+      [
+        p("Alain Bourdeau", 5),
+        p("Nathan Nadeau", 8),
+      ],
     ],
   },
-];
+};
+
+export const lineupTeams = teams.map((team) => ({
+  ...team,
+
+  ...(lineupDetails[team.slug] || {
+    status: "Unavailable",
+    goalie: "TBD",
+    forwards: [],
+    defense: [],
+  }),
+
+  team: team.fullName,
+}));

@@ -3510,3 +3510,47 @@ button:hover {
     display: none;
   }
 }
+.stats-lineup-panel {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.stats-lineup-content {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.stats-roster-section {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.lineup-row-list {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.lineup-row {
+  display: block;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+.lineup-row-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: visible;
+}.lineup-row-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: visible;
+}

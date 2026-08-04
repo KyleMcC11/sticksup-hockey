@@ -1,4 +1,5 @@
 import { teams } from "../data/teams.js";
+import { lineupTeams } from "../data/lineups.js";
 
 function getNumericStat(value) {
   const number = Number(value);
@@ -24,21 +25,159 @@ function getLogoPath(logo) {
   return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
 }
 
-function getCompleteTeam(lineupTeam) {
-  const matchingTeam = teams.find((team) => {
-    return team.slug === lineupTeam.slug;
-  });
+function normalizeName(name) {
+  return String(name || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
 
-  if (!matchingTeam) {
-    return lineupTeam;
+function findMatchingPlayer(player, suppliedPlayers) {
+  if (!player) {
+    return null;
   }
 
+  if (player.id !== null && player.id !== undefined) {
+    const matchingIdPlayer = suppliedPlayers.find((suppliedPlayer) => {
+      return (
+        suppliedPlayer?.id !== null &&
+        suppliedPlayer?.id !== undefined &&
+        String(suppliedPlayer.id) === String(player.id)
+      );
+    });
+
+    if (matchingIdPlayer) {
+      return matchingIdPlayer;
+    }
+  }
+
+  const playerName = normalizeName(player.name);
+
+  return suppliedPlayers.find((suppliedPlayer) => {
+    return normalizeName(suppliedPlayer?.name) === playerName;
+  });
+}
+
+/*
+ * Keeps the line structure from lineups.js.
+ *
+ * This is important because lineups.js contains four forward
+ * lines. Any statistics already attached to the incoming team
+ * are merged onto the matching players.
+ */
+function mergeLineupRows(baseRows, suppliedRows) {
+  const validBaseRows = Array.isArray(baseRows)
+    ? baseRows
+    : [];
+
+  const validSuppliedRows = Array.isArray(suppliedRows)
+    ? suppliedRows
+    : [];
+
+  if (validBaseRows.length === 0) {
+    return validSuppliedRows;
+  }
+
+  const suppliedPlayers = validSuppliedRows
+    .flat()
+    .filter(Boolean);
+
+  return validBaseRows.map((row) => {
+    if (!Array.isArray(row)) {
+      return [];
+    }
+
+    return row.map((basePlayer) => {
+      const matchingPlayer = findMatchingPlayer(
+        basePlayer,
+        suppliedPlayers
+      );
+
+      if (!matchingPlayer) {
+        return basePlayer;
+      }
+
+      return {
+        ...basePlayer,
+        ...matchingPlayer,
+
+        // Preserve the lineup name and number.
+        name: basePlayer.name,
+        number:
+          basePlayer.number ??
+          matchingPlayer.number ??
+          matchingPlayer.jerseyNumber ??
+          "--",
+      };
+    });
+  });
+}
+
+function getCompleteTeam(lineupTeam) {
+  const slug = lineupTeam?.slug;
+
+  const matchingTeam = teams.find((team) => {
+    return team.slug === slug;
+  });
+
+  const matchingLineup = lineupTeams.find((team) => {
+    return team.slug === slug;
+  });
+
+  const forwards = mergeLineupRows(
+    matchingLineup?.forwards,
+    lineupTeam?.forwards
+  );
+
+  const defense = mergeLineupRows(
+    matchingLineup?.defense,
+    lineupTeam?.defense
+  );
+
   return {
-    ...matchingTeam,
-    ...lineupTeam,
-    logo: matchingTeam.logo,
-    primary: matchingTeam.primary,
-    secondary: matchingTeam.secondary,
+    ...(matchingTeam || {}),
+    ...(matchingLineup || {}),
+    ...(lineupTeam || {}),
+
+    logo:
+      matchingTeam?.logo ||
+      matchingLineup?.logo ||
+      lineupTeam?.logo ||
+      "",
+
+    primary:
+      matchingTeam?.primary ||
+      matchingLineup?.primary ||
+      lineupTeam?.primary ||
+      "#1f5f43",
+
+    secondary:
+      matchingTeam?.secondary ||
+      matchingLineup?.secondary ||
+      lineupTeam?.secondary ||
+      "#ffffff",
+
+    accent:
+      matchingTeam?.accent ||
+      matchingLineup?.accent ||
+      lineupTeam?.accent ||
+      "#ffffff",
+
+    forwards,
+    defense,
+
+    goalie:
+      matchingLineup?.goalie ||
+      lineupTeam?.goalie ||
+      matchingTeam?.goalie ||
+      "TBD",
+
+    goalies:
+      lineupTeam?.goalies ||
+      matchingLineup?.goalies ||
+      matchingTeam?.goalies ||
+      [],
   };
 }
 
@@ -62,7 +201,11 @@ function normalizePlayer(
 
     id: player?.id ?? null,
     name,
-    number: player?.number ?? player?.jerseyNumber ?? "--",
+    number:
+      player?.number ??
+      player?.jerseyNumber ??
+      "--",
+
     position: player?.position || "",
     goals: getNumericStat(player?.goals),
     assists: getNumericStat(player?.assists),
@@ -198,7 +341,10 @@ function PlayerCard({
         borderColor: secondary,
       }}
     >
-      <PlayerVisual player={player} team={team} />
+      <PlayerVisual
+        player={player}
+        team={team}
+      />
 
       <h3 className="stats-player-name">
         {player.name}
@@ -333,7 +479,7 @@ function LineupSection({
   team,
   teamLeader,
 }) {
-  if (rows.length === 0) {
+  if (!Array.isArray(rows) || rows.length === 0) {
     return null;
   }
 
@@ -353,18 +499,16 @@ function LineupSection({
       </div>
 
       <div className="lineup-row-list">
-        {rows.map((row, rowIndex) => {
-          return (
-            <LineupRow
-              key={`${sectionType}-${rowIndex}`}
-              row={row}
-              rowIndex={rowIndex}
-              sectionType={sectionType}
-              team={team}
-              teamLeader={teamLeader}
-            />
-          );
-        })}
+        {rows.map((row, rowIndex) => (
+          <LineupRow
+            key={`${sectionType}-${rowIndex}`}
+            row={row}
+            rowIndex={rowIndex}
+            sectionType={sectionType}
+            team={team}
+            teamLeader={teamLeader}
+          />
+        ))}
       </div>
     </section>
   );
@@ -383,10 +527,31 @@ function LineupCard({ team: lineupTeam }) {
     "defense"
   );
 
-  const goalies = prepareGoalies(team.goalies);
+  let goalieSource = [];
+
+  if (
+    Array.isArray(team.goalies) &&
+    team.goalies.length > 0
+  ) {
+    goalieSource = team.goalies;
+  } else if (team.goalie && team.goalie !== "TBD") {
+    goalieSource = [
+      {
+        name: team.goalie,
+        number:
+          team.goalieNumber ??
+          team.jerseyNumber ??
+          "--",
+      },
+    ];
+  }
+
+  const goalies = prepareGoalies(goalieSource);
 
   const goalieRows =
-    goalies.length > 0 ? [goalies] : [];
+    goalies.length > 0
+      ? [goalies]
+      : [];
 
   const teamLeader = findTeamLeader(
     forwards,
@@ -436,7 +601,13 @@ function LineupCard({ team: lineupTeam }) {
           <h3>{displayName}</h3>
 
           <span>
-            3 forward lines · 3 defence pairs · goalies
+            {forwards.length} forward lines ·{" "}
+            {defense.length} defence pairs ·{" "}
+            {goalies.length > 0
+              ? `${goalies.length} goalie${
+                  goalies.length === 1 ? "" : "s"
+                }`
+              : "goalie unavailable"}
           </span>
         </div>
 
@@ -469,7 +640,7 @@ function LineupCard({ team: lineupTeam }) {
       >
         <LineupSection
           title="Forwards"
-          subtitle="Three Forward Lines"
+          subtitle={`${forwards.length} Forward Lines`}
           rows={forwards}
           sectionType="forwards"
           team={team}
@@ -478,7 +649,7 @@ function LineupCard({ team: lineupTeam }) {
 
         <LineupSection
           title="Defence"
-          subtitle="Three Defence Pairs"
+          subtitle={`${defense.length} Defence Pairs`}
           rows={defense}
           sectionType="defense"
           team={team}
