@@ -1,0 +1,77 @@
+name: Refresh QMJHL stats
+
+# Pulls fresh skater stats from the HockeyTech feed every morning, saves them
+# as public/data/qmjhl_player_stats.csv (the file the site reads), commits the
+# CSV back to the repo, and redeploys the site to GitHub Pages — so the numbers
+# stay current with zero manual Excel work.
+#
+# Note: pushes made with GITHUB_TOKEN do not trigger other workflows, so this
+# job builds and deploys to Pages itself instead of relying on deploy.yml.
+
+on:
+  schedule:
+    # 7:00 AM Atlantic time (10:00 UTC) daily, during the season
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  scrape-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install scraper dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch latest QMJhl skater stats
+        run: python scraper/fetch_qmjhl.py
+
+      - name: Commit updated stats CSV
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: public/data/qmjhl_player_stats.csv
+          commit_message: "chore: refresh QMJHL player stats"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build website
+        run: npm run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
