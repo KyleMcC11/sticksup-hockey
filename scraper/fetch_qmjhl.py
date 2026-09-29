@@ -1,3 +1,17 @@
+"""Fetch the latest QMJHL skater stats and save them as the CSV the website reads.
+
+The site (src/data/loadPlayerStats.js via src/pages/TeamLineupPage.jsx) loads
+exactly one data file: public/data/qmjhl_player_stats.csv. This script
+replaces the old manual Excel export — it pulls the same columns straight
+from the HockeyTech feed (via the scrapernhl package) and overwrites that
+CSV, so the site picks up fresh numbers with zero frontend changes.
+
+Run by .github/workflows/scrape.yml every morning; also runnable by hand:
+
+    pip install -r requirements.txt
+    python scraper/fetch_qmjhl.py
+"""
+
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -12,7 +26,7 @@ year = today.year
 month = today.month
 season_start = year if month >= 9 else year - 1
 
-# QMJHL season ID pattern
+# QMJHL season ID pattern (HockeyTech): 211 = 2025-26 regular, +3 each year
 base_year = 2025
 base_regular_id = 211
 
@@ -25,54 +39,38 @@ project_root = Path(__file__).resolve().parents[1]
 data_folder = project_root / "public" / "data"
 data_folder.mkdir(parents=True, exist_ok=True)
 
+# The one file the website reads — keep this name stable.
+csv_file = data_folder / "qmjhl_player_stats.csv"
+
 qmjhl = HockeyScraper("qmjhl")
 
 
 def fetch_and_save(season_id: int, season_type: str) -> bool:
-    """Fetch QMJHL statistics and save them as website-ready JSON."""
+    """Fetch QMJHL skater statistics and overwrite the website's CSV."""
 
     try:
         print(
             f"Fetching {season_start}-{season_start + 1} "
-            f"{season_type.upper()} statistics..."
+            f"{season_type.upper()} skater statistics..."
         )
 
         players = qmjhl.player_stats(
             season=season_id,
-            position="skaters"
+            position="skaters",
         )
 
-        # Website always reads the stable "current" filename
-        current_file = (
-            data_folder / f"qmjhl_current_{season_type}.json"
-        )
+        if players is None or len(players) == 0:
+            print("Feed returned no players — leaving the existing CSV untouched.")
+            return False
 
-        # Archive copy keeps the season in its filename
-        archive_file = (
-            data_folder
-            / f"qmjhl_{season_type}_{season_start}_{season_start + 1}.json"
-        )
+        players.to_csv(csv_file, index=False, encoding="utf-8")
 
-        players.to_json(
-            current_file,
-            orient="records",
-            force_ascii=False,
-            indent=2
-        )
-
-        players.to_json(
-            archive_file,
-            orient="records",
-            force_ascii=False,
-            indent=2
-        )
-
-        print(f"Exported {len(players)} players")
-        print(f"Current file: {current_file}")
+        print(f"Wrote {len(players)} players to {csv_file}")
         return True
 
     except Exception as error:
         print(f"Could not fetch {season_type} statistics: {error}")
+        print("Leaving the existing CSV untouched.")
         return False
 
 
@@ -95,13 +93,10 @@ elif (
 
 elif 4 <= month <= 6:
     print("Playoffs")
-    fetch_and_save(regular_season_id, "regular")
     fetch_and_save(playoff_id, "playoffs")
 
 else:
     print("Off-season — collecting final statistics")
     fetch_and_save(regular_season_id, "regular")
-    fetch_and_save(playoff_id, "playoffs")
 
 print("-" * 50)
-print(f"Files saved to: {data_folder}")
