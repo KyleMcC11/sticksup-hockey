@@ -1,234 +1,316 @@
-const goalies = [
-  {
-    id: 1,
-    name: "Owen Bresson",
-    team: "Halifax Mooseheads",
-    age: 18,
-    catchingHand: "L",
-    status: "Watch List",
-    gamesPlayed: 24,
-    wins: 15,
-    losses: 7,
-    otLosses: 2,
-    gaa: 2.48,
-    savePercentage: ".918",
-    shutouts: 2,
-    height: "6'2",
-    weight: "185",
-  },
-  {
-    id: 2,
-    name: "Félix Hamel",
-    team: "Cape Breton Eagles",
-    age: 19,
-    catchingHand: "L",
-    status: "Trending Up",
-    gamesPlayed: 28,
-    wins: 16,
-    losses: 9,
-    otLosses: 3,
-    gaa: 2.61,
-    savePercentage: ".914",
-    shutouts: 1,
-    height: "6'1",
-    weight: "181",
-  },
-  {
-    id: 3,
-    name: "Lucas Harrington",
-    team: "Moncton Wildcats",
-    age: 18,
-    catchingHand: "R",
-    status: "Draft Eligible",
-    gamesPlayed: 22,
-    wins: 14,
-    losses: 6,
-    otLosses: 2,
-    gaa: 2.35,
-    savePercentage: ".921",
-    shutouts: 3,
-    height: "6'3",
-    weight: "190",
-  },
-  {
-    id: 4,
-    name: "Louis-Antoine Denault",
-    team: "Newfoundland Regiment",
-    age: 19,
-    catchingHand: "L",
-    status: "Sleeper",
-    gamesPlayed: 26,
-    wins: 13,
-    losses: 10,
-    otLosses: 3,
-    gaa: 2.78,
-    savePercentage: ".907",
-    shutouts: 1,
-    height: "6'0",
-    weight: "176",
-  },
+import { useEffect, useMemo, useState } from "react";
+
+import { teams } from "../data/teams.js";
+import loadGoalieStats from "../data/loadGoalieStats.js";
+
+const TEAM_STATS_CODES = {
+  halifax: "Hal",
+  moncton: "Mon",
+  "cape-breton": "Cap",
+  charlottetown: "Cha",
+  "saint-john": "SNB",
+  newfoundland: "NFL",
+  "baie-comeau": "BaC",
+  chicoutimi: "Chi",
+  quebec: "Que",
+  rimouski: "Rim",
+  "blainville-boisbriand": "BLB",
+  drummondville: "Dru",
+  gatineau: "Gat",
+  "rouyn-noranda": "Rou",
+  shawinigan: "Sha",
+  sherbrooke: "She",
+  "val-dor": "VdO",
+  victoriaville: "Vic",
+};
+
+const teamByCode = {};
+
+Object.entries(TEAM_STATS_CODES).forEach(([slug, code]) => {
+  const team = teams.find((entry) => entry.slug === slug);
+
+  if (team) {
+    teamByCode[code] = team;
+  }
+});
+
+const sortOptions = [
+  { value: "wins", label: "Wins" },
+  { value: "savePercentage", label: "Save %" },
+  { value: "goalsAgainstAverage", label: "GAA" },
+  { value: "shutouts", label: "Shutouts" },
+  { value: "gamesPlayed", label: "Games Played" },
 ];
 
-function getBestGoalieBySavePercentage(goalies) {
-  return [...goalies].sort(
-    (a, b) =>
-      Number(b.savePercentage.replace(".", "0.")) -
-      Number(a.savePercentage.replace(".", "0."))
-  )[0];
+const MIN_GAMES_FOR_RATE_STATS = 2;
+
+function teamName(code) {
+  const team = teamByCode[code];
+
+  return team ? team.fullName : code;
 }
 
-function getMostWins(goalies) {
-  return [...goalies].sort((a, b) => b.wins - a.wins)[0];
+function formatSavePercentage(value) {
+  const numeric = Number(value) || 0;
+
+  return numeric.toFixed(3).replace(/^0/, "");
 }
 
-function GoalieCard({ goalie }) {
-  return (
-    <article className="goalie-prospect-card">
-      <div className="goalie-card-top">
-        <div className="goalie-mask">
-          <span>{goalie.catchingHand}</span>
-        </div>
+function formatGaa(value) {
+  const numeric = Number(value) || 0;
 
-        <div>
-          <p>{goalie.team}</p>
-          <h3>{goalie.name}</h3>
-        </div>
-      </div>
+  return numeric.toFixed(2);
+}
 
-      <div className="goalie-status-row">
-        <span>{goalie.status}</span>
-        <strong>{goalie.age} yrs</strong>
-      </div>
+function sortGoalies(goaliesList, sortBy, direction) {
+  const multiplier = direction === "asc" ? 1 : -1;
 
-      <div className="goalie-stat-grid">
-        <div>
-          <span>GP</span>
-          <strong>{goalie.gamesPlayed}</strong>
-        </div>
+  return [...goaliesList].sort((a, b) => {
+    const aValue = Number(a[sortBy]) || 0;
+    const bValue = Number(b[sortBy]) || 0;
 
-        <div>
-          <span>Record</span>
-          <strong>
-            {goalie.wins}-{goalie.losses}-{goalie.otLosses}
-          </strong>
-        </div>
+    if (aValue !== bValue) {
+      return (aValue - bValue) * multiplier;
+    }
 
-        <div>
-          <span>GAA</span>
-          <strong>{goalie.gaa}</strong>
-        </div>
+    return (
+      b.gamesPlayed - a.gamesPlayed || a.name.localeCompare(b.name)
+    );
+  });
+}
 
-        <div>
-          <span>SV%</span>
-          <strong>{goalie.savePercentage}</strong>
-        </div>
-
-        <div>
-          <span>SO</span>
-          <strong>{goalie.shutouts}</strong>
-        </div>
-
-        <div>
-          <span>Size</span>
-          <strong>{goalie.height}</strong>
-        </div>
-      </div>
-    </article>
+function bestBy(goaliesList, field, lowestWins, minGames) {
+  const eligible = goaliesList.filter(
+    (goalie) => goalie.gamesPlayed >= minGames
   );
+
+  const pool = eligible.length > 0 ? eligible : goaliesList;
+
+  if (pool.length === 0) {
+    return null;
+  }
+
+  return [...pool].sort((a, b) => {
+    const diff =
+      (Number(a[field]) || 0) - (Number(b[field]) || 0);
+
+    return lowestWins ? diff : -diff;
+  })[0];
 }
 
 function GoaliesPage() {
-  const bestSavePercentage = getBestGoalieBySavePercentage(goalies);
-  const mostWins = getMostWins(goalies);
+  const [goalies, setGoalies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [sortBy, setSortBy] = useState("wins");
+  const [direction, setDirection] = useState("desc");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const stats = await loadGoalieStats();
+
+        if (cancelled) {
+          return;
+        }
+
+        const active = stats.filter(
+          (goalie) => goalie.gamesPlayed > 0
+        );
+
+        setGoalies(active);
+      } catch (err) {
+        if (!cancelled) {
+          setError("Could not load goalie stats right now.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const sortedGoalies = useMemo(() => {
+    return sortGoalies(goalies, sortBy, direction);
+  }, [goalies, sortBy, direction]);
+
+  const bestSavePercentage = useMemo(() => {
+    return bestBy(goalies, "savePercentage", false, MIN_GAMES_FOR_RATE_STATS);
+  }, [goalies]);
+
+  const mostWins = useMemo(() => {
+    return bestBy(goalies, "wins", false, 0);
+  }, [goalies]);
+
+  const bestGaa = useMemo(() => {
+    return bestBy(
+      goalies,
+      "goalsAgainstAverage",
+      true,
+      MIN_GAMES_FOR_RATE_STATS
+    );
+  }, [goalies]);
 
   return (
     <>
       <section className="page-title goalie-page-title">
-        <p className="section-label">Goalie Prospects</p>
-        <h2>QMJHL Goalie Watch</h2>
+        <p className="section-label">Goaltending</p>
+        <h2>QMJHL Goalie Stats</h2>
         <p>
-          Track goalie prospects, season stats, draft watch notes, and
-          performance trends from around the league.
+          Live goaltending numbers from around the league &mdash; updated
+          daily.
         </p>
       </section>
 
-      <section className="goalie-leader-row">
-        <article className="goalie-leader-card">
-          <span>Best Save Percentage</span>
-          <h3>{bestSavePercentage.name}</h3>
-          <p>
-            {bestSavePercentage.savePercentage} SV% —{" "}
-            {bestSavePercentage.team}
-          </p>
-        </article>
+      {loading && <p className="home-status">Loading goalie stats&hellip;</p>}
 
-        <article className="goalie-leader-card">
-          <span>Most Wins</span>
-          <h3>{mostWins.name}</h3>
-          <p>
-            {mostWins.wins} wins — {mostWins.team}
-          </p>
-        </article>
+      {!loading && error && <p className="home-status">{error}</p>}
 
-        <article className="goalie-leader-card">
-          <span>Prospect Focus</span>
-          <h3>Draft Watch</h3>
-          <p>Goalies to monitor for draft rankings and team reports.</p>
-        </article>
-      </section>
+      {!loading && !error && goalies.length === 0 && (
+        <p className="home-status">No goalie stats available yet.</p>
+      )}
 
-      <section className="goalie-page-grid">
-        {goalies.map((goalie) => (
-          <GoalieCard key={goalie.id} goalie={goalie} />
-        ))}
-      </section>
+      {!loading && !error && goalies.length > 0 && (
+        <>
+          <section className="goalie-leader-row">
+            <article className="goalie-leader-card">
+              <span>Best Save Percentage</span>
+              {bestSavePercentage ? (
+                <>
+                  <h3>{bestSavePercentage.name}</h3>
+                  <p>
+                    {formatSavePercentage(
+                      bestSavePercentage.savePercentage
+                    )}{" "}
+                    SV% &mdash; {teamName(bestSavePercentage.teamCode)}
+                  </p>
+                </>
+              ) : (
+                <p>Not available yet.</p>
+              )}
+            </article>
 
-      <section className="goalie-table-card">
-        <div className="section-header">
-          <h2>Goalie Stats</h2>
-          <a href="#">View Full Rankings</a>
-        </div>
+            <article className="goalie-leader-card">
+              <span>Most Wins</span>
+              {mostWins ? (
+                <>
+                  <h3>{mostWins.name}</h3>
+                  <p>
+                    {mostWins.wins} wins &mdash;{" "}
+                    {teamName(mostWins.teamCode)}
+                  </p>
+                </>
+              ) : (
+                <p>Not available yet.</p>
+              )}
+            </article>
 
-        <div className="goalie-table-wrap">
-          <table className="goalie-table">
-            <thead>
-              <tr>
-                <th>Goalie</th>
-                <th>Team</th>
-                <th>Age</th>
-                <th>GP</th>
-                <th>Record</th>
-                <th>GAA</th>
-                <th>SV%</th>
-                <th>SO</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+            <article className="goalie-leader-card">
+              <span>Lowest GAA</span>
+              {bestGaa ? (
+                <>
+                  <h3>{bestGaa.name}</h3>
+                  <p>
+                    {formatGaa(bestGaa.goalsAgainstAverage)} GAA &mdash;{" "}
+                    {teamName(bestGaa.teamCode)}
+                  </p>
+                </>
+              ) : (
+                <p>Not available yet.</p>
+              )}
+            </article>
+          </section>
 
-            <tbody>
-              {goalies.map((goalie) => (
-                <tr key={goalie.id}>
-                  <td>
-                    <strong>{goalie.name}</strong>
-                  </td>
-                  <td>{goalie.team}</td>
-                  <td>{goalie.age}</td>
-                  <td>{goalie.gamesPlayed}</td>
-                  <td>
-                    {goalie.wins}-{goalie.losses}-{goalie.otLosses}
-                  </td>
-                  <td>{goalie.gaa}</td>
-                  <td>{goalie.savePercentage}</td>
-                  <td>{goalie.shutouts}</td>
-                  <td>
-                    <span className="goalie-table-pill">{goalie.status}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+          <section className="goalie-table-card">
+            <div className="section-header">
+              <h2>Goalie Stats</h2>
+
+              <div className="standings-controls">
+                <label>
+                  Sort by
+                  <select
+                    value={sortBy}
+                    onChange={(event) =>
+                      setSortBy(event.target.value)
+                    }
+                  >
+                    {sortOptions.map((option) => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setDirection((current) =>
+                      current === "desc" ? "asc" : "desc"
+                    )
+                  }
+                >
+                  {direction === "desc"
+                    ? "Highest first"
+                    : "Lowest first"}
+                </button>
+              </div>
+            </div>
+
+            <div className="goalie-table-wrap">
+              <table className="goalie-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Goalie</th>
+                    <th>Team</th>
+                    <th>GP</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>OTL</th>
+                    <th>SV%</th>
+                    <th>GAA</th>
+                    <th>SO</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {sortedGoalies.map((goalie, index) => (
+                    <tr key={goalie.id || `${goalie.name}-${index}`}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <strong>{goalie.name}</strong>
+                      </td>
+                      <td>{teamName(goalie.teamCode)}</td>
+                      <td>{goalie.gamesPlayed}</td>
+                      <td>{goalie.wins}</td>
+                      <td>{goalie.losses}</td>
+                      <td>{goalie.otLosses}</td>
+                      <td>
+                        {formatSavePercentage(goalie.savePercentage)}
+                      </td>
+                      <td>{formatGaa(goalie.goalsAgainstAverage)}</td>
+                      <td>{goalie.shutouts}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </>
+      )}
     </>
   );
 }
