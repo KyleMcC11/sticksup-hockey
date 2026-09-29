@@ -53,6 +53,12 @@ function teamLabel(code) {
 }
 
 function HomePage() {
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const [leaders, setLeaders] = useState([]);
   const [standings, setStandings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -112,7 +118,9 @@ function HomePage() {
   return (
     <>
       <section className="home-hero">
-        <p className="section-label">QMJHL &middot; 2026&ndash;27</p>
+        <p className="home-dateline">
+          {today} &middot; QMJHL 2026&ndash;27
+        </p>
         <h2>Sticks Up Hockey</h2>
         <p>
           Live player stats, projected lineups and standings for all 18

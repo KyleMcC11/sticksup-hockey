@@ -209,7 +209,7 @@ function StandingsPage() {
   return (
     <>
       <section className="page-title">
-        <p className="section-label">QMJHL Standings</p>
+        <p className="section-label">QMJHL &middot; 2026&ndash;27</p>
         <h2>Standings</h2>
         <p>
           Live QMJHL standings, refreshed every morning from official

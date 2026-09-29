@@ -344,9 +344,10 @@ body {
 
 .home-mini-table th {
   padding: 8px 10px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: right;
   color: #6b7280;
@@ -434,4 +435,341 @@ body {
 .team-tile span {
   font-size: 0.7rem;
   color: #6b7280;
+}
+
+/* ======================================================
+   Editorial sports-desk reskin — de-AI the look.
+   Condensed display type, masthead headers, confident
+   tables, flatter surfaces. Layout unchanged.
+   ====================================================== */
+
+:root {
+  --font-display: "Barlow Condensed", "Arial Narrow", "Inter", sans-serif;
+  --desk-green: #1f5f43;
+  --desk-ink: #111827;
+}
+
+/* ---------- sidebar ---------- */
+
+.sidebar-logo h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.1rem;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sidebar-logo p {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.sidebar-nav a {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- page titles (all pages) ---------- */
+
+.page-title .section-label {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.page-title h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  line-height: 0.92;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  border-bottom: 3px solid var(--desk-green);
+}
+
+/* ---------- home masthead ---------- */
+
+.home-hero {
+  margin-bottom: 28px;
+  padding: 30px 30px 26px;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-top: 5px solid var(--desk-green);
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.home-hero h2 {
+  margin: 4px 0 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.8rem, 6vw, 4.4rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--desk-ink);
+}
+
+.home-hero p {
+  margin: 0;
+  max-width: 640px;
+}
+
+.home-dateline {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--desk-green);
+}
+
+/* ---------- flatter surfaces (less floaty-card AI look) ---------- */
+
+.home-card,
+.home-teams,
+.goalie-table-card,
+.goalie-leader-card,
+.team-card,
+.team-select-card,
+.standings-summary-row article {
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.home-card-head h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.standings-summary-row article {
+  background: #ffffff;
+  border-left: 4px solid var(--desk-green);
+  padding: 16px 20px;
+}
+
+.standings-summary-row span {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.standings-summary-row strong {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* ---------- standings table: sports-desk treatment ---------- */
+
+.standings-section h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.standings-table-wrap {
+  border: 1px solid #dfe3e8;
+  border-radius: 12px;
+  box-shadow: none;
+  overflow-x: auto;
+}
+
+.standings-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.standings-table th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--desk-green);
+  padding: 10px 12px;
+  border-bottom: none;
+}
+
+.standings-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.standings-table tbody tr:hover td {
+  background: #f6f9f7;
+}
+
+.standings-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.standings-team-cell span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--desk-green);
+  background: #e8f3ed;
+  border: 1px solid #cfe4d8;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+/* ---------- standings controls ---------- */
+
+.standings-controls {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: none;
+}
+
+.standings-controls label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--desk-green);
+}
+
+.standings-controls select {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ---------- goalies page ---------- */
+
+.goalie-page-title h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  line-height: 0.92;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+
+.goalie-leader-card span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--desk-green);
+}
+
+.goalie-leader-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin: 6px 0;
+}
+
+.goalie-table-card .section-header h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.goalie-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.goalie-table th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: var(--desk-green);
+}
+
+.goalie-controls label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--desk-green);
+}
+
+/* ---------- team lineup page headers ---------- */
+
+.stats-lineup-header h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 0.92;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+
+.stats-header-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.stats-section-heading h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.stats-section-heading p {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---------- lineups + teams index titles ---------- */
+
+.team-select-card h3,
+.team-card-main h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ---------- tabular numerals everywhere data lives ---------- */
+
+.home-mini-table,
+.leader-points,
+.leader-line {
+  font-variant-numeric: tabular-nums;
 }
