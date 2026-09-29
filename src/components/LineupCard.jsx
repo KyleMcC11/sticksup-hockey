@@ -105,6 +105,10 @@ function normalizePlayer(
     assists: getNumericStat(player?.assists),
     points: getNumericStat(player?.points),
     gamesPlayed: getNumericStat(player?.gamesPlayed),
+    wins: getNumericStat(player?.wins),
+    savePercentage: player?.savePercentage ?? null,
+    goalsAgainstAverage:
+      player?.goalsAgainstAverage ?? null,
   };
 }
 
