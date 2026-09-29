@@ -235,27 +235,13 @@ function TeamLineupPage() {
   if (loading) {
     return (
       <>
-        <section
-          className="lineup-page-header no-logo"
-          style={{
-            "--primary": team.primary,
-            "--secondary": team.secondary,
-          }}
-        >
-          <div>
-            <p className="section-label">Team Lineup</p>
-
-            <h2>
-              {team.team || team.fullName}
-            </h2>
-
-            <p>Loading player statistics...</p>
-          </div>
-        </section>
-
         <Link className="back-link" to="/lineups">
           ← Back to all teams
         </Link>
+
+        <p className="home-status">
+          Loading {team.fullName} lineup&hellip;
+        </p>
       </>
     );
   }
@@ -282,27 +268,6 @@ function TeamLineupPage() {
 
   return (
     <>
-      <section
-        className="lineup-page-header no-logo"
-        style={{
-          "--primary": displayTeam.primary,
-          "--secondary": displayTeam.secondary,
-        }}
-      >
-        <div>
-          <p className="section-label">Team Lineup</p>
-
-          <h2>
-            {displayTeam.team || displayTeam.fullName}
-          </h2>
-
-          <p>
-            Projected from the latest scoring stats: three forward
-            lines, three defence pairs and up to two goaltenders.
-          </p>
-        </div>
-      </section>
-
       <Link className="back-link" to="/lineups">
         ← Back to all teams
       </Link>

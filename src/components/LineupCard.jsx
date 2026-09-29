@@ -389,7 +389,7 @@ function LineupSection({
         className="stats-section-heading"
         style={{
           borderBottomColor:
-            team.secondary || "#ffffff",
+            team.primary || "#1f5f43",
         }}
       >
         <div>
@@ -472,8 +472,8 @@ function LineupCard({ team: lineupTeam }) {
       style={{
         "--team-primary": primary,
         "--team-secondary": secondary,
-        background: primary,
-        borderColor: secondary,
+        background: "#ffffff",
+        borderColor: "#e5e7eb",
       }}
     >
       <header
@@ -528,14 +528,7 @@ function LineupCard({ team: lineupTeam }) {
       <div
         className="stats-lineup-content"
         style={{
-          background: `
-            linear-gradient(
-              160deg,
-              rgba(255,255,255,0.1),
-              rgba(0,0,0,0.35)
-            ),
-            ${primary}
-          `,
+          background: "#ffffff",
         }}
       >
         <LineupSection

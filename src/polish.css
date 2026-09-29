@@ -162,6 +162,35 @@ body {
   font-weight: 700;
 }
 
+/* ---------- team lineup page: neutral surfaces, team color as accent ---------- */
+
+.stats-lineup-panel {
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+
+.stats-section-heading p,
+.stats-section-heading h4,
+.stats-section-heading > span {
+  color: #111827;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.stats-section-heading p {
+  color: #6b7280;
+}
+
+.lineup-row-label {
+  color: #111827;
+  background: #eef0f3;
+}
+
+/* ---------- goalies page: title underline should span full width ---------- */
+
+.goalie-page-title {
+  max-width: none;
+}
+
 /* ---------- home page ---------- */
 
 .home-hero {
