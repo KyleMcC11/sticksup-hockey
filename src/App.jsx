@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import "./polish.css";
 
 import Sidebar from "./components/Sidebar.jsx";
 
