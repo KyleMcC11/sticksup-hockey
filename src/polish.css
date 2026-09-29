@@ -15,7 +15,7 @@ body {
     "Segoe UI",
     sans-serif;
   background: #f3f5f7;
-  color: #111827;
+  color: #131316;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -171,7 +171,7 @@ body {
 .stats-section-heading p,
 .stats-section-heading h4,
 .stats-section-heading > span {
-  color: #111827;
+  color: #131316;
   text-shadow: none;
   opacity: 1;
 }
@@ -181,7 +181,7 @@ body {
 }
 
 .lineup-row-label {
-  color: #111827;
+  color: #131316;
   background: #eef0f3;
 }
 
@@ -208,7 +208,7 @@ body {
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #111827;
+  color: #131316;
 }
 
 .home-hero p {
@@ -258,13 +258,13 @@ body {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 800;
-  color: #111827;
+  color: #131316;
 }
 
 .home-card-head a {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #1f5f43;
+  color: #1c1c21;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -299,8 +299,8 @@ body {
   place-items: center;
   font-size: 0.8rem;
   font-weight: 800;
-  color: #1f5f43;
-  background: #e8f3ed;
+  color: #1c1c21;
+  background: #eff0f2;
   border-radius: 9px;
 }
 
@@ -313,7 +313,7 @@ body {
 
 .leader-main strong {
   font-weight: 700;
-  color: #111827;
+  color: #131316;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -333,7 +333,7 @@ body {
 .leader-points {
   font-size: 0.95rem;
   font-weight: 800;
-  color: #111827;
+  color: #131316;
   white-space: nowrap;
 }
 
@@ -375,12 +375,12 @@ body {
 
 .home-mini-table td strong {
   font-weight: 700;
-  color: #111827;
+  color: #131316;
 }
 
 .home-pts {
   font-weight: 800;
-  color: #1f5f43;
+  color: #1c1c21;
 }
 
 .home-teams {
@@ -429,7 +429,7 @@ body {
   font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.25;
-  color: #111827;
+  color: #131316;
 }
 
 .team-tile span {
@@ -445,8 +445,8 @@ body {
 
 :root {
   --font-display: "Barlow Condensed", "Arial Narrow", "Inter", sans-serif;
-  --desk-green: #1f5f43;
-  --desk-ink: #111827;
+  --desk-green: #1c1c21;
+  --desk-ink: #131316;
 }
 
 /* ---------- sidebar ---------- */
@@ -620,7 +620,7 @@ body {
 }
 
 .standings-table tbody tr:hover td {
-  background: #f6f9f7;
+  background: #fafafa;
 }
 
 .standings-table tbody tr:last-child td {
@@ -633,8 +633,8 @@ body {
   font-size: 1.05rem;
   letter-spacing: 0.06em;
   color: var(--desk-green);
-  background: #e8f3ed;
-  border: 1px solid #cfe4d8;
+  background: #eff0f2;
+  border: 1px solid #d9d9de;
   border-radius: 6px;
   padding: 2px 8px;
 }
@@ -796,7 +796,7 @@ body {
   font-size: 0.85rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #1f5f43;
+  color: #1c1c21;
 }
 
 .team-card-info strong {

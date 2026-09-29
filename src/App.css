@@ -6,7 +6,7 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: white;
-  color: #111827;
+  color: #131316;
 }
 
 a {
@@ -15,7 +15,7 @@ a {
 }
 
 button {
-  background: #1f5f43;
+  background: #1c1c21;
   color: white;
   border: none;
   padding: 12px 18px;
@@ -25,7 +25,7 @@ button {
 }
 
 button:hover {
-  background: #174832;
+  background: #232328;
 }
 
 .app {
@@ -38,7 +38,7 @@ button:hover {
 /* LEFT SIDEBAR */
 
 .sidebar {
-  background: #1f5f43;
+  background: #1c1c21;
   color: white;
   min-height: 100vh;
   padding: 28px 22px;
@@ -60,7 +60,7 @@ button:hover {
 
 .sidebar-logo p {
   margin: 4px 0 0;
-  color: #d9eadf;
+  color: #eff0f2;
   font-weight: 600;
 }
 
@@ -73,7 +73,7 @@ button:hover {
 .sidebar-nav a {
   padding: 13px 14px;
   border-radius: 10px;
-  color: #eef7f0;
+  color: #eff0f2;
   font-weight: 700;
 }
 
@@ -83,7 +83,7 @@ button:hover {
 
 .sidebar-footer {
   margin-top: auto;
-  color: #d9eadf;
+  color: #eff0f2;
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -99,8 +99,8 @@ button:hover {
   min-height: 330px;
   border-radius: 20px;
   background: linear-gradient(
-      rgba(31, 95, 67, 0.85),
-      rgba(31, 95, 67, 0.85)
+      rgba(28, 28, 33, 0.85),
+      rgba(28, 28, 33, 0.85)
     ),
     url("https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1600&q=80");
   background-size: cover;
@@ -125,7 +125,7 @@ button:hover {
 .hero p {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: #eef7f0;
+  color: #eff0f2;
   margin-bottom: 24px;
 }
 
@@ -134,7 +134,7 @@ button:hover {
   letter-spacing: 0.12em;
   font-size: 0.8rem;
   font-weight: 800;
-  color: #d9eadf;
+  color: #eff0f2;
 }
 
 .content-grid {
@@ -160,7 +160,7 @@ button:hover {
 }
 
 .section-header a {
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 800;
 }
 
@@ -180,8 +180,8 @@ button:hover {
 
 .article-card span {
   display: inline-block;
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -202,7 +202,7 @@ button:hover {
 }
 
 .article-card a {
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 800;
 }
 
@@ -224,7 +224,7 @@ button:hover {
 
 .side-card h3 {
   margin: 0 0 16px;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 1.25rem;
 }
 
@@ -260,8 +260,8 @@ button:hover {
 }
 
 .goalie-row strong {
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   font-size: 0.78rem;
   padding: 5px 8px;
   border-radius: 999px;
@@ -531,7 +531,7 @@ button:hover {
 .team-card {
   border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #f8faf9;
+  background: #fafafa;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -592,7 +592,7 @@ button:hover {
 .team-card-main h3 {
   margin: 0;
   font-size: 1.55rem;
-  color: #111827;
+  color: #131316;
 }
 
 .team-card-main span {
@@ -621,7 +621,7 @@ button:hover {
 }
 
 .team-card-info strong {
-  color: #111827;
+  color: #131316;
   text-align: right;
 }
 
@@ -634,7 +634,7 @@ button:hover {
 }
 
 .team-card-actions a {
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 800;
 }
 
@@ -672,13 +672,13 @@ button:hover {
 }
 
 .page-title .section-label {
-  color: #1f5f43;
+  color: #1c1c21;
 }
 
 .page-title h2 {
   margin: 8px 0 10px;
   font-size: 2.4rem;
-  color: #111827;
+  color: #131316;
 }
 
 .page-title p {
@@ -697,7 +697,7 @@ button:hover {
 .team-select-card {
   border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #f8faf9;
+  background: #fafafa;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -769,8 +769,8 @@ button:hover {
 }
 
 .team-select-footer span {
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -778,7 +778,7 @@ button:hover {
 }
 
 .team-select-footer strong {
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 900;
 }
 
@@ -787,13 +787,13 @@ button:hover {
 .back-link {
   display: inline-block;
   margin-bottom: 24px;
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 800;
 }
 
 .lineup-page-header {
   border-radius: 20px;
-  background: linear-gradient(135deg, var(--primary), #1f5f43);
+  background: linear-gradient(135deg, var(--primary), #1c1c21);
   color: white;
   padding: 28px;
   margin-bottom: 24px;
@@ -820,7 +820,7 @@ button:hover {
 }
 
 .lineup-page-logo span {
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 900;
   font-size: 1.5rem;
 }
@@ -832,7 +832,7 @@ button:hover {
 
 .lineup-page-header p {
   margin: 0;
-  color: #eef7f0;
+  color: #eff0f2;
   line-height: 1.6;
 }
 
@@ -843,7 +843,7 @@ button:hover {
 .lineup-card {
   border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #f8faf9;
+  background: #fafafa;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
   overflow: hidden;
 }
@@ -899,8 +899,8 @@ button:hover {
 }
 
 .team-meta span {
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -937,8 +937,8 @@ button:hover {
 }
 
 .status-pill.confirmed {
-  background: #dcfce7;
-  color: #166534;
+  background: #eff0f2;
+  color: #26262c;
 }
 
 .status-pill.not-announced {
@@ -957,7 +957,7 @@ button:hover {
 .lineup-group h4,
 .scratches-box h4 {
   margin: 0 0 12px;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 1.1rem;
 }
 
@@ -978,8 +978,8 @@ button:hover {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -1077,7 +1077,7 @@ button:hover {
 .player-name {
   font-weight: 800;
   font-size: 0.9rem;
-  color: #111827;
+  color: #131316;
   overflow-wrap: anywhere;
 }
 
@@ -1104,7 +1104,7 @@ button:hover {
 .lineup-card {
   border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #f8faf9;
+  background: #fafafa;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
   overflow: hidden;
 }
@@ -1222,13 +1222,13 @@ button:hover {
 
 .lineup-section-header h4 {
   margin: 0;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 1.25rem;
 }
 
 .lineup-section-header span {
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -1266,7 +1266,7 @@ button:hover {
 }
 
 .line-label strong {
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 1.4rem;
 }
 
@@ -1301,8 +1301,8 @@ button:hover {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   display: grid;
   place-items: center;
   font-size: 0.78rem;
@@ -1377,7 +1377,7 @@ button:hover {
 
 .player-name {
   font-weight: 900;
-  color: #111827;
+  color: #131316;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
@@ -1403,7 +1403,7 @@ button:hover {
 
 .scratches-box h4 {
   margin: 0 0 8px;
-  color: #1f5f43;
+  color: #1c1c21;
 }
 
 .scratches-box p {
@@ -1506,7 +1506,7 @@ button:hover {
 /* Make the player names feel more like a lineup sheet */
 .player-name {
   font-weight: 800;
-  color: #111827;
+  color: #131316;
   line-height: 1.15;
 }
 
@@ -1521,8 +1521,8 @@ button:hover {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   display: grid;
   place-items: center;
   font-size: 0.78rem;
@@ -1534,7 +1534,7 @@ button:hover {
 .lf-lineup-card {
   border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #f8faf9;
+  background: #fafafa;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
   overflow: hidden;
 }
@@ -1677,7 +1677,7 @@ button:hover {
   gap: 18px;
   align-items: center;
   text-align: center;
-  color: #1f5f43;
+  color: #1c1c21;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -1688,7 +1688,7 @@ button:hover {
 }
 
 .lf-board-header div:not(:first-child) {
-  background: #e8f3ed;
+  background: #eff0f2;
   border-radius: 8px;
   padding: 8px;
 }
@@ -1726,7 +1726,7 @@ button:hover {
 
 .lf-line-label strong {
   display: block;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 1.8rem;
 }
 
@@ -1832,7 +1832,7 @@ button:hover {
 
 .lf-player-fullname {
   font-weight: 900;
-  color: #111827;
+  color: #131316;
   font-size: 0.95rem;
   line-height: 1.2;
   overflow-wrap: anywhere;
@@ -1849,7 +1849,7 @@ button:hover {
 
 .lf-scratches h4 {
   margin: 0 0 8px;
-  color: #1f5f43;
+  color: #1c1c21;
 }
 
 .lf-scratches p {
@@ -2034,14 +2034,14 @@ button:hover {
 .goalie-leader-card {
   border: 1px solid #e5e7eb;
   border-radius: 18px;
-  background: #f8faf9;
+  background: #fafafa;
   padding: 22px;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
 }
 
 .goalie-leader-card span {
   display: inline-block;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2086,7 +2086,7 @@ button:hover {
   width: 64px;
   height: 64px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #1f5f43, #174832);
+  background: linear-gradient(135deg, #1c1c21, #232328);
   color: white;
   display: grid;
   place-items: center;
@@ -2103,7 +2103,7 @@ button:hover {
 
 .goalie-card-top h3 {
   margin: 0;
-  color: #111827;
+  color: #131316;
   font-size: 1.45rem;
 }
 
@@ -2119,8 +2119,8 @@ button:hover {
 }
 
 .goalie-status-row span {
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -2128,7 +2128,7 @@ button:hover {
 }
 
 .goalie-status-row strong {
-  color: #111827;
+  color: #131316;
 }
 
 .goalie-stat-grid {
@@ -2138,7 +2138,7 @@ button:hover {
 }
 
 .goalie-stat-grid div {
-  background: #f8faf9;
+  background: #fafafa;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 14px;
@@ -2154,7 +2154,7 @@ button:hover {
 }
 
 .goalie-stat-grid strong {
-  color: #111827;
+  color: #131316;
   font-size: 1.15rem;
 }
 
@@ -2178,7 +2178,7 @@ button:hover {
 
 .goalie-table th {
   text-align: left;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2189,7 +2189,7 @@ button:hover {
 .goalie-table td {
   border-bottom: 1px solid #e5e7eb;
   padding: 14px 12px;
-  color: #111827;
+  color: #131316;
 }
 
 .goalie-table tr:last-child td {
@@ -2197,8 +2197,8 @@ button:hover {
 }
 
 .goalie-table-pill {
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -2243,7 +2243,7 @@ button:hover {
 }
 
 .standings-controls label {
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2255,13 +2255,13 @@ button:hover {
   background: white;
   border-radius: 12px;
   padding: 12px 14px;
-  color: #111827;
+  color: #131316;
   font-weight: 800;
   outline: none;
 }
 
 .standings-controls select:focus {
-  border-color: #1f5f43;
+  border-color: #1c1c21;
 }
 
 .standings-summary-row {
@@ -2274,14 +2274,14 @@ button:hover {
 .standings-summary-row article {
   border: 1px solid #e5e7eb;
   border-radius: 16px;
-  background: #f8faf9;
+  background: #fafafa;
   padding: 20px;
   box-shadow: 0 8px 22px rgba(17, 24, 39, 0.06);
 }
 
 .standings-summary-row span {
   display: block;
-  color: #1f5f43;
+  color: #1c1c21;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2290,7 +2290,7 @@ button:hover {
 }
 
 .standings-summary-row strong {
-  color: #111827;
+  color: #131316;
   font-size: 1.15rem;
 }
 
@@ -2301,7 +2301,7 @@ button:hover {
 .standings-section h3 {
   margin: 0 0 12px;
   font-size: 1.35rem;
-  color: #111827;
+  color: #131316;
 }
 
 .standings-table-wrap {
@@ -2320,20 +2320,20 @@ button:hover {
 
 .standings-table th {
   text-align: left;
-  color: #111827;
+  color: #131316;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 14px 12px;
   border-bottom: 1px solid #e5e7eb;
-  background: #f8faf9;
+  background: #fafafa;
   white-space: nowrap;
 }
 
 .standings-table td {
   padding: 14px 12px;
   border-bottom: 1px solid #e5e7eb;
-  color: #111827;
+  color: #131316;
   white-space: nowrap;
 }
 
@@ -2342,7 +2342,7 @@ button:hover {
 }
 
 .standings-table tbody tr:hover {
-  background: #f8faf9;
+  background: #fafafa;
 }
 
 .team-column {
@@ -2359,8 +2359,8 @@ button:hover {
   width: 42px;
   height: 32px;
   border-radius: 8px;
-  background: #e8f3ed;
-  color: #1f5f43;
+  background: #eff0f2;
+  color: #1c1c21;
   display: grid;
   place-items: center;
   font-size: 0.78rem;
@@ -2372,12 +2372,12 @@ button:hover {
 }
 
 .highlight-column {
-  background: #dff3e8;
+  background: #eff0f2;
   font-weight: 900;
 }
 
 .positive-diff {
-  color: #166534 !important;
+  color: #26262c !important;
   font-weight: 900;
 }
 
@@ -3203,7 +3203,7 @@ button:hover {
 
 .team-player-leader-tag {
   padding: 6px;
-  color: #101827;
+  color: #101013;
   background:
     linear-gradient(
       180deg,
@@ -3553,4 +3553,104 @@ button:hover {
   flex-direction: column;
   gap: 24px;
   overflow: visible;
+}
+/* ---------- mobile topbar + hamburger drawer ---------- */
+
+.mobile-topbar {
+  display: none;
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+.sidebar-nav a.active {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: #1c1c21;
+    color: #ffffff;
+    padding: 10px 14px;
+  }
+
+  .mobile-topbar-title {
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+    background: transparent;
+    border-radius: 8px;
+  }
+
+  .hamburger:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .hamburger span {
+    display: block;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 272px;
+    max-width: 82vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 60;
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+    overflow-y: auto;
+  }
+
+  .sidebar.open {
+    transform: none;
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 55;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-page {
+    padding: 20px 14px;
+  }
 }

@@ -58,7 +58,7 @@ function getCompleteTeam(lineupTeam) {
     logo: matchingTeam?.logo || lineupTeam?.logo || "",
 
     primary:
-      matchingTeam?.primary || lineupTeam?.primary || "#1f5f43",
+      matchingTeam?.primary || lineupTeam?.primary || "#1c1c21",
 
     secondary:
       matchingTeam?.secondary || lineupTeam?.secondary || "#ffffff",
@@ -220,7 +220,7 @@ function PlayerCard({
   isTeamLeader,
   isGoalie,
 }) {
-  const primary = team.primary || "#1f5f43";
+  const primary = team.primary || "#1c1c21";
   const secondary = team.secondary || "#ffffff";
 
   return (
@@ -389,7 +389,7 @@ function LineupSection({
         className="stats-section-heading"
         style={{
           borderBottomColor:
-            team.primary || "#1f5f43",
+            team.primary || "#1c1c21",
         }}
       >
         <div>
@@ -458,7 +458,7 @@ function LineupCard({ team: lineupTeam }) {
     defense
   );
 
-  const primary = team.primary || "#1f5f43";
+  const primary = team.primary || "#1c1c21";
   const secondary = team.secondary || "#ffffff";
 
   const displayName =

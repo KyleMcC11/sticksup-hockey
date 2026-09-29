@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "./polish.css";
@@ -14,10 +15,40 @@ import ScoresPage from "./pages/ScoresPage.jsx";
 import GameDetailPage from "./pages/GameDetailPage.jsx";
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <HashRouter>
       <div className="app">
-        <Sidebar />
+        <header className="mobile-topbar">
+          <button
+            className="hamburger"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <span className="mobile-topbar-title">Sticks Up</span>
+        </header>
+
+        <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
 
         <main className="main-page">
           <Routes>
