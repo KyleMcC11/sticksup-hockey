@@ -773,3 +773,33 @@ body {
 .leader-line {
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- teams page: stop mid-word breaks + stack info fields ---------- */
+
+.team-card-main h3 {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  line-height: 1.05;
+  font-size: 1.22rem;
+}
+
+.team-card-info div {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.team-card-info span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1f5f43;
+}
+
+.team-card-info strong {
+  text-align: left;
+  font-weight: 700;
+}
