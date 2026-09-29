@@ -9,10 +9,7 @@ function LineupsPage() {
 
         <h2>Select a Team</h2>
 
-        <p>
-          Select a QMJHL team to view players loaded from the CSV statistics
-          file. Lines are projected using player positions and point totals.
-        </p>
+        <p>Pick a team to see its projected lineups.</p>
       </section>
 
       <section className="team-select-grid">
@@ -40,7 +37,7 @@ function LineupsPage() {
             </div>
 
             <div className="team-select-footer">
-              <span>CSV roster</span>
+              <span>Live roster</span>
               <strong>View Roster</strong>
             </div>
           </Link>
