@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { teams } from "../data/teams.js";
 import loadPlayerStats from "../data/loadPlayerStats.js";
 import loadGoalieStats from "../data/loadGoalieStats.js";
+import loadRosters from "../data/loadRosters.js";
 import LineupCard from "../components/LineupCard.jsx";
 
 const TEAM_STATS_CODES = {
@@ -168,9 +169,10 @@ function TeamLineupPage() {
         setLoading(true);
         setErrorMessage("");
 
-        const [allSkaters, allGoalies] = await Promise.all([
+        const [allSkaters, allGoalies, rostersByTeam] = await Promise.all([
           loadPlayerStats(),
           loadGoalieStats(),
+          loadRosters(),
         ]);
 
         if (!pageIsActive) {
@@ -192,6 +194,7 @@ function TeamLineupPage() {
           forwards: buildForwardLines(teamSkaters),
           defense: buildDefensePairs(teamSkaters),
           goalies: buildGoalieList(teamGoalies),
+          roster: rostersByTeam[team.slug] || [],
           status: "Projected",
         });
       } catch (error) {
@@ -275,6 +278,52 @@ function TeamLineupPage() {
       <section className="single-lineup-page">
         <LineupCard team={displayTeam} />
       </section>
+
+      {displayTeam.roster.length > 0 && (
+        <section className="scores-section">
+          <p className="section-label">
+            {displayTeam.roster.length} players
+          </p>
+          <h3>Full Roster</h3>
+
+          <div className="roster-table-wrap">
+            <table className="roster-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Player</th>
+                  <th>Pos</th>
+                  <th>Age</th>
+                  <th>Ht</th>
+                  <th>Wt</th>
+                  <th>S/C</th>
+                  <th>Birthplace</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {displayTeam.roster.map((player) => (
+                  <tr key={player.id || player.name}>
+                    <td>{player.jersey}</td>
+                    <td className="roster-name">
+                      {player.name}
+                      {player.rookie && (
+                        <span className="roster-rookie">R</span>
+                      )}
+                    </td>
+                    <td>{player.position}</td>
+                    <td>{player.age ?? "–"}</td>
+                    <td>{player.height || "–"}</td>
+                    <td>{player.weight || "–"}</td>
+                    <td>{player.shoots || "–"}</td>
+                    <td>{player.birthplace || "–"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
     </>
   );
 }

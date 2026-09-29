@@ -14,6 +14,7 @@ function Sidebar() {
         <NavLink to="/goalies">Goalies</NavLink>
         <NavLink to="/teams">Teams</NavLink>
         <NavLink to="/standings">Standings</NavLink>
+        <NavLink to="/scores">Scores</NavLink>
       </nav>
 
       <div className="sidebar-footer">

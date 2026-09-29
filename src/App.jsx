@@ -10,6 +10,8 @@ import TeamLineupPage from "./pages/TeamLineupPage.jsx";
 import GoaliesPage from "./pages/GoaliesPage.jsx";
 import TeamsPage from "./pages/TeamsPage.jsx";
 import StandingsPage from "./pages/StandingsPage.jsx";
+import ScoresPage from "./pages/ScoresPage.jsx";
+import GameDetailPage from "./pages/GameDetailPage.jsx";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/goalies" element={<GoaliesPage />} />
             <Route path="/teams" element={<TeamsPage />} />
             <Route path="/standings" element={<StandingsPage />} />
+            <Route path="/scores" element={<ScoresPage />} />
+            <Route path="/game/:gameId" element={<GameDetailPage />} />
           </Routes>
         </main>
       </div>

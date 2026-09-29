@@ -803,3 +803,303 @@ body {
   text-align: left;
   font-weight: 700;
 }
+
+/* ---------- scores & schedule ---------- */
+
+.scores-section {
+  margin: 32px 0;
+}
+
+.scores-section h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--desk-ink);
+  border-bottom: 2px solid var(--desk-green);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+.scores-day h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--desk-green);
+  margin: 20px 0 8px;
+}
+
+.scores-game {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 8px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.scores-game:hover {
+  border-color: var(--desk-green);
+}
+
+.scores-game-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scores-game-date {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.scores-game-matchup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.05rem;
+}
+
+.scores-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.scores-team img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.scores-game-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--desk-ink);
+}
+
+.scores-game-dash {
+  color: #9ca3af;
+}
+
+.scores-game-vs {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #9ca3af;
+}
+
+.scores-game-venue {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.scores-game-link {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--desk-green);
+  white-space: nowrap;
+}
+
+.scores-empty {
+  color: #6b7280;
+  padding: 12px 0;
+}
+
+/* ---------- game detail ---------- */
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.game-header-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 260px;
+  text-align: center;
+}
+
+.game-header-team img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.game-header-team h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.game-header-score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.2rem;
+  color: var(--desk-ink);
+  white-space: nowrap;
+}
+
+.game-header-score span {
+  color: #9ca3af;
+  margin: 0 6px;
+}
+
+.game-header-vs {
+  font-size: 1.4rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.game-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.game-event {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 4px;
+  border-bottom: 1px solid #eef0f2;
+  flex-wrap: wrap;
+}
+
+.game-event-time {
+  min-width: 92px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.game-event-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.game-event-team img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.game-event-assists {
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.game-event-badges {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.game-badge {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  background: var(--desk-green);
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.game-event-score {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--desk-ink);
+  white-space: nowrap;
+}
+
+/* ---------- roster table ---------- */
+
+.roster-table-wrap {
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.roster-table thead th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--desk-green);
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.roster-table tbody td {
+  padding: 9px 12px;
+  border-top: 1px solid #eef0f2;
+  white-space: nowrap;
+}
+
+.roster-table tbody tr:first-child td {
+  border-top: none;
+}
+
+.roster-table .roster-name {
+  font-weight: 700;
+  white-space: normal;
+}
+
+.roster-rookie {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--desk-green);
+  border: 1px solid var(--desk-green);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
