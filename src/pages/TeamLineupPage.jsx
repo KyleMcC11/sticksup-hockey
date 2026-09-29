@@ -101,7 +101,7 @@ function buildForwardLines(teamSkaters) {
 
   const lines = [];
 
-  for (let lineIndex = 0; lineIndex < 3; lineIndex++) {
+  for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
     const line = [
       takeFrom(leftWingers) || takeAnyForward(),
       takeFrom(centers) || takeAnyForward(),
