@@ -1,10 +1,13 @@
-"""Fetch the latest QMJHL skater stats and save them as the CSV the website reads.
+"""Fetch the latest QMJHL stats and save the CSVs the website reads.
 
-The site (src/data/loadPlayerStats.js via src/pages/TeamLineupPage.jsx) loads
-exactly one data file: public/data/qmjhl_player_stats.csv. This script
-replaces the old manual Excel export — it pulls the same columns straight
-from the HockeyTech feed (via the scrapernhl package) and overwrites that
-CSV, so the site picks up fresh numbers with zero frontend changes.
+The site loads three data files:
+  - public/data/qmjhl_player_stats.csv  (skaters, via src/data/loadPlayerStats.js)
+  - public/data/qmjhl_goalie_stats.csv  (goalies, via src/data/loadGoalieStats.js)
+  - public/data/qmjhl_standings.csv     (standings, via src/data/loadStandings.js)
+
+This script replaces the old manual Excel exports — it pulls the same columns
+straight from the HockeyTech feed (via the scrapernhl package) and overwrites
+those CSVs, so the site picks up fresh numbers with zero manual work.
 
 Run by .github/workflows/scrape.yml every morning; also runnable by hand:
 
@@ -39,37 +42,75 @@ project_root = Path(__file__).resolve().parents[1]
 data_folder = project_root / "public" / "data"
 data_folder.mkdir(parents=True, exist_ok=True)
 
-# The one file the website reads — keep this name stable.
-csv_file = data_folder / "qmjhl_player_stats.csv"
+# The files the website reads — keep these names stable.
+SKATERS_CSV = data_folder / "qmjhl_player_stats.csv"
+GOALIES_CSV = data_folder / "qmjhl_goalie_stats.csv"
+STANDINGS_CSV = data_folder / "qmjhl_standings.csv"
 
 qmjhl = HockeyScraper("qmjhl")
 
 
-def fetch_and_save(season_id: int, season_type: str) -> bool:
-    """Fetch QMJHL skater statistics and overwrite the website's CSV."""
+def fetch_and_save(
+    season_id: int,
+    season_type: str,
+    position: str,
+    csv_file: Path,
+) -> bool:
+    """Fetch QMJHL statistics for one position group and overwrite its CSV."""
 
     try:
         print(
             f"Fetching {season_start}-{season_start + 1} "
-            f"{season_type.upper()} skater statistics..."
+            f"{season_type.upper()} {position} statistics..."
         )
 
         players = qmjhl.player_stats(
             season=season_id,
-            position="skaters",
+            position=position,
         )
 
         if players is None or len(players) == 0:
-            print("Feed returned no players — leaving the existing CSV untouched.")
+            print(f"Feed returned no {position} — leaving {csv_file.name} untouched.")
             return False
 
         players.to_csv(csv_file, index=False, encoding="utf-8")
 
-        print(f"Wrote {len(players)} players to {csv_file}")
+        print(f"Wrote {len(players)} {position} to {csv_file}")
         return True
 
     except Exception as error:
-        print(f"Could not fetch {season_type} statistics: {error}")
+        print(f"Could not fetch {season_type} {position} statistics: {error}")
+        print(f"Leaving {csv_file.name} untouched.")
+        return False
+
+
+def fetch_season(season_id: int, season_type: str) -> None:
+    """Fetch skaters and goalies for one season."""
+    fetch_and_save(season_id, season_type, "skaters", SKATERS_CSV)
+    fetch_and_save(season_id, season_type, "goalies", GOALIES_CSV)
+
+
+def fetch_standings() -> bool:
+    """Fetch the regular-season standings and overwrite the website's CSV."""
+
+    try:
+        print(
+            f"Fetching {season_start}-{season_start + 1} standings..."
+        )
+
+        standings = qmjhl.standings(season=regular_season_id)
+
+        if standings is None or len(standings) == 0:
+            print("Feed returned no standings — leaving the CSV untouched.")
+            return False
+
+        standings.to_csv(STANDINGS_CSV, index=False, encoding="utf-8")
+
+        print(f"Wrote {len(standings)} teams to {STANDINGS_CSV}")
+        return True
+
+    except Exception as error:
+        print(f"Could not fetch standings: {error}")
         print("Leaving the existing CSV untouched.")
         return False
 
@@ -89,14 +130,17 @@ elif (
     or 1 <= month <= 3
 ):
     print("Regular season")
-    fetch_and_save(regular_season_id, "regular")
+    fetch_season(regular_season_id, "regular")
+    fetch_standings()
 
 elif 4 <= month <= 6:
     print("Playoffs")
-    fetch_and_save(playoff_id, "playoffs")
+    fetch_season(playoff_id, "playoffs")
+    fetch_standings()
 
 else:
     print("Off-season — collecting final statistics")
-    fetch_and_save(regular_season_id, "regular")
+    fetch_season(regular_season_id, "regular")
+    fetch_standings()
 
 print("-" * 50)

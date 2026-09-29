@@ -1,9 +1,10 @@
 name: Refresh QMJHL stats
 
-# Pulls fresh skater stats from the HockeyTech feed every morning, saves them
-# as public/data/qmjhl_player_stats.csv (the file the site reads), commits the
-# CSV back to the repo, and redeploys the site to GitHub Pages — so the numbers
-# stay current with zero manual Excel work.
+# Pulls fresh skater + goalie stats from the HockeyTech feed every morning,
+# saves them as public/data/qmjhl_player_stats.csv and
+# public/data/qmjhl_goalie_stats.csv (the files the site reads), commits the
+# CSVs back to the repo, and redeploys the site to GitHub Pages — so the
+# numbers stay current with zero manual Excel work.
 #
 # Note: pushes made with GITHUB_TOKEN do not trigger other workflows, so this
 # job builds and deploys to Pages itself instead of relying on deploy.yml.
@@ -43,13 +44,13 @@ jobs:
       - name: Install scraper dependencies
         run: pip install -r requirements.txt
 
-      - name: Fetch latest QMJhl skater stats
+      - name: Fetch latest QMJHL skater + goalie stats
         run: python scraper/fetch_qmjhl.py
 
-      - name: Commit updated stats CSV
+      - name: Commit updated stats CSVs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: public/data/qmjhl_player_stats.csv
+          file_pattern: public/data/*.csv
           commit_message: "chore: refresh QMJHL player stats"
 
       - name: Set up Node

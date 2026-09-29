@@ -1,10 +1,29 @@
 import { teams } from "../data/teams.js";
-import { lineupTeams } from "../data/lineups.js";
 
 function getNumericStat(value) {
   const number = Number(value);
 
   return Number.isFinite(number) ? number : 0;
+}
+
+function formatSavePercentage(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "--";
+  }
+
+  return number.toFixed(3).replace(/^0/, "");
+}
+
+function formatGoalsAgainstAverage(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "--";
+  }
+
+  return number.toFixed(2);
 }
 
 function getLogoPath(logo) {
@@ -25,95 +44,6 @@ function getLogoPath(logo) {
   return `${import.meta.env.BASE_URL}${cleanLogoPath}`;
 }
 
-function normalizeName(name) {
-  return String(name || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
-}
-
-function findMatchingPlayer(player, suppliedPlayers) {
-  if (!player) {
-    return null;
-  }
-
-  if (player.id !== null && player.id !== undefined) {
-    const matchingIdPlayer = suppliedPlayers.find((suppliedPlayer) => {
-      return (
-        suppliedPlayer?.id !== null &&
-        suppliedPlayer?.id !== undefined &&
-        String(suppliedPlayer.id) === String(player.id)
-      );
-    });
-
-    if (matchingIdPlayer) {
-      return matchingIdPlayer;
-    }
-  }
-
-  const playerName = normalizeName(player.name);
-
-  return suppliedPlayers.find((suppliedPlayer) => {
-    return normalizeName(suppliedPlayer?.name) === playerName;
-  });
-}
-
-/*
- * Keeps the line structure from lineups.js.
- *
- * This is important because lineups.js contains four forward
- * lines. Any statistics already attached to the incoming team
- * are merged onto the matching players.
- */
-function mergeLineupRows(baseRows, suppliedRows) {
-  const validBaseRows = Array.isArray(baseRows)
-    ? baseRows
-    : [];
-
-  const validSuppliedRows = Array.isArray(suppliedRows)
-    ? suppliedRows
-    : [];
-
-  if (validBaseRows.length === 0) {
-    return validSuppliedRows;
-  }
-
-  const suppliedPlayers = validSuppliedRows
-    .flat()
-    .filter(Boolean);
-
-  return validBaseRows.map((row) => {
-    if (!Array.isArray(row)) {
-      return [];
-    }
-
-    return row.map((basePlayer) => {
-      const matchingPlayer = findMatchingPlayer(
-        basePlayer,
-        suppliedPlayers
-      );
-
-      if (!matchingPlayer) {
-        return basePlayer;
-      }
-
-      return {
-        ...basePlayer,
-        ...matchingPlayer,
-
-        // Preserve the lineup name and number.
-        name: basePlayer.name,
-        number:
-          basePlayer.number ??
-          matchingPlayer.number ??
-          matchingPlayer.jerseyNumber ??
-          "--",
-      };
-    });
-  });
-}
-
 function getCompleteTeam(lineupTeam) {
   const slug = lineupTeam?.slug;
 
@@ -121,63 +51,27 @@ function getCompleteTeam(lineupTeam) {
     return team.slug === slug;
   });
 
-  const matchingLineup = lineupTeams.find((team) => {
-    return team.slug === slug;
-  });
-
-  const forwards = mergeLineupRows(
-    matchingLineup?.forwards,
-    lineupTeam?.forwards
-  );
-
-  const defense = mergeLineupRows(
-    matchingLineup?.defense,
-    lineupTeam?.defense
-  );
-
   return {
     ...(matchingTeam || {}),
-    ...(matchingLineup || {}),
     ...(lineupTeam || {}),
 
-    logo:
-      matchingTeam?.logo ||
-      matchingLineup?.logo ||
-      lineupTeam?.logo ||
-      "",
+    logo: matchingTeam?.logo || lineupTeam?.logo || "",
 
     primary:
-      matchingTeam?.primary ||
-      matchingLineup?.primary ||
-      lineupTeam?.primary ||
-      "#1f5f43",
+      matchingTeam?.primary || lineupTeam?.primary || "#1f5f43",
 
     secondary:
-      matchingTeam?.secondary ||
-      matchingLineup?.secondary ||
-      lineupTeam?.secondary ||
-      "#ffffff",
+      matchingTeam?.secondary || lineupTeam?.secondary || "#ffffff",
 
     accent:
-      matchingTeam?.accent ||
-      matchingLineup?.accent ||
-      lineupTeam?.accent ||
-      "#ffffff",
+      matchingTeam?.accent || lineupTeam?.accent || "#ffffff",
 
-    forwards,
-    defense,
+    forwards: lineupTeam?.forwards || [],
+    defense: lineupTeam?.defense || [],
 
-    goalie:
-      matchingLineup?.goalie ||
-      lineupTeam?.goalie ||
-      matchingTeam?.goalie ||
-      "TBD",
+    goalie: lineupTeam?.goalie || matchingTeam?.goalie || "TBD",
 
-    goalies:
-      lineupTeam?.goalies ||
-      matchingLineup?.goalies ||
-      matchingTeam?.goalies ||
-      [],
+    goalies: lineupTeam?.goalies || matchingTeam?.goalies || [],
   };
 }
 
@@ -365,18 +259,20 @@ function PlayerCard({
             />
 
             <PlayerStat
-              label="Goals"
-              value={player.goals}
+              label="Wins"
+              value={player.wins ?? 0}
             />
 
             <PlayerStat
-              label="Assists"
-              value={player.assists}
+              label="SV%"
+              value={formatSavePercentage(player.savePercentage)}
             />
 
             <PlayerStat
-              label="Points"
-              value={player.points}
+              label="GAA"
+              value={formatGoalsAgainstAverage(
+                player.goalsAgainstAverage
+              )}
             />
           </>
         ) : (
