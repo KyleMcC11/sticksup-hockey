@@ -1,4 +1,5 @@
 import { teams } from "../data/teams.js";
+import PlayerLink from "./PlayerLink.jsx";
 
 function getNumericStat(value) {
   const number = Number(value);
@@ -245,7 +246,7 @@ function PlayerCard({
       />
 
       <h3 className="stats-player-name">
-        {player.name}
+        <PlayerLink playerId={player.id} name={player.name} />
       </h3>
 
       <span className="lineup-row-position">
@@ -517,8 +518,8 @@ function LineupCard({ team: lineupTeam }) {
               <span>Points Leader</span>
 
               <strong>
-                {teamLeader.name} ·{" "}
-                {teamLeader.points} PTS
+                <PlayerLink playerId={teamLeader.id} name={teamLeader.name} />{" "}
+                · {teamLeader.points} PTS
               </strong>
             </div>
           </div>

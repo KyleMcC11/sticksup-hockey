@@ -6,6 +6,7 @@ import loadPlayerStats from "../data/loadPlayerStats.js";
 import loadGoalieStats from "../data/loadGoalieStats.js";
 import loadRosters from "../data/loadRosters.js";
 import LineupCard from "../components/LineupCard.jsx";
+import PlayerLink from "../components/PlayerLink.jsx";
 
 const TEAM_STATS_CODES = {
   halifax: "Hal",
@@ -228,7 +229,7 @@ function TeamLineupPage() {
           <p>This team does not have a lineup available yet.</p>
         </section>
 
-        <Link className="back-link" to="/lineups">
+        <Link className="back-link" to="/teams">
           ← Back to all teams
         </Link>
       </>
@@ -238,7 +239,7 @@ function TeamLineupPage() {
   if (loading) {
     return (
       <>
-        <Link className="back-link" to="/lineups">
+        <Link className="back-link" to="/teams">
           ← Back to all teams
         </Link>
 
@@ -262,7 +263,7 @@ function TeamLineupPage() {
           <p>{errorMessage}</p>
         </section>
 
-        <Link className="back-link" to="/lineups">
+        <Link className="back-link" to="/teams">
           ← Back to all teams
         </Link>
       </>
@@ -271,7 +272,7 @@ function TeamLineupPage() {
 
   return (
     <>
-      <Link className="back-link" to="/lineups">
+      <Link className="back-link" to="/teams">
         ← Back to all teams
       </Link>
 
@@ -306,7 +307,7 @@ function TeamLineupPage() {
                   <tr key={player.id || player.name}>
                     <td>{player.jersey}</td>
                     <td className="roster-name">
-                      {player.name}
+                      <PlayerLink playerId={player.id} name={player.name} />
                       {player.rookie && (
                         <span className="roster-rookie">R</span>
                       )}

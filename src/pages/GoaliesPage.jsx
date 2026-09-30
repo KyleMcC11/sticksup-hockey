@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { teams } from "../data/teams.js";
 import loadGoalieStats from "../data/loadGoalieStats.js";
+import PlayerLink from "../components/PlayerLink.jsx";
 
 const TEAM_STATS_CODES = {
   halifax: "Hal",
@@ -291,7 +292,9 @@ function GoaliesPage() {
                     <tr key={goalie.id || `${goalie.name}-${index}`}>
                       <td>{index + 1}</td>
                       <td>
-                        <strong>{goalie.name}</strong>
+                        <strong>
+                          <PlayerLink playerId={goalie.id} name={goalie.name} />
+                        </strong>
                       </td>
                       <td>{teamName(goalie.teamCode)}</td>
                       <td>{goalie.gamesPlayed}</td>

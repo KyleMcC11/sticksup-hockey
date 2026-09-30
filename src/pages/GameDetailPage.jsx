@@ -3,6 +3,12 @@ import { Link, useParams } from "react-router-dom";
 
 import loadSchedule from "../data/loadSchedule.js";
 import loadGameEvents from "../data/loadGameEvents.js";
+import loadPlayerStats from "../data/loadPlayerStats.js";
+import {
+  buildPlayerNameIndex,
+  findPlayerId,
+} from "../data/playerNames.js";
+import PlayerLink from "../components/PlayerLink.jsx";
 import { findTeamByFeedCode } from "../data/teamCodes.js";
 
 function logoUrl(logo) {
@@ -21,9 +27,9 @@ function ordinalPeriod(period) {
   return `${period}${period === 1 ? "st" : period === 2 ? "nd" : "rd"}`;
 }
 
-function GoalRow({ event, homeTeam, awayTeam }) {
+function GoalRow({ event, homeTeam, awayTeam, nameIndex }) {
   const team = findTeamByFeedCode(event.teamCode);
-  const assists = [event.assist1, event.assist2].filter(Boolean).join(", ");
+  const assists = [event.assist1, event.assist2].filter(Boolean);
 
   return (
     <li className="game-event">
@@ -35,8 +41,28 @@ function GoalRow({ event, homeTeam, awayTeam }) {
         {team && logoUrl(team.logo) && (
           <img src={logoUrl(team.logo)} alt={`${team.fullName} logo`} />
         )}
-        <strong>{event.scorer}</strong>
-        {assists && <span className="game-event-assists"> ({assists})</span>}
+        <strong>
+          <PlayerLink
+            playerId={findPlayerId(event.scorer, nameIndex)}
+            name={event.scorer}
+          />
+        </strong>
+        {assists.length > 0 && (
+          <span className="game-event-assists">
+            {" "}
+            (
+            {assists.map((name, index) => (
+              <span key={`${name}-${index}`}>
+                {index > 0 && ", "}
+                <PlayerLink
+                  playerId={findPlayerId(name, nameIndex)}
+                  name={name}
+                />
+              </span>
+            ))}
+            )
+          </span>
+        )}
       </span>
 
       <span className="game-event-badges">
@@ -83,6 +109,7 @@ function GameDetailPage() {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
   const [events, setEvents] = useState([]);
+  const [nameIndex, setNameIndex] = useState(new Map());
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -94,9 +121,10 @@ function GameDetailPage() {
         setLoading(true);
         setErrorMessage("");
 
-        const [schedule, eventsByGame] = await Promise.all([
+        const [schedule, eventsByGame, players] = await Promise.all([
           loadSchedule(),
           loadGameEvents(),
+          loadPlayerStats(),
         ]);
 
         if (!pageIsActive) {
@@ -110,6 +138,7 @@ function GameDetailPage() {
         } else {
           setGame(found);
           setEvents(eventsByGame[gameId] || []);
+          setNameIndex(buildPlayerNameIndex(players));
         }
       } catch (error) {
         console.error(error);
@@ -223,6 +252,7 @@ function GameDetailPage() {
                 event={event}
                 homeTeam={game.homeTeam}
                 awayTeam={game.awayTeam}
+                nameIndex={nameIndex}
               />
             ))}
           </ul>

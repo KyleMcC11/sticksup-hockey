@@ -18,20 +18,26 @@ function Sidebar({ open, onClose }) {
           <NavLink to="/" onClick={onClose}>
             Home
           </NavLink>
-          <NavLink to="/lineups" onClick={onClose}>
-            Lineups
+          <NavLink to="/last-night" onClick={onClose}>
+            Last Night
           </NavLink>
-          <NavLink to="/goalies" onClick={onClose}>
-            Goalies
-          </NavLink>
-          <NavLink to="/teams" onClick={onClose}>
-            Teams
+          <NavLink to="/scores" onClick={onClose}>
+            Scores
           </NavLink>
           <NavLink to="/standings" onClick={onClose}>
             Standings
           </NavLink>
-          <NavLink to="/scores" onClick={onClose}>
-            Scores
+          <NavLink to="/teams" onClick={onClose}>
+            Teams
+          </NavLink>
+          <NavLink to="/goalies" onClick={onClose}>
+            Goalies
+          </NavLink>
+          <NavLink to="/rookies" onClick={onClose}>
+            Rookies
+          </NavLink>
+          <NavLink to="/streaks" onClick={onClose}>
+            Streaks
           </NavLink>
         </nav>
 

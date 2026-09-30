@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { teams } from "../data/teams.js";
 import loadPlayerStats from "../data/loadPlayerStats.js";
 import loadStandings from "../data/loadStandings.js";
+import PlayerLink from "../components/PlayerLink.jsx";
 
 const TEAM_STATS_CODES = {
   halifax: "Hal",
@@ -137,7 +138,7 @@ function HomePage() {
           <section className="home-card">
             <div className="home-card-head">
               <h3>Scoring Leaders</h3>
-              <Link to="/lineups">All teams</Link>
+              <Link to="/teams">All teams</Link>
             </div>
 
             <ol className="leaders-list">
@@ -146,7 +147,9 @@ function HomePage() {
                   <span className="leader-rank">{index + 1}</span>
 
                   <span className="leader-main">
-                    <strong>{player.name}</strong>
+                    <strong>
+                      <PlayerLink playerId={player.id} name={player.name} />
+                    </strong>
                     <span>
                       {teamLabel(player.teamCode)}
                       {player.position
