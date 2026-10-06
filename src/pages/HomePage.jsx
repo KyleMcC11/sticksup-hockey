@@ -53,6 +53,25 @@ function teamLabel(code) {
   return team ? team.abbreviation : code;
 }
 
+function formatStatsUpdated(value) {
+  if (!value) {
+    return "";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date
+    .toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    })
+    .toUpperCase();
+}
+
 function HomePage() {
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -62,6 +81,8 @@ function HomePage() {
   });
   const [leaders, setLeaders] = useState([]);
   const [standings, setStandings] = useState([]);
+  const [showAllLeaders, setShowAllLeaders] = useState(false);
+  const [statsUpdated, setStatsUpdated] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -88,7 +109,7 @@ function HomePage() {
               b.gamesPlayed - a.gamesPlayed
             );
           })
-          .slice(0, 5);
+          .slice(0, 50);
 
         const rankedTeams = [...table]
           .sort((a, b) => {
@@ -98,6 +119,7 @@ function HomePage() {
 
         setLeaders(rankedSkaters);
         setStandings(rankedTeams);
+        setStatsUpdated(formatStatsUpdated(players[0]?.scrapedAt));
       } catch (err) {
         if (!cancelled) {
           setError("Could not load live stats right now.");
@@ -121,6 +143,15 @@ function HomePage() {
       <section className="home-hero">
         <p className="home-dateline">
           {today} &middot; QMJHL 2026&ndash;27
+          {statsUpdated && (
+            <>
+              {" "}
+              &middot;{" "}
+              <span className="home-dateline-fresh">
+                Stats updated {statsUpdated}
+              </span>
+            </>
+          )}
         </p>
         <h2>Sticks Up Hockey</h2>
         <p>
@@ -142,32 +173,70 @@ function HomePage() {
             </div>
 
             <ol className="leaders-list">
-              {leaders.map((player, index) => (
-                <li key={player.id || `${player.name}-${index}`}>
-                  <span className="leader-rank">{index + 1}</span>
+              {(showAllLeaders ? leaders : leaders.slice(0, 10)).map(
+                (player, index) => {
+                  const team = teamByCode[player.teamCode];
+                  const primary = team?.primary || "#1c1c21";
+                  const logo = logoUrl(team?.logo);
 
-                  <span className="leader-main">
-                    <strong>
-                      <PlayerLink playerId={player.id} name={player.name} />
-                    </strong>
-                    <span>
-                      {teamLabel(player.teamCode)}
-                      {player.position
-                        ? ` \u00B7 ${player.position}`
-                        : ""}
-                    </span>
-                  </span>
+                  return (
+                    <li
+                      key={player.id || `${player.name}-${index}`}
+                      className="leader-row-team"
+                      style={{
+                        "--team-color": primary,
+                        background: `linear-gradient(90deg, ${primary}26 0%, transparent 70%)`,
+                      }}
+                    >
+                      {logo && (
+                        <img
+                          className="leader-team-watermark"
+                          src={logo}
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                        />
+                      )}
 
-                  <span className="leader-line">
-                    {player.goals}G &middot; {player.assists}A
-                  </span>
+                      <span className="leader-rank">{index + 1}</span>
 
-                  <strong className="leader-points">
-                    {player.points} PTS
-                  </strong>
-                </li>
-              ))}
+                      <span className="leader-main">
+                        <strong>
+                          <PlayerLink
+                            playerId={player.id}
+                            name={player.name}
+                          />
+                        </strong>
+                        <span>
+                          {teamLabel(player.teamCode)}
+                          {player.position
+                            ? ` \u00B7 ${player.position}`
+                            : ""}
+                        </span>
+                      </span>
+
+                      <span className="leader-line">
+                        {player.goals}G &middot; {player.assists}A
+                      </span>
+
+                      <strong className="leader-points">
+                        {player.points} PTS
+                      </strong>
+                    </li>
+                  );
+                }
+              )}
             </ol>
+
+            {leaders.length > 10 && (
+              <button
+                type="button"
+                className="leaders-toggle"
+                onClick={() => setShowAllLeaders((open) => !open)}
+              >
+                {showAllLeaders ? "Show top 10" : "View top 50"}
+              </button>
+            )}
           </section>
 
           <section className="home-card">

@@ -113,6 +113,7 @@ async function loadPlayerStats() {
 
         rank: Number(player.rank) || 0,
         season: cleanText(player.seasonName),
+        scrapedAt: cleanText(player.scraped_at),
       };
     });
 }

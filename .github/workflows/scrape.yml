@@ -11,8 +11,10 @@ name: Refresh QMJHL stats
 
 on:
   schedule:
-    # 7:00 AM Atlantic time (10:00 UTC) daily, during the season
-    - cron: "0 10 * * *"
+    # 5:00 AM Atlantic time (8:00 UTC) daily, during the season.
+    # Note: GitHub often starts scheduled runs hours late, so the actual
+    # run usually lands mid-morning/midday, not at 5 AM sharp.
+    - cron: "0 8 * * *"
   workflow_dispatch:
 
 permissions:

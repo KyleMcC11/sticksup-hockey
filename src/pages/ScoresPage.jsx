@@ -141,7 +141,7 @@ function ScoresPage() {
     });
   }, [games, teamFilter]);
 
-  const { upcoming, finalsByDay } = useMemo(() => {
+  const { upcomingByDay, finalsByDay } = useMemo(() => {
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
 
@@ -154,21 +154,28 @@ function ScoresPage() {
       .slice()
       .reverse();
 
-    const grouped = [];
-    const byDay = new Map();
+    function groupByDay(games) {
+      const grouped = [];
+      const byDay = new Map();
 
-    finals.forEach((game) => {
-      const dayKey = game.date.toISOString().slice(0, 10);
+      games.forEach((game) => {
+        const dayKey = game.date.toISOString().slice(0, 10);
 
-      if (!byDay.has(dayKey)) {
-        byDay.set(dayKey, { date: game.date, games: [] });
-        grouped.push(byDay.get(dayKey));
-      }
+        if (!byDay.has(dayKey)) {
+          byDay.set(dayKey, { date: game.date, games: [] });
+          grouped.push(byDay.get(dayKey));
+        }
 
-      byDay.get(dayKey).games.push(game);
-    });
+        byDay.get(dayKey).games.push(game);
+      });
 
-    return { upcoming: upcomingGames, finalsByDay: grouped.slice(0, 14) };
+      return grouped;
+    }
+
+    return {
+      upcomingByDay: groupByDay(upcomingGames).slice(0, 14),
+      finalsByDay: groupByDay(finals).slice(0, 14),
+    };
   }, [filteredGames]);
 
   return (
@@ -209,14 +216,19 @@ function ScoresPage() {
           <section className="scores-section">
             <h3>Upcoming Games</h3>
 
-            {upcoming.length === 0 && (
+            {upcomingByDay.length === 0 && (
               <p className="scores-empty">
                 No upcoming games on the schedule.
               </p>
             )}
 
-            {upcoming.slice(0, 12).map((game) => (
-              <GameCard key={game.id} game={game} showDate />
+            {upcomingByDay.map((day) => (
+              <div key={day.date.toISOString()} className="scores-day">
+                <h4>{formatDay(day.date)}</h4>
+                {day.games.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
             ))}
           </section>
 
