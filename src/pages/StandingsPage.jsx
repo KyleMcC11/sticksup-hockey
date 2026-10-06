@@ -30,6 +30,13 @@ function getConference(code) {
   return (matchingTeam?.division || "").replace(" Conference", "");
 }
 
+function teamForCode(code) {
+  const abbreviation =
+    CODE_TO_ABBREVIATION[code] || String(code || "").toUpperCase();
+
+  return teams.find((entry) => entry.abbreviation === abbreviation);
+}
+
 function getDiff(team) {
   return team.gf - team.ga;
 }
@@ -80,9 +87,16 @@ function StandingsTable({ title, teamsList }) {
           <tbody>
             {teamsList.map((team, index) => {
               const diff = getDiff(team);
+              const teamEntry = teamForCode(team.code);
 
               return (
-                <tr key={team.id || team.code}>
+                <tr
+                  key={team.id || team.code}
+                  className="team-row-subtle"
+                  style={{
+                    "--team-color": teamEntry?.primary || "transparent",
+                  }}
+                >
                   <td>{index + 1}</td>
 
                   <td className="team-column">

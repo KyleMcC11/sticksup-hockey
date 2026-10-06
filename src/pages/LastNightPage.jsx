@@ -10,6 +10,7 @@ import {
 } from "../data/playerNames.js";
 import PlayerLink from "../components/PlayerLink.jsx";
 import { findTeamByFeedCode } from "../data/teamCodes.js";
+import { teamRowStyle, TeamWatermark } from "../components/TeamStyle.jsx";
 
 function formatDayLabel(dateKey) {
   const [year, month, day] = dateKey.split("-").map(Number);
@@ -85,6 +86,7 @@ function LastNightPage() {
   const [schedule, setSchedule] = useState([]);
   const [eventsByGame, setEventsByGame] = useState({});
   const [nameIndex, setNameIndex] = useState(new Map());
+  const [teamByPlayerId, setTeamByPlayerId] = useState(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -103,6 +105,14 @@ function LastNightPage() {
           setSchedule(games);
           setEventsByGame(events);
           setNameIndex(buildPlayerNameIndex(players));
+          setTeamByPlayerId(
+            new Map(
+              players.map((player) => [
+                String(player.id),
+                player.teamCode,
+              ])
+            )
+          );
         }
       } catch (err) {
         if (!cancelled) {
@@ -199,20 +209,31 @@ function LastNightPage() {
                   <div className="lastnight-stars">
                     <h4>Three stars</h4>
                     <ol>
-                      {stars.map((star, index) => (
-                        <li key={`${star.name}-${index}`}>
-                          <span className="lastnight-star-rank">
-                            {index + 1}
-                          </span>
-                          <PlayerLink
-                            playerId={star.playerId}
-                            name={star.name}
-                          />
-                          <span className="lastnight-star-line">
-                            {star.goals}G, {star.assists}A
-                          </span>
-                        </li>
-                      ))}
+                      {stars.map((star, index) => {
+                        const team = findTeamByFeedCode(
+                          teamByPlayerId.get(String(star.playerId))
+                        );
+
+                        return (
+                          <li
+                            key={`${star.name}-${index}`}
+                            className="team-row"
+                            style={teamRowStyle(team)}
+                          >
+                            <TeamWatermark team={team} />
+                            <span className="lastnight-star-rank">
+                              {index + 1}
+                            </span>
+                            <PlayerLink
+                              playerId={star.playerId}
+                              name={star.name}
+                            />
+                            <span className="lastnight-star-line">
+                              {star.goals}G, {star.assists}A
+                            </span>
+                          </li>
+                        );
+                      })}
                     </ol>
                   </div>
                 )}

@@ -337,29 +337,48 @@ body {
   white-space: nowrap;
 }
 
-/* Team-tinted scoring-leader rows: team color wash + faded logo watermark */
-.leaders-list li.leader-row-team {
+/* Team-tinted rows: team color wash + centered faded logo watermark.
+   Full treatment: className="team-row" + style={teamRowStyle(team)} with a
+   <TeamWatermark> as the first child. Subtle treatment for dense tables:
+   className="team-row-subtle" on the <tr> with --team-color set. */
+.team-row {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  padding: 11px 10px 11px 4px;
   border-left: 4px solid var(--team-color, #e5e7eb);
 }
 
-.leader-team-watermark {
+.team-watermark {
   position: absolute;
-  right: 2px;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
-  height: 66px;
+  transform: translate(-50%, -50%);
+  height: 92px;
   width: auto;
-  opacity: 0.13;
+  opacity: 0.14;
   pointer-events: none;
 }
 
-.leaders-list li.leader-row-team > *:not(.leader-team-watermark) {
+.team-row > *:not(.team-watermark) {
   position: relative;
   z-index: 1;
+}
+
+tr.team-row-subtle > td:first-child {
+  border-left: 3px solid var(--team-color, transparent);
+}
+
+.leaders-list li.team-row {
+  border-radius: 8px;
+  padding: 11px 10px 11px 4px;
+}
+
+.goalie-leader-card.team-row {
+  border-radius: 12px;
+}
+
+.lastnight-stars li.team-row {
+  border-radius: 8px;
+  padding: 8px 10px 8px 6px;
 }
 
 .leaders-toggle {

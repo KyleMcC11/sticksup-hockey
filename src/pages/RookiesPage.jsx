@@ -95,7 +95,15 @@ function RookiesPage() {
                   </thead>
                   <tbody>
                     {rookieSkaters.map((player, index) => (
-                      <tr key={player.id || `${player.name}-${index}`}>
+                      <tr
+                        key={player.id || `${player.name}-${index}`}
+                        className="team-row-subtle"
+                        style={{
+                          "--team-color":
+                            findTeamByFeedCode(player.teamCode)?.primary ||
+                            "transparent",
+                        }}
+                      >
                         <td>{index + 1}</td>
                         <td>
                           <PlayerLink playerId={player.id} name={player.name} />
@@ -136,7 +144,15 @@ function RookiesPage() {
                   </thead>
                   <tbody>
                     {rookieGoalies.map((goalie, index) => (
-                      <tr key={goalie.id || `${goalie.name}-${index}`}>
+                      <tr
+                        key={goalie.id || `${goalie.name}-${index}`}
+                        className="team-row-subtle"
+                        style={{
+                          "--team-color":
+                            findTeamByFeedCode(goalie.teamCode)?.primary ||
+                            "transparent",
+                        }}
+                      >
                         <td>{index + 1}</td>
                         <td>
                           <PlayerLink playerId={goalie.id} name={goalie.name} />

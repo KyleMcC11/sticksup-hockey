@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { teams } from "../data/teams.js";
 import loadGoalieStats from "../data/loadGoalieStats.js";
 import PlayerLink from "../components/PlayerLink.jsx";
+import { teamRowStyle, TeamWatermark } from "../components/TeamStyle.jsx";
 
 const TEAM_STATS_CODES = {
   halifax: "Hal",
@@ -183,7 +184,11 @@ function GoaliesPage() {
       {!loading && !error && goalies.length > 0 && (
         <>
           <section className="goalie-leader-row">
-            <article className="goalie-leader-card">
+            <article
+              className="goalie-leader-card team-row"
+              style={teamRowStyle(teamByCode[bestSavePercentage?.teamCode])}
+            >
+              <TeamWatermark team={teamByCode[bestSavePercentage?.teamCode]} />
               <span>Best Save Percentage</span>
               {bestSavePercentage ? (
                 <>
@@ -200,7 +205,11 @@ function GoaliesPage() {
               )}
             </article>
 
-            <article className="goalie-leader-card">
+            <article
+              className="goalie-leader-card team-row"
+              style={teamRowStyle(teamByCode[mostWins?.teamCode])}
+            >
+              <TeamWatermark team={teamByCode[mostWins?.teamCode]} />
               <span>Most Wins</span>
               {mostWins ? (
                 <>
@@ -215,7 +224,11 @@ function GoaliesPage() {
               )}
             </article>
 
-            <article className="goalie-leader-card">
+            <article
+              className="goalie-leader-card team-row"
+              style={teamRowStyle(teamByCode[bestGaa?.teamCode])}
+            >
+              <TeamWatermark team={teamByCode[bestGaa?.teamCode]} />
               <span>Lowest GAA</span>
               {bestGaa ? (
                 <>
@@ -289,7 +302,14 @@ function GoaliesPage() {
 
                 <tbody>
                   {sortedGoalies.map((goalie, index) => (
-                    <tr key={goalie.id || `${goalie.name}-${index}`}>
+                    <tr
+                      key={goalie.id || `${goalie.name}-${index}`}
+                      className="team-row-subtle"
+                      style={{
+                        "--team-color":
+                          teamByCode[goalie.teamCode]?.primary || "transparent",
+                      }}
+                    >
                       <td>{index + 1}</td>
                       <td>
                         <strong>

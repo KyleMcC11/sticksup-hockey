@@ -279,7 +279,15 @@ function StreaksPage() {
                   </thead>
                   <tbody>
                     {streaks.map((skater) => (
-                      <tr key={skater.id}>
+                      <tr
+                        key={skater.id}
+                        className="team-row-subtle"
+                        style={{
+                          "--team-color":
+                            findTeamByFeedCode(skater.teamCode)?.primary ||
+                            "transparent",
+                        }}
+                      >
                         <td>
                           <PlayerLink playerId={skater.id} name={skater.name} />
                         </td>
@@ -316,7 +324,15 @@ function StreaksPage() {
                   </thead>
                   <tbody>
                     {hottest.map((skater, index) => (
-                      <tr key={skater.id}>
+                      <tr
+                        key={skater.id}
+                        className="team-row-subtle"
+                        style={{
+                          "--team-color":
+                            findTeamByFeedCode(skater.teamCode)?.primary ||
+                            "transparent",
+                        }}
+                      >
                         <td>{index + 1}</td>
                         <td>
                           <PlayerLink playerId={skater.id} name={skater.name} />

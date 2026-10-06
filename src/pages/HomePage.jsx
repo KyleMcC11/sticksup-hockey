@@ -6,6 +6,7 @@ import loadPlayerStats from "../data/loadPlayerStats.js";
 import loadStandings from "../data/loadStandings.js";
 import loadSchedule from "../data/loadSchedule.js";
 import PlayerLink from "../components/PlayerLink.jsx";
+import { teamRowStyle, TeamWatermark } from "../components/TeamStyle.jsx";
 
 const TEAM_STATS_CODES = {
   halifax: "Hal",
@@ -223,27 +224,14 @@ function HomePage() {
               {(showAllLeaders ? leaders : leaders.slice(0, 10)).map(
                 (player, index) => {
                   const team = teamByCode[player.teamCode];
-                  const primary = team?.primary || "#1c1c21";
-                  const logo = logoUrl(team?.logo);
 
                   return (
                     <li
                       key={player.id || `${player.name}-${index}`}
-                      className="leader-row-team"
-                      style={{
-                        "--team-color": primary,
-                        background: `linear-gradient(90deg, ${primary}26 0%, transparent 70%)`,
-                      }}
+                      className="team-row"
+                      style={teamRowStyle(team)}
                     >
-                      {logo && (
-                        <img
-                          className="leader-team-watermark"
-                          src={logo}
-                          alt=""
-                          aria-hidden="true"
-                          loading="lazy"
-                        />
-                      )}
+                      <TeamWatermark team={team} />
 
                       <span className="leader-rank">{index + 1}</span>
 
@@ -304,16 +292,26 @@ function HomePage() {
                 </thead>
 
                 <tbody>
-                  {standings.map((team, index) => (
-                    <tr key={team.id || `${team.code}-${index}`}>
-                      <td>
-                        <strong>{team.team}</strong>
-                      </td>
-                      <td>{team.gp}</td>
-                      <td>{team.w}</td>
-                      <td className="home-pts">{team.pts}</td>
-                    </tr>
-                  ))}
+                  {standings.map((team, index) => {
+                    const teamEntry = teamByCode[team.code];
+
+                    return (
+                      <tr
+                        key={team.id || `${team.code}-${index}`}
+                        className="team-row-subtle"
+                        style={{
+                          "--team-color": teamEntry?.primary || "transparent",
+                        }}
+                      >
+                        <td>
+                          <strong>{team.team}</strong>
+                        </td>
+                        <td>{team.gp}</td>
+                        <td>{team.w}</td>
+                        <td className="home-pts">{team.pts}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </section>
