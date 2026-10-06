@@ -8,7 +8,20 @@ function toInt(value) {
 
 function parseGameDate(row) {
   // The feed provides a real date column plus display pieces as fallback.
-  const raw = row.date;
+  const raw = String(row.date || "").trim();
+
+  // Treat "YYYY-MM-DD" as a local calendar day. Parsing it with
+  // `new Date("YYYY-MM-DD")` would read it as UTC midnight, which then
+  // renders as the previous day for viewers behind UTC (all of Canada).
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(raw);
+
+  if (match) {
+    return new Date(
+      Number(match[1]),
+      Number(match[2]) - 1,
+      Number(match[3])
+    );
+  }
 
   if (raw) {
     const parsed = new Date(raw);

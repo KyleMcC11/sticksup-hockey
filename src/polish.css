@@ -387,6 +387,56 @@ body {
   white-space: nowrap;
 }
 
+/* Right-hand home column: standings stacked over tonight's games */
+.home-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.tonight-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tonight-game {
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.tonight-game:last-child {
+  border-bottom: none;
+}
+
+.tonight-matchup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.tonight-matchup img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex: none;
+}
+
+.tonight-at {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.tonight-meta {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
 .home-mini-table {
   width: 100%;
   border-collapse: collapse;

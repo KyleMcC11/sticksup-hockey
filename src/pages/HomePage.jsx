@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { teams } from "../data/teams.js";
 import loadPlayerStats from "../data/loadPlayerStats.js";
 import loadStandings from "../data/loadStandings.js";
+import loadSchedule from "../data/loadSchedule.js";
 import PlayerLink from "../components/PlayerLink.jsx";
 
 const TEAM_STATS_CODES = {
@@ -72,6 +73,49 @@ function formatStatsUpdated(value) {
     .toUpperCase();
 }
 
+function startOfDay(value) {
+  const day = new Date(value);
+  day.setHours(0, 0, 0, 0);
+  return day;
+}
+
+function pickSpotlightGames(schedule) {
+  const todayStart = startOfDay(new Date()).getTime();
+
+  const upcoming = schedule.filter(
+    (game) => !game.isFinal && game.date && game.date >= new Date(todayStart)
+  );
+
+  const tonight = upcoming.filter(
+    (game) => startOfDay(game.date).getTime() === todayStart
+  );
+
+  if (tonight.length > 0) {
+    return { label: "Tonight", games: tonight };
+  }
+
+  if (upcoming.length === 0) {
+    return { label: "Tonight", games: [] };
+  }
+
+  const nextDay = startOfDay(upcoming[0].date).getTime();
+  const games = upcoming.filter(
+    (game) => startOfDay(game.date).getTime() === nextDay
+  );
+  const diffDays = Math.round((nextDay - todayStart) / 86400000);
+
+  const label =
+    diffDays === 1
+      ? "Tomorrow"
+      : new Date(nextDay).toLocaleDateString("en-US", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+        });
+
+  return { label, games };
+}
+
 function HomePage() {
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -83,6 +127,7 @@ function HomePage() {
   const [standings, setStandings] = useState([]);
   const [showAllLeaders, setShowAllLeaders] = useState(false);
   const [statsUpdated, setStatsUpdated] = useState("");
+  const [spotlight, setSpotlight] = useState({ label: "Tonight", games: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -91,9 +136,10 @@ function HomePage() {
 
     async function loadHomeData() {
       try {
-        const [players, table] = await Promise.all([
+        const [players, table, schedule] = await Promise.all([
           loadPlayerStats(),
           loadStandings(),
+          loadSchedule(),
         ]);
 
         if (cancelled) {
@@ -120,6 +166,7 @@ function HomePage() {
         setLeaders(rankedSkaters);
         setStandings(rankedTeams);
         setStatsUpdated(formatStatsUpdated(players[0]?.scrapedAt));
+        setSpotlight(pickSpotlightGames(schedule));
       } catch (err) {
         if (!cancelled) {
           setError("Could not load live stats right now.");
@@ -239,36 +286,85 @@ function HomePage() {
             )}
           </section>
 
-          <section className="home-card">
-            <div className="home-card-head">
-              <h3>Standings &mdash; Top 5</h3>
-              <Link to="/standings">Full standings</Link>
-            </div>
+          <div className="home-col">
+            <section className="home-card">
+              <div className="home-card-head">
+                <h3>Standings &mdash; Top 5</h3>
+                <Link to="/standings">Full standings</Link>
+              </div>
 
-            <table className="home-mini-table">
-              <thead>
-                <tr>
-                  <th>Team</th>
-                  <th>GP</th>
-                  <th>W</th>
-                  <th>PTS</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {standings.map((team, index) => (
-                  <tr key={team.id || `${team.code}-${index}`}>
-                    <td>
-                      <strong>{team.team}</strong>
-                    </td>
-                    <td>{team.gp}</td>
-                    <td>{team.w}</td>
-                    <td className="home-pts">{team.pts}</td>
+              <table className="home-mini-table">
+                <thead>
+                  <tr>
+                    <th>Team</th>
+                    <th>GP</th>
+                    <th>W</th>
+                    <th>PTS</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
+                </thead>
+
+                <tbody>
+                  {standings.map((team, index) => (
+                    <tr key={team.id || `${team.code}-${index}`}>
+                      <td>
+                        <strong>{team.team}</strong>
+                      </td>
+                      <td>{team.gp}</td>
+                      <td>{team.w}</td>
+                      <td className="home-pts">{team.pts}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+
+            <section className="home-card">
+              <div className="home-card-head">
+                <h3>{spotlight.label}</h3>
+                <Link to="/scores">Full schedule</Link>
+              </div>
+
+              {spotlight.games.length === 0 ? (
+                <p className="scores-empty">No games scheduled.</p>
+              ) : (
+                <ul className="tonight-list">
+                  {spotlight.games.map((game) => (
+                    <li key={game.id} className="tonight-game">
+                      <span className="tonight-matchup">
+                        {logoUrl(game.awayTeam?.logo) && (
+                          <img
+                            src={logoUrl(game.awayTeam.logo)}
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                          />
+                        )}
+                        <strong>
+                          {game.awayTeam?.abbreviation || game.awayCode}
+                        </strong>
+                        <span className="tonight-at">at</span>
+                        <strong>
+                          {game.homeTeam?.abbreviation || game.homeCode}
+                        </strong>
+                        {logoUrl(game.homeTeam?.logo) && (
+                          <img
+                            src={logoUrl(game.homeTeam.logo)}
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                          />
+                        )}
+                      </span>
+                      <span className="tonight-meta">
+                        {game.timeLabel}
+                        {game.venue ? ` \u00B7 ${game.venue}` : ""}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          </div>
         </div>
       )}
 
