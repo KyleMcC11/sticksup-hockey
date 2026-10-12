@@ -167,10 +167,9 @@
 .standings-controls {
   background: transparent;
   border: none;
-  border-bottom: 1px solid #e9ebef;
   border-radius: 0;
   box-shadow: none;
-  padding: 0 0 12px;
+  padding: 0;
   margin-bottom: 4px;
 }
 
@@ -199,19 +198,20 @@
   border-color: #141419;
 }
 
-/* ---- No doubled rule under the page title ---- */
-.home-col > .home-card:first-child,
-.lastnight-list > article:first-child,
-.rookies-card:first-of-type,
-.streaks-card:first-of-type,
-.standings-section:first-of-type {
+/* ---- One rule, not two: the page title gives up its bottom border,
+   each section's top rule becomes the single divider ---- */
+.page-title {
+  border-bottom: none;
+  margin-bottom: 18px;
+  padding-bottom: 6px;
+}
+
+/* Home uses home-hero (keeps its own rule), so its first cards
+   drop theirs to avoid doubling. Note: the left card is a direct
+   child of .home-grid-2, the right cards are wrapped in .home-col. */
+.home-grid-2 > .home-card:first-child,
+.home-col > .home-card:first-child {
   border-top: none;
   padding-top: 0;
   margin-top: 10px;
-}
-
-/* ---- Page titles: keep the 3px rule, tighten spacing ---- */
-.page-title {
-  margin-bottom: 18px;
-  padding-bottom: 14px;
 }
