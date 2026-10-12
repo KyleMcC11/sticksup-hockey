@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import loadSchedule from "../data/loadSchedule.js";
 import loadGameEvents from "../data/loadGameEvents.js";
@@ -245,18 +246,25 @@ function StreaksPage() {
           <section className="streaks-card">
             <h3>Team Streaks</h3>
             <div className="streaks-grid">
-              {teamStreaks.map((team) => (
-                <div
-                  key={team.code}
-                  className={`streak-chip ${team.won ? "streak-win" : "streak-loss"}`}
-                >
-                  <span className="streak-team">{teamAbbr(team.code)}</span>
-                  <span className="streak-count">
-                    {team.won ? "W" : "L"}
-                    {team.count}
-                  </span>
-                </div>
-              ))}
+              {teamStreaks.map((team) => {
+                const teamEntry = findTeamByFeedCode(team.code);
+
+                return (
+                  <Link
+                    key={team.code}
+                    className={`streak-chip ${
+                      team.won ? "streak-win" : "streak-loss"
+                    }`}
+                    to={teamEntry ? `/lineups/${teamEntry.slug}` : "/teams"}
+                  >
+                    <span className="streak-team">{teamAbbr(team.code)}</span>
+                    <span className="streak-count">
+                      {team.won ? "W" : "L"}
+                      {team.count}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </section>
 

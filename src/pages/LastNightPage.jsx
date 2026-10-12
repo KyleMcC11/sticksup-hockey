@@ -35,10 +35,12 @@ function TeamMark({ code }) {
     : "";
 
   return (
-    <span className="lastnight-team">
-      {logo && <img src={logo} alt={`${team.fullName} logo`} />}
-      <span>{team.abbreviation}</span>
-    </span>
+    <Link className="lastnight-team-link" to={`/lineups/${team.slug}`}>
+      <span className="lastnight-team">
+        {logo && <img src={logo} alt={`${team.fullName} logo`} />}
+        <span>{team.abbreviation}</span>
+      </span>
+    </Link>
   );
 }
 

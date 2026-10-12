@@ -192,7 +192,7 @@ function GoaliesPage() {
               <span>Best Save Percentage</span>
               {bestSavePercentage ? (
                 <>
-                  <h3>{bestSavePercentage.name}</h3>
+                  <h3><PlayerLink playerId={bestSavePercentage.id} name={bestSavePercentage.name} /></h3>
                   <p>
                     {formatSavePercentage(
                       bestSavePercentage.savePercentage
@@ -213,7 +213,7 @@ function GoaliesPage() {
               <span>Most Wins</span>
               {mostWins ? (
                 <>
-                  <h3>{mostWins.name}</h3>
+                  <h3><PlayerLink playerId={mostWins.id} name={mostWins.name} /></h3>
                   <p>
                     {mostWins.wins} wins &mdash;{" "}
                     {teamName(mostWins.teamCode)}
@@ -232,7 +232,7 @@ function GoaliesPage() {
               <span>Lowest GAA</span>
               {bestGaa ? (
                 <>
-                  <h3>{bestGaa.name}</h3>
+                  <h3><PlayerLink playerId={bestGaa.id} name={bestGaa.name} /></h3>
                   <p>
                     {formatGaa(bestGaa.goalsAgainstAverage)} GAA &mdash;{" "}
                     {teamName(bestGaa.teamCode)}

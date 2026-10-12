@@ -203,15 +203,24 @@ function GameDetailPage() {
         </p>
 
         <div className="game-header">
-          <div className="game-header-team">
-            {game.awayTeam && logoUrl(game.awayTeam.logo) && (
-              <img
-                src={logoUrl(game.awayTeam.logo)}
-                alt={`${game.awayTeam.fullName} logo`}
-              />
-            )}
-            <h2>{game.awayTeam?.fullName || game.awayCode}</h2>
-          </div>
+          {game.awayTeam ? (
+            <Link
+              className="game-header-team"
+              to={`/lineups/${game.awayTeam.slug}`}
+            >
+              {logoUrl(game.awayTeam.logo) && (
+                <img
+                  src={logoUrl(game.awayTeam.logo)}
+                  alt={`${game.awayTeam.fullName} logo`}
+                />
+              )}
+              <h2>{game.awayTeam.fullName}</h2>
+            </Link>
+          ) : (
+            <div className="game-header-team">
+              <h2>{game.awayCode}</h2>
+            </div>
+          )}
 
           <div className="game-header-score">
             {game.isFinal ? (
@@ -223,15 +232,24 @@ function GameDetailPage() {
             )}
           </div>
 
-          <div className="game-header-team">
-            {game.homeTeam && logoUrl(game.homeTeam.logo) && (
-              <img
-                src={logoUrl(game.homeTeam.logo)}
-                alt={`${game.homeTeam.fullName} logo`}
-              />
-            )}
-            <h2>{game.homeTeam?.fullName || game.homeCode}</h2>
-          </div>
+          {game.homeTeam ? (
+            <Link
+              className="game-header-team"
+              to={`/lineups/${game.homeTeam.slug}`}
+            >
+              {logoUrl(game.homeTeam.logo) && (
+                <img
+                  src={logoUrl(game.homeTeam.logo)}
+                  alt={`${game.homeTeam.fullName} logo`}
+                />
+              )}
+              <h2>{game.homeTeam.fullName}</h2>
+            </Link>
+          ) : (
+            <div className="game-header-team">
+              <h2>{game.homeCode}</h2>
+            </div>
+          )}
         </div>
       </section>
 

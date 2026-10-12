@@ -104,16 +104,20 @@ function PlayerPage() {
 
   const player = useMemo(() => {
     const id = String(playerId || "");
-    const skater = skaters.find((p) => String(p.id) === id);
 
-    if (skater) {
-      return { ...skater, isGoalie: false };
-    }
-
+    // Goalies appear in both feeds under the same id, so check the
+    // goalie rows first — otherwise every goalie resolves to their
+    // (empty) skater row and shows skater stats.
     const goalie = goalies.find((g) => String(g.id) === id);
 
     if (goalie) {
       return { ...goalie, isGoalie: true };
+    }
+
+    const skater = skaters.find((p) => String(p.id) === id);
+
+    if (skater) {
+      return { ...skater, isGoalie: false };
     }
 
     return null;

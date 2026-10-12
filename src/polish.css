@@ -443,6 +443,39 @@ tr.team-row-subtle > td:first-child {
   flex: none;
 }
 
+a.tonight-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.tonight-team:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a.lastnight-team-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.lastnight-team-link:hover .lastnight-team {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a.mini-standings-team {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.mini-standings-team:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .tonight-at {
   color: #9ca3af;
   font-weight: 400;
@@ -997,6 +1030,32 @@ a.scores-game:hover {
   font-weight: 700;
 }
 
+a.scores-team-link {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+a.scores-team-link:hover .scores-team {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a.scores-game-score {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.standings-team-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.standings-team-link:hover .standings-team-cell strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .scores-team img {
   width: 28px;
   height: 28px;
@@ -1061,6 +1120,16 @@ a.scores-game:hover {
   gap: 10px;
   max-width: 260px;
   text-align: center;
+}
+
+a.game-header-team {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.game-header-team:hover h2 {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .game-header-team img {
@@ -1567,6 +1636,15 @@ a.scores-game:hover {
   border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #f7f8fa;
+}
+
+a.streak-chip {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.streak-chip:hover {
+  border-color: #c9ced6;
 }
 
 .streak-team {

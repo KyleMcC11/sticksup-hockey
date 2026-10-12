@@ -28,18 +28,22 @@ function TeamMark({ team }) {
   }
 
   return (
-    <span className="scores-team">
-      {logoUrl(team.logo) && (
-        <img src={logoUrl(team.logo)} alt={`${team.fullName} logo`} />
-      )}
-      <span>{team.abbreviation}</span>
-    </span>
+    <Link className="scores-team-link" to={`/lineups/${team.slug}`}>
+      <span className="scores-team">
+        {logoUrl(team.logo) && (
+          <img src={logoUrl(team.logo)} alt={`${team.fullName} logo`} />
+        )}
+        <span>{team.abbreviation}</span>
+      </span>
+    </Link>
   );
 }
 
 function GameCard({ game, showDate }) {
-  const content = (
-    <>
+  const gameUrl = `/game/${game.id}`;
+
+  return (
+    <div className="scores-game">
       <div className="scores-game-main">
         {showDate && (
           <span className="scores-game-date">
@@ -52,17 +56,17 @@ function GameCard({ game, showDate }) {
 
         <span className="scores-game-matchup">
           <TeamMark team={game.awayTeam} />
-          <span className="scores-game-score">
-            {game.isFinal ? (
-              <>
-                <strong>{game.awayScore}</strong>
-                <span className="scores-game-dash">&ndash;</span>
-                <strong>{game.homeScore}</strong>
-              </>
-            ) : (
+          {game.isFinal ? (
+            <Link className="scores-game-score" to={gameUrl}>
+              <strong>{game.awayScore}</strong>
+              <span className="scores-game-dash">&ndash;</span>
+              <strong>{game.homeScore}</strong>
+            </Link>
+          ) : (
+            <span className="scores-game-score">
               <span className="scores-game-vs">at</span>
-            )}
-          </span>
+            </span>
+          )}
           <TeamMark team={game.homeTeam} />
         </span>
 
@@ -72,20 +76,12 @@ function GameCard({ game, showDate }) {
       </div>
 
       {game.isFinal && (
-        <span className="scores-game-link">Box score &rarr;</span>
+        <Link className="scores-game-link" to={gameUrl}>
+          Box score &rarr;
+        </Link>
       )}
-    </>
+    </div>
   );
-
-  if (game.isFinal) {
-    return (
-      <Link className="scores-game" to={`/game/${game.id}`}>
-        {content}
-      </Link>
-    );
-  }
-
-  return <div className="scores-game">{content}</div>;
 }
 
 function ScoresPage() {

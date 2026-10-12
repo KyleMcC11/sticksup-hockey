@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { teams } from "../data/teams.js";
 import loadStandings from "../data/loadStandings.js";
@@ -100,10 +101,22 @@ function StandingsTable({ title, teamsList }) {
                   <td>{index + 1}</td>
 
                   <td className="team-column">
-                    <div className="standings-team-cell">
-                      <span>{team.abbreviation}</span>
-                      <strong>{team.team}</strong>
-                    </div>
+                    {teamEntry ? (
+                      <Link
+                        className="standings-team-link"
+                        to={`/lineups/${teamEntry.slug}`}
+                      >
+                        <div className="standings-team-cell">
+                          <span>{team.abbreviation}</span>
+                          <strong>{team.team}</strong>
+                        </div>
+                      </Link>
+                    ) : (
+                      <div className="standings-team-cell">
+                        <span>{team.abbreviation}</span>
+                        <strong>{team.team}</strong>
+                      </div>
+                    )}
                   </td>
 
                   <td>{team.gp}</td>

@@ -304,7 +304,16 @@ function HomePage() {
                         }}
                       >
                         <td>
-                          <strong>{team.team}</strong>
+                          {teamEntry ? (
+                            <Link
+                              className="mini-standings-team"
+                              to={`/lineups/${teamEntry.slug}`}
+                            >
+                              <strong>{team.team}</strong>
+                            </Link>
+                          ) : (
+                            <strong>{team.team}</strong>
+                          )}
                         </td>
                         <td>{team.gp}</td>
                         <td>{team.w}</td>
@@ -329,28 +338,42 @@ function HomePage() {
                   {spotlight.games.map((game) => (
                     <li key={game.id} className="tonight-game">
                       <span className="tonight-matchup">
-                        {logoUrl(game.awayTeam?.logo) && (
-                          <img
-                            src={logoUrl(game.awayTeam.logo)}
-                            alt=""
-                            aria-hidden="true"
-                            loading="lazy"
-                          />
+                        {game.awayTeam ? (
+                          <Link
+                            className="tonight-team"
+                            to={`/lineups/${game.awayTeam.slug}`}
+                          >
+                            {logoUrl(game.awayTeam.logo) && (
+                              <img
+                                src={logoUrl(game.awayTeam.logo)}
+                                alt=""
+                                aria-hidden="true"
+                                loading="lazy"
+                              />
+                            )}
+                            <strong>{game.awayTeam.abbreviation}</strong>
+                          </Link>
+                        ) : (
+                          <strong>{game.awayCode}</strong>
                         )}
-                        <strong>
-                          {game.awayTeam?.abbreviation || game.awayCode}
-                        </strong>
                         <span className="tonight-at">at</span>
-                        <strong>
-                          {game.homeTeam?.abbreviation || game.homeCode}
-                        </strong>
-                        {logoUrl(game.homeTeam?.logo) && (
-                          <img
-                            src={logoUrl(game.homeTeam.logo)}
-                            alt=""
-                            aria-hidden="true"
-                            loading="lazy"
-                          />
+                        {game.homeTeam ? (
+                          <Link
+                            className="tonight-team"
+                            to={`/lineups/${game.homeTeam.slug}`}
+                          >
+                            <strong>{game.homeTeam.abbreviation}</strong>
+                            {logoUrl(game.homeTeam.logo) && (
+                              <img
+                                src={logoUrl(game.homeTeam.logo)}
+                                alt=""
+                                aria-hidden="true"
+                                loading="lazy"
+                              />
+                            )}
+                          </Link>
+                        ) : (
+                          <strong>{game.homeCode}</strong>
                         )}
                       </span>
                       <span className="tonight-meta">
