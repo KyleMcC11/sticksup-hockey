@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "./polish.css";
+import "./flat.css";
 
 import Sidebar from "./components/Sidebar.jsx";
 

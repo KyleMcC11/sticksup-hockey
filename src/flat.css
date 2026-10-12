@@ -1,0 +1,217 @@
+/* ============================================================
+   FLAT EDITORIAL THEME (mockup)
+   Kills the floating-card "AI" look: sections become flat bands
+   divided by black rules and hairlines instead of rounded boxes.
+   ============================================================ */
+
+/* ---- Section wrappers: no more floating cards ---- */
+.home-card,
+.goalie-table-card,
+.rookies-card,
+.streaks-card,
+.lastnight-card,
+.player-stats-card,
+.player-gamelog-card,
+.standings-section,
+.scores-section,
+.player-hero {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Black rule above every section = the new section divider */
+.home-card,
+.goalie-table-card,
+.rookies-card,
+.streaks-card,
+.lastnight-card,
+.player-stats-card,
+.player-gamelog-card,
+.standings-section,
+.scores-section {
+  border-top: 3px solid #141419;
+  padding-top: 12px;
+  margin-top: 30px;
+}
+
+.home-card:first-child,
+.scores-section:first-of-type {
+  margin-top: 6px;
+}
+
+/* Section titles: tighter, consistent */
+.home-card-head h3,
+.standings-section > h3,
+.goalie-table-card .section-header h2,
+.rookies-card > h3,
+.streaks-card > h3,
+.player-stats-card > h3,
+.player-gamelog-card > h3,
+.scores-section > h3 {
+  font-size: 1.25rem;
+  margin: 0 0 10px;
+}
+
+.home-card-head {
+  margin-bottom: 10px;
+}
+
+/* ---- Scores: games become flowing rows, not boxes ---- */
+.scores-game {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #e9ebef;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 11px 2px;
+}
+
+.scores-day {
+  margin-bottom: 18px;
+}
+
+.scores-day > h4 {
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 2px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e9ebef;
+}
+
+/* ---- Tables: square, tighter, full-bleed ---- */
+.table-scroll,
+.goalie-table-wrap,
+.roster-table-wrap,
+.standings-table-wrap {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.rookies-table tbody td,
+.streaks-table tbody td,
+.goalie-table tbody td,
+.standings-table tbody td,
+.player-gamelog-table tbody td {
+  padding: 7px 10px;
+}
+
+/* ---- Leader rows: keep the team wash, lose the pill look ---- */
+.leaders-list li.team-row {
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 9px 10px 9px 4px;
+}
+
+/* ---- Goalie leader cards: flatter highlight cards ---- */
+.goalie-leader-card.team-row {
+  border-radius: 6px;
+}
+
+/* ---- Tonight list: already hairlines, just unbox ---- */
+.tonight-list {
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- Last night cards: flat bands ---- */
+.lastnight-card {
+  margin-bottom: 26px;
+}
+
+.lastnight-stars li.team-row {
+  border-radius: 5px;
+}
+
+/* ---- Team tiles + team cards: keep, slightly sharper ---- */
+.team-tile,
+.team-card {
+  border-radius: 8px;
+}
+
+/* ---- Lineup cards: untouched (already have identity) ---- */
+
+/* ---- Masthead: no box, left-aligned, black rule ---- */
+.home-hero {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 6px 0 16px;
+  margin-bottom: 20px;
+  text-align: left;
+  border-bottom: 3px solid #141419;
+}
+
+.home-hero h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 0.95;
+  margin: 8px 0 10px;
+}
+
+.home-hero .home-dateline {
+  text-align: left;
+}
+
+/* ---- Filter controls: flat strip, not a card ---- */
+.standings-controls {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #e9ebef;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 12px;
+  margin-bottom: 4px;
+}
+
+/* ---- Summary highlight cards: keep, sharpen ---- */
+.standings-summary-row article {
+  border-radius: 6px;
+}
+
+/* ---- Toggle buttons: text style, not black blocks ---- */
+.standings-controls button,
+.leaders-toggle {
+  background: transparent;
+  color: #141419;
+  border: 1px solid #d4d7dc;
+  border-radius: 5px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.standings-controls button:hover,
+.leaders-toggle:hover {
+  border-color: #141419;
+}
+
+/* ---- No doubled rule under the page title ---- */
+.home-col > .home-card:first-child,
+.lastnight-list > article:first-child,
+.rookies-card:first-of-type,
+.streaks-card:first-of-type,
+.standings-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 10px;
+}
+
+/* ---- Page titles: keep the 3px rule, tighten spacing ---- */
+.page-title {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+}
