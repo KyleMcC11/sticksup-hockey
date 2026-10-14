@@ -190,12 +190,24 @@ function TeamLineupPage() {
           return goalie.teamCode === statsCode;
         });
 
+        const gamesById = new Map();
+        for (const player of [...allSkaters, ...allGoalies]) {
+          gamesById.set(String(player.id), player.gamesPlayed ?? 0);
+        }
+
+        const rosterWithGp = (rostersByTeam[team.slug] || []).map((player) => ({
+          ...player,
+          gamesPlayed: gamesById.has(String(player.id))
+            ? gamesById.get(String(player.id))
+            : null,
+        }));
+
         setDisplayTeam({
           ...team,
           forwards: buildForwardLines(teamSkaters),
           defense: buildDefensePairs(teamSkaters),
           goalies: buildGoalieList(teamGoalies),
-          roster: rostersByTeam[team.slug] || [],
+          roster: rosterWithGp,
           status: "Projected",
         });
       } catch (error) {
@@ -294,6 +306,7 @@ function TeamLineupPage() {
                   <th>#</th>
                   <th>Player</th>
                   <th>Pos</th>
+                  <th>GP</th>
                   <th>Age</th>
                   <th>Ht</th>
                   <th>Wt</th>
@@ -313,6 +326,7 @@ function TeamLineupPage() {
                       )}
                     </td>
                     <td>{player.position}</td>
+                    <td>{player.gamesPlayed ?? "–"}</td>
                     <td>{player.age ?? "–"}</td>
                     <td>{player.height || "–"}</td>
                     <td>{player.weight || "–"}</td>
