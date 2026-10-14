@@ -283,6 +283,11 @@ function PlayerCard({
         ) : (
           <>
             <PlayerStat
+              label="Games"
+              value={player.gamesPlayed}
+            />
+
+            <PlayerStat
               label="Goals"
               value={player.goals}
             />
@@ -295,11 +300,6 @@ function PlayerCard({
             <PlayerStat
               label="Points"
               value={player.points}
-            />
-
-            <PlayerStat
-              label="Games"
-              value={player.gamesPlayed}
             />
           </>
         )}
