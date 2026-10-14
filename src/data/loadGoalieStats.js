@@ -1,4 +1,4 @@
-import Papa from "papaparse";
+import loadApi from "./loadApi.js";
 
 function cleanText(value) {
   if (value === null || value === undefined) {
@@ -20,29 +20,9 @@ function createGoalieName(goalie) {
 }
 
 async function loadGoalieStats() {
-  const csvUrl = `${import.meta.env.BASE_URL}data/qmjhl_goalie_stats.csv`;
+  const rows = await loadApi("goalies");
 
-  const response = await fetch(csvUrl);
-
-  if (!response.ok) {
-    throw new Error(
-      `Could not load goalie stats. Server returned ${response.status}.`
-    );
-  }
-
-  const csvText = await response.text();
-
-  const results = Papa.parse(csvText, {
-    header: true,
-    skipEmptyLines: true,
-    dynamicTyping: true,
-  });
-
-  if (results.errors.length > 0) {
-    console.warn("Goalie CSV parsing warnings:", results.errors);
-  }
-
-  return results.data
+  return rows
     .filter((goalie) => {
       return goalie.player_id || goalie.name;
     })

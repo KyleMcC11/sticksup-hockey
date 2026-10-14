@@ -1,4 +1,4 @@
-import loadCsv from "./loadCsv.js";
+import loadApi from "./loadApi.js";
 import { findTeamByFeedCode } from "./teamCodes.js";
 
 function toInt(value) {
@@ -34,7 +34,7 @@ function parseGameDate(row) {
 }
 
 async function loadSchedule() {
-  const rows = await loadCsv("qmjhl_schedule.csv");
+  const rows = await loadApi("schedule");
 
   return rows
     .map((row) => {

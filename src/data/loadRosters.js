@@ -1,4 +1,4 @@
-import loadCsv from "./loadCsv.js";
+import loadApi from "./loadApi.js";
 import { findTeamByFeedCode } from "./teamCodes.js";
 
 function cleanText(value) {
@@ -71,7 +71,7 @@ function ageOn(birthdate, today = new Date()) {
 const POSITION_ORDER = { G: 0, D: 1, C: 2, LW: 3, RW: 4 };
 
 async function loadRosters() {
-  const rows = await loadCsv("qmjhl_rosters.csv");
+  const rows = await loadApi("rosters");
 
   const byTeam = {};
 

@@ -1,4 +1,4 @@
-import loadCsv from "./loadCsv.js";
+import loadApi from "./loadApi.js";
 
 function cleanText(value) {
   if (value === null || value === undefined) {
@@ -49,7 +49,7 @@ async function loadGameEvents() {
   let rows = [];
 
   try {
-    rows = await loadCsv("qmjhl_game_events.csv");
+    rows = await loadApi("game-events");
   } catch (error) {
     console.warn("Game events not available yet:", error.message);
     return {};

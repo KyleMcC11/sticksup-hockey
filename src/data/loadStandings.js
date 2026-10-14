@@ -1,4 +1,4 @@
-import Papa from "papaparse";
+import loadApi from "./loadApi.js";
 
 function cleanText(value) {
   if (value === null || value === undefined) {
@@ -14,29 +14,9 @@ function cleanTeamName(value) {
 }
 
 async function loadStandings() {
-  const csvUrl = `${import.meta.env.BASE_URL}data/qmjhl_standings.csv`;
+  const rows = await loadApi("standings");
 
-  const response = await fetch(csvUrl);
-
-  if (!response.ok) {
-    throw new Error(
-      `Could not load standings. Server returned ${response.status}.`
-    );
-  }
-
-  const csvText = await response.text();
-
-  const results = Papa.parse(csvText, {
-    header: true,
-    skipEmptyLines: true,
-    dynamicTyping: true,
-  });
-
-  if (results.errors.length > 0) {
-    console.warn("Standings CSV parsing warnings:", results.errors);
-  }
-
-  return results.data
+  return rows
     .filter((team) => {
       return team.team_code || team.teamId;
     })
