@@ -1,12 +1,4 @@
 game_id,game_date,home_code,away_code,period,time,event,team_code,scorer,assist1,assist2,is_pp,is_sh,is_en,is_gw,score_home,score_away,penalized_player,offence,minutes
-32852,2026-10-29,Gat,Hal,1,5:28,goal,,Patrick McNab,Cole MacLeod,Jackson Smail,False,False,False,False,0,1,,,0
-32852,2026-10-29,Gat,Hal,1,8:18,goal,,Zakary Horvat-Edouard,Louis-Étienne Halley,Nicolas Petrut,True,False,False,False,1,1,,,0
-32852,2026-10-29,Gat,Hal,1,7:24,penalty,,,,,False,False,False,False,1,1,Evan Nee,Tripping,2
-32852,2026-10-29,Gat,Hal,2,16:10,goal,,Gabriel Séguin,Drew McLennan,Artem Glukhikh,False,False,False,True,2,1,,,0
-32852,2026-10-29,Gat,Hal,2,14:50,penalty,,,,,False,False,False,False,2,1,Justin Blais,Roughing,2
-32852,2026-10-29,Gat,Hal,2,14:50,penalty,,,,,False,False,False,False,2,1,Shawn Carrier,Roughing,2
-32852,2026-10-29,Gat,Hal,3,10:59,goal,,Gabriel Séguin,Artem Glukhikh,Ryan White,False,False,False,False,3,1,,,0
-32852,2026-10-29,Gat,Hal,3,19:08,goal,,Finn Barton,Simon-Xavier Cyr,Michel Myloserdnyy,False,False,True,False,4,1,,,0
 32948,2026-10-30,NFL,Cha,1,4:51,goal,,Damian Norris,Phenwick MacLean,Nikita Bloch,False,False,False,False,1,0,,,0
 32948,2026-10-30,NFL,Cha,1,9:51,goal,,Matthew Frost,Quinn Norman,Maddex Marmulak,False,False,False,False,2,0,,,0
 32948,2026-10-30,NFL,Cha,1,11:11,goal,,Rowan Walsh,Hugo Charron,,False,False,False,False,2,1,,,0
@@ -641,3 +633,23 @@ game_id,game_date,home_code,away_code,period,time,event,team_code,scorer,assist1
 33105,2026-11-08,Sha,She,3,19:28,goal,,Louis-Alex Tremblay,Éloi Bénard,Florent Houle,False,False,False,True,4,5,,,0
 33105,2026-11-08,Sha,She,3,6:55,penalty,,,,,False,False,False,False,4,5,Olivier Lampron,Unsportmanlike conduct,2
 33105,2026-11-08,Sha,She,3,6:55,penalty,,,,,False,False,False,False,4,5,Nathan Kydd,Unsportmanlike conduct,2
+32916,2026-11-11,Mon,Que,1,16:13,goal,,Carter Meyer,Maddox Labre,,True,False,False,False,0,1,,,0
+32916,2026-11-11,Mon,Que,1,0:09,penalty,,,,,False,False,False,False,0,1,,Too many players on the ice,2
+32916,2026-11-11,Mon,Que,1,15:36,penalty,,,,,False,False,False,False,0,1,Elliott Mullen,High sticking,2
+32916,2026-11-11,Mon,Que,1,15:36,penalty,,,,,False,False,False,False,0,1,Elliott Mullen,Unsportmanlike conduct,0
+32916,2026-11-11,Mon,Que,1,15:36,penalty,,,,,False,False,False,False,0,1,Elliott Mullen,High sticking,2
+32916,2026-11-11,Mon,Que,2,4:45,goal,,Maddox Dagenais,Freddy Meyer,Mavrick Rousseau-Hamel,False,False,False,True,0,2,,,0
+32916,2026-11-11,Mon,Que,2,13:12,goal,,Carter Meyer,Egan Beveridge,,False,False,False,False,0,3,,,0
+32916,2026-11-11,Mon,Que,2,9:43,penalty,,,,,False,False,False,False,0,3,Wyatt Blace,Roughing,2
+32916,2026-11-11,Mon,Que,2,9:43,penalty,,,,,False,False,False,False,0,3,Freddy Meyer,Roughing,2
+32916,2026-11-11,Mon,Que,2,13:25,penalty,,,,,False,False,False,False,0,3,Hunter McKenzie,High sticking,2
+32916,2026-11-11,Mon,Que,2,18:57,penalty,,,,,False,False,False,False,0,3,Egan Beveridge,Roughing,2
+32916,2026-11-11,Mon,Que,2,18:57,penalty,,,,,False,False,False,False,0,3,Carter Meyer,Boarding,2
+32916,2026-11-11,Mon,Que,2,18:57,penalty,,,,,False,False,False,False,0,3,Bastien Michaud,Roughing,2
+32916,2026-11-11,Mon,Que,2,18:57,penalty,,,,,False,False,False,False,0,3,Charlie Benigno,Roughing,2
+32916,2026-11-11,Mon,Que,2,18:57,penalty,,,,,False,False,False,False,0,3,Liam Bursaw,Roughing,2
+32916,2026-11-11,Mon,Que,3,17:54,goal,,Elliott Mullen,,,False,True,False,False,1,3,,,0
+32916,2026-11-11,Mon,Que,3,17:19,penalty,,,,,False,False,False,False,1,3,Charlie Benigno,Slashing,2
+32916,2026-11-11,Mon,Que,3,19:36,penalty,,,,,False,False,False,False,1,3,Adam Fortier-Gendron,Unsportmanlike conduct,0
+32916,2026-11-11,Mon,Que,3,19:36,penalty,,,,,False,False,False,False,1,3,James Scantlebury,Unsportmanlike conduct,0
+32916,2026-11-11,Mon,Que,3,19:36,penalty,,,,,False,False,False,False,1,3,Étienne Desjardins,Tripping,2
