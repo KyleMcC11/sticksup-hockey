@@ -1,22 +1,4 @@
 game_id,game_date,home_code,away_code,period,time,event,team_code,scorer,assist1,assist2,is_pp,is_sh,is_en,is_gw,score_home,score_away,penalized_player,offence,minutes
-32816,2026-11-05,Dru,Rim,1,5:07,goal,,Dylan Dumont,Jayden Rousseau,,False,False,False,False,1,0,,,0
-32816,2026-11-05,Dru,Rim,1,7:55,goal,,Alex Massé,Justin Gagnon,Luca Nappiot,False,False,False,False,1,1,,,0
-32816,2026-11-05,Dru,Rim,1,10:38,goal,,Hugo Dufour,Jacob Boucher,Jan Larys,False,False,False,False,2,1,,,0
-32816,2026-11-05,Dru,Rim,1,10:50,penalty,,,,,False,False,False,False,2,1,Yoan Tassé,Roughing,2
-32816,2026-11-05,Dru,Rim,1,15:42,penalty,,,,,False,False,False,False,2,1,Owen Ronson,Holding,2
-32816,2026-11-05,Dru,Rim,2,3:58,goal,,Antoine Robichaud,Jayden Rousseau,Yoan Tassé,True,False,False,True,3,1,,,0
-32816,2026-11-05,Dru,Rim,2,0:17,penalty,,,,,False,False,False,False,3,1,Justin Beaulieu,Hooking,2
-32816,2026-11-05,Dru,Rim,2,3:05,penalty,,,,,False,False,False,False,3,1,Zack Arsenault,Tripping,2
-32816,2026-11-05,Dru,Rim,2,7:16,penalty,,,,,False,False,False,False,3,1,A.J. Schaaf,Slashing,2
-32816,2026-11-05,Dru,Rim,2,7:16,penalty,,,,,False,False,False,False,3,1,Sebastian Taliga,Tripping,2
-32816,2026-11-05,Dru,Rim,2,13:01,penalty,,,,,False,False,False,False,3,1,Alex Massé,Delaying the game,2
-32816,2026-11-05,Dru,Rim,3,6:27,goal,,Antoine Robichaud,Renaud Poulin,Yoan Tassé,True,False,False,False,4,1,,,0
-32816,2026-11-05,Dru,Rim,3,12:26,goal,,Thomas Miller,Caiden Pellegrino,Justin Gagnon,False,False,False,False,4,2,,,0
-32816,2026-11-05,Dru,Rim,3,13:07,goal,,Cooper Campbell,Yoan Tassé,,False,False,False,False,5,2,,,0
-32816,2026-11-05,Dru,Rim,3,0:24,penalty,,,,,False,False,False,False,5,2,Antoine Robichaud,Interference,2
-32816,2026-11-05,Dru,Rim,3,4:34,penalty,,,,,False,False,False,False,5,2,Thomas Miller,Roughing,2
-32816,2026-11-05,Dru,Rim,3,5:55,penalty,,,,,False,False,False,False,5,2,Alex Massé,Slashing,2
-32816,2026-11-05,Dru,Rim,3,13:36,penalty,,,,,False,False,False,False,5,2,Maxmilian Mares,Boarding,2
 32882,2026-11-06,Hal,Cap,1,11:41,goal,,Brady Smith,Quinn Kennedy,Shawn Carrier,False,False,False,False,1,0,,,0
 32882,2026-11-06,Hal,Cap,1,14:35,goal,,Reece Peitzsche,Cole Chandler,Aiden McCullough,False,False,False,False,1,1,,,0
 32882,2026-11-06,Hal,Cap,1,15:14,penalty,,,,,False,False,False,False,1,1,Quinn Kennedy,Tripping,2
@@ -605,3 +587,23 @@ game_id,game_date,home_code,away_code,period,time,event,team_code,scorer,assist1
 32818,2026-11-15,Dru,Chi,3,15:15,goal,,Yoan Tassé,Dylan Dumont,Renaud Poulin,True,False,False,False,2,3,,,0
 32818,2026-11-15,Dru,Chi,3,3:28,penalty,,,,,False,False,False,False,2,3,Tobias Tilley,Tripping,2
 32818,2026-11-15,Dru,Chi,3,14:51,penalty,,,,,False,False,False,False,2,3,Christophe Berthelot,Slashing,2
+33211,2026-11-18,Vic,Cap,1,2:20,goal,,Maxim Schäfer,Liam Lefebvre,Noah Jettelson,True,False,False,False,0,1,,,0
+33211,2026-11-18,Vic,Cap,1,5:08,goal,,Eliot Litalien,Maxim Schäfer,Elias Schneider,True,False,False,False,0,2,,,0
+33211,2026-11-18,Vic,Cap,1,18:22,goal,,Jacob Hartlin,Maxim Schäfer,Elias Schneider,False,False,False,False,0,3,,,0
+33211,2026-11-18,Vic,Cap,1,19:29,goal,,Eliot Litalien,Romain Litalien,Aiden McCullough,False,False,False,True,0,4,,,0
+33211,2026-11-18,Vic,Cap,1,1:05,penalty,,,,,False,False,False,False,0,4,Alexey Vlasov,Delaying the game,2
+33211,2026-11-18,Vic,Cap,1,4:00,penalty,,,,,False,False,False,False,0,4,Vincent Boutet,Tripping,2
+33211,2026-11-18,Vic,Cap,1,15:37,penalty,,,,,False,False,False,False,0,4,Maxim Schäfer,Holding,2
+33211,2026-11-18,Vic,Cap,2,0:59,goal,,Cole Chandler,Brayden Reynolds,Liam Lefebvre,False,False,False,False,0,5,,,0
+33211,2026-11-18,Vic,Cap,2,4:31,goal,,Alexis Desroches,Thomas Desruisseaux,Alexis Guévin,False,False,False,False,1,5,,,0
+33211,2026-11-18,Vic,Cap,2,6:25,goal,,Liam Lefebvre,Brayden Reynolds,Tyler Roccas,False,False,False,False,1,6,,,0
+33211,2026-11-18,Vic,Cap,2,16:37,goal,,Liam Lefebvre,Cole Chandler,Brayden Reynolds,False,False,False,False,1,7,,,0
+33211,2026-11-18,Vic,Cap,2,19:18,goal,,Thomas Desruisseaux,Egor Shilov,Louis-Félix Guay,True,False,False,False,2,7,,,0
+33211,2026-11-18,Vic,Cap,2,10:37,penalty,,,,,False,False,False,False,2,7,Xavier Lebel,Hooking,2
+33211,2026-11-18,Vic,Cap,2,17:46,penalty,,,,,False,False,False,False,2,7,Alonso Gosselin,High sticking,2
+33211,2026-11-18,Vic,Cap,3,4:03,goal,,Thomas Desruisseaux,Louis-Félix Guay,Egor Shilov,True,False,False,False,3,7,,,0
+33211,2026-11-18,Vic,Cap,3,12:35,goal,,Elias Schneider,Maxim Schäfer,Romain Litalien,True,False,False,False,3,8,,,0
+33211,2026-11-18,Vic,Cap,3,3:22,penalty,,,,,False,False,False,False,3,8,Alonso Gosselin,Interference,2
+33211,2026-11-18,Vic,Cap,3,5:38,penalty,,,,,False,False,False,False,3,8,Cohen Paquet,Unsportmanlike conduct,2
+33211,2026-11-18,Vic,Cap,3,5:38,penalty,,,,,False,False,False,False,3,8,Cohen Paquet,Roughing,2
+33211,2026-11-18,Vic,Cap,3,11:53,penalty,,,,,False,False,False,False,3,8,Xavier Lebel,Holding,2
