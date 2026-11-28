@@ -1,102 +1,4 @@
 game_id,game_date,home_code,away_code,period,time,event,team_code,scorer,assist1,assist2,is_pp,is_sh,is_en,is_gw,score_home,score_away,penalized_player,offence,minutes
-32853,2026-11-14,Gat,Chi,1,12:30,goal,,Dylan Allie,Peter Legostaev,,False,False,False,False,1,0,,,0
-32853,2026-11-14,Gat,Chi,1,12:57,goal,,Owen McHale,Candon O'Neill,Brayden Kaldenbach,False,False,False,False,1,1,,,0
-32853,2026-11-14,Gat,Chi,1,19:04,goal,,Mathis Dufour,Émile Ricard,Justin Lee,True,False,False,False,1,2,,,0
-32853,2026-11-14,Gat,Chi,1,3:14,penalty,,,,,False,False,False,False,1,2,Louis-Félix Gagnon,Delaying the game,2
-32853,2026-11-14,Gat,Chi,1,13:44,penalty,,,,,False,False,False,False,1,2,Emile-Alexandro Lemieux-Goupil,Tripping,2
-32853,2026-11-14,Gat,Chi,1,18:20,penalty,,,,,False,False,False,False,1,2,Justin Blais,Roughing,2
-32853,2026-11-14,Gat,Chi,2,16:52,goal,,Émile Ricard,Darcy Terglav,,False,False,False,True,1,3,,,0
-32853,2026-11-14,Gat,Chi,2,13:42,penalty,,,,,False,False,False,False,1,3,Joshua Phillips,Tripping,2
-32853,2026-11-14,Gat,Chi,2,17:48,penalty,,,,,False,False,False,False,1,3,Kasen Walsh,Cross-checking,2
-32853,2026-11-14,Gat,Chi,3,19:06,goal,,Dylan Allie,Gabriel Séguin,Zakary Horvat-Edouard,False,False,False,False,2,3,,,0
-32853,2026-11-14,Gat,Chi,3,0:39,penalty,,,,,False,False,False,False,2,3,Michel Myloserdnyy,Boarding,2
-32853,2026-11-14,Gat,Chi,3,6:24,penalty,,,,,False,False,False,False,2,3,Loïc Poirier,Holding,2
-32853,2026-11-14,Gat,Chi,3,16:57,penalty,,,,,False,False,False,False,2,3,Michel Myloserdnyy,Roughing,2
-32853,2026-11-14,Gat,Chi,3,17:04,penalty,,,,,False,False,False,False,2,3,Andrew Mohesky,Hooking,2
-33210,2026-11-14,Vic,BLB,1,12:29,goal,,Jacob McKinnon,Matt Gosselin,Korney Korneyev,False,False,False,False,0,1,,,0
-33210,2026-11-14,Vic,BLB,1,18:24,goal,,Thomas Desruisseaux,Alexey Vlasov,Egor Shilov,False,False,False,False,1,1,,,0
-33210,2026-11-14,Vic,BLB,1,7:21,penalty,,,,,False,False,False,False,1,1,Andrei Milyayev,Boarding,2
-33210,2026-11-14,Vic,BLB,1,16:22,penalty,,,,,False,False,False,False,1,1,Korney Korneyev,Tripping,2
-33210,2026-11-14,Vic,BLB,2,3:07,goal,,Alexis Desroches,Alexis Guévin,Loïk Gariépy,False,False,False,False,2,1,,,0
-33210,2026-11-14,Vic,BLB,2,12:52,penalty,,,,,False,False,False,False,2,1,Stefano Pietrantonio,Hooking,2
-33210,2026-11-14,Vic,BLB,2,14:37,penalty,,,,,False,False,False,False,2,1,Alexis Desroches,Hooking,2
-33210,2026-11-14,Vic,BLB,3,2:18,goal,,Giovanni Collin,Elliot Dubé,Andrei Milyayev,False,False,False,False,2,2,,,0
-33210,2026-11-14,Vic,BLB,3,4:04,goal,,Andrei Milyayev,Matt Gosselin,Olivier Filaj,True,False,False,True,2,3,,,0
-33210,2026-11-14,Vic,BLB,3,15:14,goal,,Korney Korneyev,,,False,False,False,False,2,4,,,0
-33210,2026-11-14,Vic,BLB,3,2:47,penalty,,,,,False,False,False,False,2,4,Théo Gravel,Holding,2
-33210,2026-11-14,Vic,BLB,3,4:50,penalty,,,,,False,False,False,False,2,4,Alexis Guévin,Roughing,2
-33210,2026-11-14,Vic,BLB,3,4:50,penalty,,,,,False,False,False,False,2,4,Giovanni Collin,Roughing,2
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Deryk Lemaire,Roughing,2
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Deryk Lemaire,Boarding,2
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Xavier Lebel,Roughing,2
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Alexis Guévin,Roughing,2
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Louis-Félix Guay,Unsportmanlike conduct,0
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Olivier Filaj,Roughing,2
-33210,2026-11-14,Vic,BLB,3,19:35,penalty,,,,,False,False,False,False,2,4,Logan Brennan,Roughing,2
-32918,2026-11-14,Mon,Rim,1,2:55,goal,,Niko Tournas,Adam Fortier-Gendron,Rian Chudzinski,True,False,False,False,1,0,,,0
-32918,2026-11-14,Mon,Rim,1,13:28,goal,,Rian Chudzinski,Shayne Gould,Liam Kilfoil,True,False,False,False,2,0,,,0
-32918,2026-11-14,Mon,Rim,1,15:46,goal,,Zack Arsenault,Justin Gagnon,,False,False,False,False,2,1,,,0
-32918,2026-11-14,Mon,Rim,1,2:37,penalty,,,,,False,False,False,False,2,1,Malik Bourque-Vigneault,Tripping,2
-32918,2026-11-14,Mon,Rim,1,12:11,penalty,,,,,False,False,False,False,2,1,Mathys Dubé,Boarding,2
-32918,2026-11-14,Mon,Rim,2,4:25,goal,,Niko Tournas,Adam Fortier-Gendron,Rian Chudzinski,True,False,False,True,3,1,,,0
-32918,2026-11-14,Mon,Rim,2,16:44,goal,,Liam Bursaw,William Manchuso,,False,False,False,False,4,1,,,0
-32918,2026-11-14,Mon,Rim,2,17:53,goal,,William Manchuso,Ethan Dean,Shayne Gould,False,False,False,False,5,1,,,0
-32918,2026-11-14,Mon,Rim,2,3:25,penalty,,,,,False,False,False,False,5,1,Phin Howard,Holding,2
-32918,2026-11-14,Mon,Rim,2,8:33,penalty,,,,,False,False,False,False,5,1,Max Vilen,Holding,2
-32918,2026-11-14,Mon,Rim,3,2:29,goal,,William Manchuso,Ethan Dean,Jacoby Weiner,False,False,False,False,6,1,,,0
-32918,2026-11-14,Mon,Rim,3,6:34,goal,,Myles Brosnan,Max Vilen,Noah Survilas,False,False,False,False,7,1,,,0
-32918,2026-11-14,Mon,Rim,3,15:01,goal,,Noah Survilas,,,False,False,False,False,8,1,,,0
-32918,2026-11-14,Mon,Rim,3,17:56,goal,,Zack Arsenault,Matyas Cutta,Caiden Pellegrino,False,False,False,False,8,2,,,0
-32918,2026-11-14,Mon,Rim,3,6:34,penalty,,,,,False,False,False,False,8,2,Max Brien,Roughing,2
-32918,2026-11-14,Mon,Rim,3,6:34,penalty,,,,,False,False,False,False,8,2,Noah Survilas,Roughing,2
-32918,2026-11-14,Mon,Rim,3,9:45,penalty,,,,,False,False,False,False,8,2,Julien Nadeau,Slashing,2
-32722,2026-11-14,Cap,NFL,1,5:10,goal,,Matthew Frost,Maddex Marmulak,Phenwick MacLean,False,False,False,False,0,1,,,0
-32722,2026-11-14,Cap,NFL,1,7:47,penalty,,,,,False,False,False,False,0,1,Brayden Reynolds,High sticking,2
-32722,2026-11-14,Cap,NFL,1,8:20,penalty,,,,,False,False,False,False,0,1,Aiden McCullough,Roughing,2
-32722,2026-11-14,Cap,NFL,1,8:20,penalty,,,,,False,False,False,False,0,1,Benjamin Veitch,High sticking,2
-32722,2026-11-14,Cap,NFL,1,12:04,penalty,,,,,False,False,False,False,0,1,Dmitry Kubantsev,Unsportmanlike conduct,2
-32722,2026-11-14,Cap,NFL,1,18:32,penalty,,,,,False,False,False,False,0,1,Jacob Hartlin,High sticking,2
-32722,2026-11-14,Cap,NFL,2,7:20,goal,,Liam Lefebvre,Noah Jettelson,Elias Schneider,True,False,False,False,1,1,,,0
-32722,2026-11-14,Cap,NFL,2,16:21,goal,,Liam Lefebvre,Noah Jettelson,Eliot Litalien,True,False,False,False,2,1,,,0
-32722,2026-11-14,Cap,NFL,2,2:55,penalty,,,,,False,False,False,False,2,1,Liam Lefebvre,Checking from behind,2
-32722,2026-11-14,Cap,NFL,2,5:58,penalty,,,,,False,False,False,False,2,1,Nikita Bloch,Cross-checking,2
-32722,2026-11-14,Cap,NFL,2,11:34,penalty,,,,,False,False,False,False,2,1,Alexis Mathieu,Tripping,2
-32722,2026-11-14,Cap,NFL,2,13:11,penalty,,,,,False,False,False,False,2,1,Liam Lefebvre,Slashing,2
-32722,2026-11-14,Cap,NFL,2,16:15,penalty,,,,,False,False,False,False,2,1,Liam Arsenault,Checking to the head,2
-32722,2026-11-14,Cap,NFL,3,2:52,goal,,Tyson Goguen,Benjamin Veitch,Quinn Norman,True,False,False,False,2,2,,,0
-32722,2026-11-14,Cap,NFL,3,18:29,goal,,Dmitry Kubantsev,Benjamin Veitch,,False,False,False,True,2,3,,,0
-32722,2026-11-14,Cap,NFL,3,19:14,goal,,Liam Arsenault,Tyson Goguen,,False,False,True,False,2,4,,,0
-32722,2026-11-14,Cap,NFL,3,1:37,penalty,,,,,False,False,False,False,2,4,Noah Levy,High sticking,2
-32722,2026-11-14,Cap,NFL,3,5:21,penalty,,,,,False,False,False,False,2,4,Liam Lefebvre,Roughing,2
-32722,2026-11-14,Cap,NFL,3,5:21,penalty,,,,,False,False,False,False,2,4,Liam Arsenault,Roughing,2
-32722,2026-11-14,Cap,NFL,3,11:15,penalty,,,,,False,False,False,False,2,4,Brayden Reynolds,Roughing,2
-32722,2026-11-14,Cap,NFL,3,11:15,penalty,,,,,False,False,False,False,2,4,Will Reynolds,Roughing,2
-32722,2026-11-14,Cap,NFL,3,19:35,penalty,,,,,False,False,False,False,2,4,Alexis Mathieu,Boarding,2
-32884,2026-11-14,Hal,Que,1,8:23,goal,,Egan Beveridge,Alexandre Taillefer,Carter Meyer,False,False,False,False,0,1,,,0
-32884,2026-11-14,Hal,Que,1,13:27,goal,,Maddox Labre,Alex Desruisseaux,,True,False,False,False,0,2,,,0
-32884,2026-11-14,Hal,Que,1,16:40,goal,,Louis-Thomas Lapointe,Alex Desruisseaux,,False,False,False,True,0,3,,,0
-32884,2026-11-14,Hal,Que,1,13:13,penalty,,,,,False,False,False,False,0,3,Paul Sintschnig,Interference,2
-32884,2026-11-14,Hal,Que,1,17:40,penalty,,,,,False,False,False,False,0,3,Mavrick Rousseau-Hamel,Interference,2
-32884,2026-11-14,Hal,Que,2,2:07,goal,,Evan Nee,Cole MacLeod,Patrick McNab,False,False,False,False,1,3,,,0
-32884,2026-11-14,Hal,Que,2,13:03,goal,,Antonin Pufr,Alexandre Taillefer,Nathan Quinn,False,False,False,False,1,4,,,0
-32884,2026-11-14,Hal,Que,2,3:32,penalty,,,,,False,False,False,False,1,4,Maddox Labre,Tripping,2
-32884,2026-11-14,Hal,Que,2,13:35,penalty,,,,,False,False,False,False,1,4,Nico Uschan,Delaying the game,2
-32884,2026-11-14,Hal,Que,2,14:35,penalty,,,,,False,False,False,False,1,4,Malik L'Italien,Slashing,2
-32884,2026-11-14,Hal,Que,2,14:35,penalty,,,,,False,False,False,False,1,4,Carter Meyer,Slashing,2
-32884,2026-11-14,Hal,Que,2,16:20,penalty,,,,,False,False,False,False,1,4,Louis-Thomas Lapointe,Roughing,2
-32884,2026-11-14,Hal,Que,2,16:20,penalty,,,,,False,False,False,False,1,4,Louis-Thomas Lapointe,Unsportmanlike conduct,0
-32884,2026-11-14,Hal,Que,2,16:20,penalty,,,,,False,False,False,False,1,4,Daniel Walters,Roughing,2
-32884,2026-11-14,Hal,Que,2,18:09,penalty,,,,,False,False,False,False,1,4,Maddox Labre,Hooking,2
-32884,2026-11-14,Hal,Que,3,4:16,goal,,Mateo Nobert,Paul Sintschnig,William Bent,False,False,False,False,2,4,,,0
-32884,2026-11-14,Hal,Que,3,8:28,goal,,Nathan Quinn,Mavrick Rousseau-Hamel,Maddox Dagenais,False,False,False,False,2,5,,,0
-32884,2026-11-14,Hal,Que,3,19:29,goal,,Samuel Huot,Alex Desruisseaux,,False,False,False,False,2,6,,,0
-32884,2026-11-14,Hal,Que,3,12:31,penalty,,,,,False,False,False,False,2,6,Daniel Walters,Unsportmanlike conduct,0
-32884,2026-11-14,Hal,Que,3,12:31,penalty,,,,,False,False,False,False,2,6,Daniel Walters,Tripping,2
-32884,2026-11-14,Hal,Que,3,16:09,penalty,,,,,False,False,False,False,2,6,Antonin Pufr,Interference,2
-32884,2026-11-14,Hal,Que,3,18:24,penalty,,,,,False,False,False,False,2,6,Hunter McKenzie,Roughing,2
-32884,2026-11-14,Hal,Que,3,18:24,penalty,,,,,False,False,False,False,2,6,Louis-Thomas Lapointe,Roughing,2
-32884,2026-11-14,Hal,Que,3,18:24,penalty,,,,,False,False,False,False,2,6,Evan Nee,Roughing,2
-32884,2026-11-14,Hal,Que,3,18:24,penalty,,,,,False,False,False,False,2,6,Evan Nee,Roughing,2
 32885,2026-11-15,Hal,NFL,1,7:09,goal,,Nikita Bloch,Dmitry Kubantsev,Benjamin Veitch,False,False,False,False,0,1,,,0
 32885,2026-11-15,Hal,NFL,1,1:16,penalty,,,,,False,False,False,False,0,1,Cameron Minella,Tripping,2
 32885,2026-11-15,Hal,NFL,1,3:42,penalty,,,,,False,False,False,False,0,1,William Lundqvist,Holding,2
@@ -594,3 +496,157 @@ game_id,game_date,home_code,away_code,period,time,event,team_code,scorer,assist1
 33178,2026-11-26,VdO,SNB,3,10:31,penalty,,,,,False,False,False,False,4,2,Mathias Bourque,Roughing,2
 33178,2026-11-26,VdO,SNB,3,10:31,penalty,,,,,False,False,False,False,4,2,Maxim LeBlanc,Cross-checking,2
 33178,2026-11-26,VdO,SNB,3,10:31,penalty,,,,,False,False,False,False,4,2,Étienne Maheu,Roughing,2
+32953,2026-11-27,NFL,Chi,1,10:57,goal,,Matthew Frost,Liam Arsenault,Quinn Norman,True,False,False,False,1,0,,,0
+32953,2026-11-27,NFL,Chi,1,9:11,penalty,,,,,False,False,False,False,1,0,Emile-Alexandro Lemieux-Goupil,Tripping,2
+32953,2026-11-27,NFL,Chi,1,19:24,penalty,,,,,False,False,False,False,1,0,Brayden Kaldenbach,Tripping,2
+32953,2026-11-27,NFL,Chi,1,19:24,penalty,,,,,False,False,False,False,1,0,Brayden Kaldenbach,Roughing,2
+32953,2026-11-27,NFL,Chi,1,19:24,penalty,,,,,False,False,False,False,1,0,Quinn Norman,Unsportmanlike conduct,2
+32953,2026-11-27,NFL,Chi,2,16:55,goal,,Christophe Berthelot,Tobias Tilley,,False,False,False,False,1,1,,,0
+32953,2026-11-27,NFL,Chi,2,17:59,goal,,Dmitry Kubantsev,Tyson Goguen,Benjamin Veitch,False,False,False,False,2,1,,,0
+32953,2026-11-27,NFL,Chi,2,18:06,penalty,,,,,False,False,False,False,2,1,Matthew Frost,High sticking,2
+32953,2026-11-27,NFL,Chi,3,0:43,goal,,Mathis Dufour,Émile Ricard,William Dubé,False,False,False,False,2,2,,,0
+32953,2026-11-27,NFL,Chi,3,3:13,goal,,William Dubé,Christophe Berthelot,Andrew Mohesky,True,False,False,True,2,3,,,0
+32953,2026-11-27,NFL,Chi,3,19:18,goal,,Émile Ricard,Christophe Berthelot,,False,False,True,False,2,4,,,0
+32953,2026-11-27,NFL,Chi,3,2:31,penalty,,,,,False,False,False,False,2,4,Benjamin Veitch,Slashing,2
+32953,2026-11-27,NFL,Chi,3,5:16,penalty,,,,,False,False,False,False,2,4,Nikita Bloch,Checking from behind,2
+32953,2026-11-27,NFL,Chi,3,6:41,penalty,,,,,False,False,False,False,2,4,Christophe Berthelot,Holding,2
+32953,2026-11-27,NFL,Chi,3,7:05,penalty,,,,,False,False,False,False,2,4,Candon O'Neill,Interference,2
+32953,2026-11-27,NFL,Chi,3,12:27,penalty,,,,,False,False,False,False,2,4,Candon O'Neill,Tripping,2
+32953,2026-11-27,NFL,Chi,3,15:45,penalty,,,,,False,False,False,False,2,4,Tobias Tilley,Hooking,2
+32724,2026-11-27,Cap,BLB,1,1:14,goal,,Cole Chandler,Brayden Reynolds,Maxim Schäfer,True,False,False,True,1,0,,,0
+32724,2026-11-27,Cap,BLB,1,0:18,penalty,,,,,False,False,False,False,1,0,Jacob McKinnon,Checking from behind,2
+32724,2026-11-27,Cap,BLB,1,10:40,penalty,,,,,False,False,False,False,1,0,Romain Litalien,Cross-checking,2
+32724,2026-11-27,Cap,BLB,1,19:58,penalty,,,,,False,False,False,False,1,0,Matt Gosselin,Roughing,2
+32724,2026-11-27,Cap,BLB,1,19:58,penalty,,,,,False,False,False,False,1,0,Elias Schneider,Roughing,2
+32724,2026-11-27,Cap,BLB,1,19:58,penalty,,,,,False,False,False,False,1,0,Olivier Filaj,Roughing,2
+32724,2026-11-27,Cap,BLB,1,19:58,penalty,,,,,False,False,False,False,1,0,Olivier Filaj,Roughing,2
+32724,2026-11-27,Cap,BLB,1,19:58,penalty,,,,,False,False,False,False,1,0,Olivier Filaj,Unsportmanlike conduct,0
+32724,2026-11-27,Cap,BLB,1,19:58,penalty,,,,,False,False,False,False,1,0,Romain Litalien,Roughing,2
+32724,2026-11-27,Cap,BLB,2,4:15,penalty,,,,,False,False,False,False,1,0,Brayden Reynolds,Hooking,2
+32724,2026-11-27,Cap,BLB,2,14:56,penalty,,,,,False,False,False,False,1,0,Liam Lefebvre,Slashing,2
+32724,2026-11-27,Cap,BLB,3,1:11,goal,,Maxim Schäfer,Romain Litalien,Will Murphy,False,False,False,False,2,0,,,0
+32724,2026-11-27,Cap,BLB,3,4:57,goal,,Romain Litalien,Elias Schneider,Maxim Schäfer,False,False,False,False,3,0,,,0
+32724,2026-11-27,Cap,BLB,3,5:38,penalty,,,,,False,False,False,False,3,0,Will Murphy,Roughing,2
+32724,2026-11-27,Cap,BLB,3,5:38,penalty,,,,,False,False,False,False,3,0,Stefano Pietrantonio,Slashing,2
+32886,2026-11-27,Hal,Mon,1,3:43,goal,,Malik L'Italien,Brady Smith,Oleg Kulebiakin,False,False,False,False,1,0,,,0
+32886,2026-11-27,Hal,Mon,1,8:57,penalty,,,,,False,False,False,False,1,0,Marc MacPhee,Hooking,2
+32886,2026-11-27,Hal,Mon,2,0:43,goal,,Paul Sintschnig,Cameron Minella,Malik L'Italien,False,False,False,True,2,0,,,0
+32886,2026-11-27,Hal,Mon,2,11:22,goal,,Daniel Walters,Nathan Langlois,Shawn Carrier,False,False,False,False,3,0,,,0
+32886,2026-11-27,Hal,Mon,2,14:12,goal,,Quinn Kennedy,Evan Nee,Nathan Langlois,False,False,False,False,4,0,,,0
+32886,2026-11-27,Hal,Mon,2,9:15,penalty,,,,,False,False,False,False,4,0,William Manchuso,High sticking,2
+32886,2026-11-27,Hal,Mon,2,12:12,penalty,,,,,False,False,False,False,4,0,William Manchuso,Fighting,5
+32886,2026-11-27,Hal,Mon,2,12:12,penalty,,,,,False,False,False,False,4,0,Duncan Anderson,Fighting,0
+32886,2026-11-27,Hal,Mon,2,12:12,penalty,,,,,False,False,False,False,4,0,Duncan Anderson,Fighting,5
+32886,2026-11-27,Hal,Mon,2,12:12,penalty,,,,,False,False,False,False,4,0,William Manchuso,Taking off one's own helmet or attempting to pull off an opponent's helmet,0
+32886,2026-11-27,Hal,Mon,2,12:12,penalty,,,,,False,False,False,False,4,0,William Manchuso,Fighting,0
+32886,2026-11-27,Hal,Mon,2,17:02,penalty,,,,,False,False,False,False,4,0,Nico Uschan,Interference,2
+32886,2026-11-27,Hal,Mon,2,20:00,penalty,,,,,False,False,False,False,4,0,Shawn Carrier,Unsportmanlike conduct,2
+32886,2026-11-27,Hal,Mon,3,17:24,goal,,Shayne Gould,Adam Fortier-Gendron,,True,False,False,False,4,1,,,0
+32886,2026-11-27,Hal,Mon,3,0:35,penalty,,,,,False,False,False,False,4,1,Rian Chudzinski,Holding,2
+32886,2026-11-27,Hal,Mon,3,3:47,penalty,,,,,False,False,False,False,4,1,Ethan Dean,Holding,2
+32886,2026-11-27,Hal,Mon,3,9:19,penalty,,,,,False,False,False,False,4,1,Jayden Napon,Charging,2
+32886,2026-11-27,Hal,Mon,3,15:38,penalty,,,,,False,False,False,False,4,1,Jayden Napon,Interference,2
+32886,2026-11-27,Hal,Mon,3,15:38,penalty,,,,,False,False,False,False,4,1,Niko Tournas,Taking off one's own helmet or attempting to pull off an opponent's helmet,0
+32886,2026-11-27,Hal,Mon,3,19:32,penalty,,,,,False,False,False,False,4,1,,Too many players on the ice,2
+32984,2026-11-27,Que,Dru,1,0:35,goal,,Renaud Poulin,Louis-Félix Bourque,Cooper Campbell,False,False,False,False,0,1,,,0
+32984,2026-11-27,Que,Dru,1,2:43,goal,,Jayden Rousseau,Cooper Campbell,William Dumont,False,False,False,False,0,2,,,0
+32984,2026-11-27,Que,Dru,1,3:38,goal,,Carter Meyer,Antonin Pufr,,False,False,False,False,1,2,,,0
+32984,2026-11-27,Que,Dru,1,6:50,goal,,Louis-Félix Bourque,Cooper Campbell,,False,False,False,False,1,3,,,0
+32984,2026-11-27,Que,Dru,1,10:45,goal,,Mavrick Rousseau-Hamel,Maddox Labre,Egan Beveridge,True,False,False,False,2,3,,,0
+32984,2026-11-27,Que,Dru,1,19:53,goal,,Mavrick Rousseau-Hamel,Freddy Meyer,Maddox Dagenais,False,False,False,False,3,3,,,0
+32984,2026-11-27,Que,Dru,1,8:54,penalty,,,,,False,False,False,False,3,3,Filip Kovalcik,Tripping,2
+32984,2026-11-27,Que,Dru,1,13:35,penalty,,,,,False,False,False,False,3,3,Antonin Pufr,High sticking,2
+32984,2026-11-27,Que,Dru,1,15:59,penalty,,,,,False,False,False,False,3,3,Antoine Robichaud,Roughing,2
+32984,2026-11-27,Que,Dru,1,15:59,penalty,,,,,False,False,False,False,3,3,Freddy Meyer,Roughing,2
+32984,2026-11-27,Que,Dru,2,2:33,goal,,Dérik Morin,Maxime-Olivier Drolet,,False,False,False,False,3,4,,,0
+32984,2026-11-27,Que,Dru,2,10:38,goal,,Antoine Robichaud,Louis-Félix Bourque,Filip Kovalcik,True,False,False,False,3,5,,,0
+32984,2026-11-27,Que,Dru,2,7:28,penalty,,,,,False,False,False,False,3,5,Eliott Belzil,Holding,2
+32984,2026-11-27,Que,Dru,2,8:59,penalty,,,,,False,False,False,False,3,5,Carter Meyer,Tripping,2
+32984,2026-11-27,Que,Dru,2,14:09,penalty,,,,,False,False,False,False,3,5,Alexandre Taillefer,Boarding,2
+32984,2026-11-27,Que,Dru,3,7:28,goal,,Maddox Dagenais,Carter Meyer,Alexandre Taillefer,True,False,False,False,4,5,,,0
+32984,2026-11-27,Que,Dru,3,11:12,goal,,Louis-Thomas Lapointe,Hunter McKenzie,Mavrick Rousseau-Hamel,False,False,False,False,5,5,,,0
+32984,2026-11-27,Que,Dru,3,12:06,goal,,Egan Beveridge,Nathan Quinn,Mavrick Rousseau-Hamel,False,False,False,True,6,5,,,0
+32984,2026-11-27,Que,Dru,3,7:18,penalty,,,,,False,False,False,False,6,5,Eliott Belzil,Tripping,2
+32984,2026-11-27,Que,Dru,3,19:55,penalty,,,,,False,False,False,False,6,5,Hugo Dufour,Slashing,2
+33016,2026-11-27,Rim,She,1,1:23,goal,,Luca Nappiot,,,False,False,False,False,1,0,,,0
+33016,2026-11-27,Rim,She,1,5:11,penalty,,,,,False,False,False,False,1,0,Emrick Nolette-Robidoux,Delaying the game,2
+33016,2026-11-27,Rim,She,1,6:37,penalty,,,,,False,False,False,False,1,0,Kurt Beck,Hooking,2
+33016,2026-11-27,Rim,She,1,15:43,penalty,,,,,False,False,False,False,1,0,Teddy Drury,Roughing,2
+33016,2026-11-27,Rim,She,1,15:43,penalty,,,,,False,False,False,False,1,0,Éloi Bénard,Roughing,2
+33016,2026-11-27,Rim,She,1,16:58,penalty,,,,,False,False,False,False,1,0,Rafaël Cloutier,Holding,2
+33016,2026-11-27,Rim,She,1,19:30,penalty,,,,,False,False,False,False,1,0,Max Brien,Interference,2
+33016,2026-11-27,Rim,She,2,6:32,goal,,Chad Bellemare,,,False,True,False,False,1,1,,,0
+33016,2026-11-27,Rim,She,2,12:45,goal,,Florent Houle,Daniyar Aibatov,Ilya Kuzminykh,False,False,False,False,1,2,,,0
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Max Brien,Unsportmanlike conduct,0
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Max Brien,Participating in the play after loosing his helmet or visor,2
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Louis-Alex Tremblay,Unsportmanlike conduct,0
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Louis-Alex Tremblay,Interference,2
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Olivier Lampron,Checking to the head,0
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Kurt Beck,Fighting,5
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Rafaël Cloutier,Instigator of a fight,0
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Rafaël Cloutier,Fighting,5
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Kurt Beck,Fighting,0
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Olivier Lampron,Checking to the head,5
+33016,2026-11-27,Rim,She,2,3:45,penalty,,,,,False,False,False,False,1,2,Rafaël Cloutier,Instigator (fight),2
+33016,2026-11-27,Rim,She,2,10:41,penalty,,,,,False,False,False,False,1,2,Julien Nadeau,High sticking,2
+33016,2026-11-27,Rim,She,3,0:25,goal,,A.J. Schaaf,Max Brien,,False,False,False,False,2,2,,,0
+33016,2026-11-27,Rim,She,3,9:57,goal,,Ilya Kuzminykh,Ilya Kolmakov,,False,False,False,False,2,3,,,0
+33016,2026-11-27,Rim,She,3,18:36,goal,,Florent Houle,Louis-Alex Tremblay,Noah Mazzola,False,False,True,True,2,4,,,0
+33016,2026-11-27,Rim,She,3,19:04,goal,,Maxmilian Mares,Mathys Dubé,Justin Beaulieu,True,False,False,False,3,4,,,0
+33016,2026-11-27,Rim,She,3,3:47,penalty,,,,,False,False,False,False,3,4,Sydney Gagnon,Tripping,2
+33016,2026-11-27,Rim,She,3,18:36,penalty,,,,,False,False,False,False,3,4,Louis-Alex Tremblay,Unsportmanlike conduct,0
+33016,2026-11-27,Rim,She,3,18:36,penalty,,,,,False,False,False,False,3,4,Max Brien,Unsportmanlike conduct,0
+33016,2026-11-27,Rim,She,3,18:36,penalty,,,,,False,False,False,False,3,4,Florent Houle,Roughing,2
+33048,2026-11-27,Rou,SNB,1,3:03,goal,,Eliot Ogonowski,,,False,False,False,False,1,0,,,0
+33048,2026-11-27,Rou,SNB,1,10:12,goal,,Olivier Groulx,Matyas Cancik,Alexander Donovan,False,False,False,False,1,1,,,0
+33048,2026-11-27,Rou,SNB,1,3:03,penalty,,,,,False,False,False,False,1,1,Thomas Charbonneau,Tripping,0
+33048,2026-11-27,Rou,SNB,2,9:43,goal,,Jamie Glance,Julien Lanthier,,False,False,False,False,1,2,,,0
+33048,2026-11-27,Rou,SNB,2,12:43,goal,,Cameron Chartrand,Alexis Joseph,,False,False,False,True,1,3,,,0
+33048,2026-11-27,Rou,SNB,2,16:17,penalty,,,,,False,False,False,False,1,3,Brandon Delarosbil,Roughing,2
+33048,2026-11-27,Rou,SNB,2,16:17,penalty,,,,,False,False,False,False,1,3,Samuel Rheault,Roughing,2
+33048,2026-11-27,Rou,SNB,2,18:08,penalty,,,,,False,False,False,False,1,3,Alexander Donovan,Tripping,2
+33048,2026-11-27,Rou,SNB,2,19:57,penalty,,,,,False,False,False,False,1,3,Julien Lanthier,Hooking,2
+33048,2026-11-27,Rou,SNB,3,10:03,goal,,Alexis Joseph,Jamie Glance,Olivier Duhamel,False,False,False,False,1,4,,,0
+33048,2026-11-27,Rou,SNB,3,13:40,goal,,Samuel Rheault,Charles Laforest,Mark Pritchin,False,False,False,False,2,4,,,0
+33048,2026-11-27,Rou,SNB,3,16:29,goal,,Alexander Donovan,Julien Lanthier,Olivier Groulx,False,False,True,False,2,5,,,0
+33048,2026-11-27,Rou,SNB,3,2:14,penalty,,,,,False,False,False,False,2,5,Alexis Lemire,Cross-checking,2
+33048,2026-11-27,Rou,SNB,3,3:41,penalty,,,,,False,False,False,False,2,5,,Too many players on the ice,2
+32856,2026-11-27,Gat,Vic,1,14:31,goal,,Alexey Vlasov,Alexis Guévin,Thomas Desruisseaux,False,False,False,False,0,1,,,0
+32856,2026-11-27,Gat,Vic,1,5:27,penalty,,,,,False,False,False,False,0,1,Joshua Vincent,Holding,2
+32856,2026-11-27,Gat,Vic,1,9:10,penalty,,,,,False,False,False,False,0,1,Jayden Tillman,Hooking,2
+32856,2026-11-27,Gat,Vic,1,17:34,penalty,,,,,False,False,False,False,0,1,Finn Barton,Cross-checking,2
+32856,2026-11-27,Gat,Vic,2,6:20,goal,,Ryan White,Peter Legostaev,Dylan Allie,True,False,False,False,1,1,,,0
+32856,2026-11-27,Gat,Vic,2,13:18,goal,,Simon-Xavier Cyr,Benson Hirst,Nicolas Petrut,False,False,False,True,2,1,,,0
+32856,2026-11-27,Gat,Vic,2,0:46,penalty,,,,,False,False,False,False,2,1,Vasily Serov,Tripping,2
+32856,2026-11-27,Gat,Vic,2,0:56,penalty,,,,,False,False,False,False,2,1,Justin Blais,Delaying the game,2
+32856,2026-11-27,Gat,Vic,2,5:01,penalty,,,,,False,False,False,False,2,1,Dominik Necak,Tripping,2
+32856,2026-11-27,Gat,Vic,2,10:54,penalty,,,,,False,False,False,False,2,1,Dominik Necak,Tripping,2
+32856,2026-11-27,Gat,Vic,2,12:13,penalty,,,,,False,False,False,False,2,1,Jakob Royer,Embellishment,2
+32856,2026-11-27,Gat,Vic,2,12:13,penalty,,,,,False,False,False,False,2,1,Dylan Allie,Tripping,2
+32856,2026-11-27,Gat,Vic,2,14:21,penalty,,,,,False,False,False,False,2,1,Justin Blais,Interference,2
+32856,2026-11-27,Gat,Vic,2,18:51,penalty,,,,,False,False,False,False,2,1,Nathan Nadeau,Roughing,2
+32856,2026-11-27,Gat,Vic,2,18:51,penalty,,,,,False,False,False,False,2,1,Loïk Gariépy,Roughing,2
+32856,2026-11-27,Gat,Vic,2,18:51,penalty,,,,,False,False,False,False,2,1,Benson Hirst,Roughing,2
+32856,2026-11-27,Gat,Vic,2,18:51,penalty,,,,,False,False,False,False,2,1,Vasily Serov,Roughing,2
+32856,2026-11-27,Gat,Vic,3,9:38,penalty,,,,,False,False,False,False,2,1,Théo Gravel,Interference,2
+32856,2026-11-27,Gat,Vic,3,13:33,penalty,,,,,False,False,False,False,2,1,Luke Murphy,Holding,2
+32856,2026-11-27,Gat,Vic,3,19:13,penalty,,,,,False,False,False,False,2,1,Deryk Lemaire,Slashing,2
+33110,2026-11-27,Sha,BaC,1,9:29,goal,,Robin Benoit,Dominic Pilote,,False,False,False,False,0,1,,,0
+33110,2026-11-27,Sha,BaC,1,15:47,goal,,Frédéric Bergeron,Chad Lygitsakos,Vladimir Shtyrkhunov,False,False,False,False,1,1,,,0
+33110,2026-11-27,Sha,BaC,1,11:06,penalty,,,,,False,False,False,False,1,1,Aiden Kirkwood,Holding,2
+33110,2026-11-27,Sha,BaC,1,16:07,penalty,,,,,False,False,False,False,1,1,Matys St-Gelais,Roughing,2
+33110,2026-11-27,Sha,BaC,2,1:14,goal,,Jonathan Oschgan,Dominic Pilote,Robin Benoit,False,False,False,False,1,2,,,0
+33110,2026-11-27,Sha,BaC,2,16:48,goal,,Olivier Charron,Chad Lygitsakos,Kody Dupuis,True,False,False,False,2,2,,,0
+33110,2026-11-27,Sha,BaC,2,9:47,penalty,,,,,False,False,False,False,2,2,Ludovic Fréchette,Roughing,2
+33110,2026-11-27,Sha,BaC,2,13:33,penalty,,,,,False,False,False,False,2,2,Tate Collins,Cross-checking,2
+33110,2026-11-27,Sha,BaC,2,15:20,penalty,,,,,False,False,False,False,2,2,Johannes Dobrovolny,Tripping,2
+33110,2026-11-27,Sha,BaC,2,19:32,penalty,,,,,False,False,False,False,2,2,Chad Lygitsakos,Roughing,2
+33110,2026-11-27,Sha,BaC,2,19:32,penalty,,,,,False,False,False,False,2,2,Dominic Pilote,Slashing,2
+33110,2026-11-27,Sha,BaC,2,19:32,penalty,,,,,False,False,False,False,2,2,Dominic Pilote,Roughing,2
+33110,2026-11-27,Sha,BaC,3,6:57,goal,,Olivier Charron,Chad Lygitsakos,Vladimir Shtyrkhunov,True,False,False,False,3,2,,,0
+33110,2026-11-27,Sha,BaC,3,9:04,goal,,Liam Armit,Dominic Pilote,,False,False,False,False,3,3,,,0
+33110,2026-11-27,Sha,BaC,3,10:32,goal,,Olivier Charron,Dylan Laframboise,Kody Dupuis,False,False,False,True,4,3,,,0
+33110,2026-11-27,Sha,BaC,3,14:38,goal,,Olivier Charron,Vladimir Shtyrkhunov,Chad Lygitsakos,True,False,False,False,5,3,,,0
+33110,2026-11-27,Sha,BaC,3,4:59,penalty,,,,,False,False,False,False,5,3,Johannes Dobrovolny,Slashing,2
+33110,2026-11-27,Sha,BaC,3,6:25,penalty,,,,,False,False,False,False,5,3,Jonathan Oschgan,Tripping,2
+33110,2026-11-27,Sha,BaC,3,14:00,penalty,,,,,False,False,False,False,5,3,Liam Armit,Tripping,2
